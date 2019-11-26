@@ -5,26 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLiCantin"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="600" Width="1000"
         Background="Black">
-    <StackPanel Name="stackpanel" Orientation="Vertical" HorizontalAlignment="Center" Height="400" Width="800">
-        <TextBlock  HorizontalAlignment="Center" FontSize="50" TextWrapping="Wrap" Width="700" TextAlignment="Center" Text="Căn tin Trường ĐH KHOA HỌC TỰ NHIÊN" Foreground="White"/>
-        <TextBlock  Name="textSignInChosen" HorizontalAlignment="Center" FontSize="25" TextWrapping="Wrap" TextAlignment="Center" Text="Chọn ví trí phục vụ" Foreground="White" Margin="296,20,278,20" Width="226"/>
-        <Button Name ="SignInAsStaffButton" Content="Nhân viên" FontSize="20" Foreground="White" Background="Transparent"  BorderBrush="Aqua"  BorderThickness="3"  HorizontalAlignment="Left" Margin="318,10,0,0" VerticalAlignment="Top" Width="200"  RenderTransformOrigin="0.8,2.8" Height="59" Click="Button_SignInStaff">
+    <Canvas Name="canvas"   Height="400" Width="800" >
+        <TextBlock   Canvas.Top="8"  Canvas.Left="54" HorizontalAlignment="Center" FontSize="40" TextWrapping="Wrap" Width="707" TextAlignment="Center" Foreground="White" Height="141" ><Run Text="Căn tin "/><LineBreak/><Run Text="Trường ĐH KHOA HỌC TỰ NHIÊN"/></TextBlock>
+        <TextBlock  Name="textSignInChosen" Canvas.Top="171"  HorizontalAlignment="Center" FontSize="25" TextWrapping="Wrap" TextAlignment="Center" Text="Chọn vị trí phục vụ" Foreground="White" Width="226" Canvas.Left="307"/>
+        <Button Name ="SignInAsStaffButton"  Canvas.Top="220"   Content="Nhân viên" FontSize="20" Foreground="White" Background="Transparent"  BorderBrush="Aqua"  BorderThickness="3"  HorizontalAlignment="Left" Margin="318,10,0,0" VerticalAlignment="Top" Width="200"  RenderTransformOrigin="0.8,2.8" Height="59" Click="Button_SignInStaff">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button Name="SignInAsManagerButton" Content="Quản lí"  FontSize="20" Foreground="White" Background="Transparent"  BorderBrush="Aqua"  BorderThickness="3"  HorizontalAlignment="Left" Margin="318,20,0,0" VerticalAlignment="Top" Width="200"  RenderTransformOrigin="0.8,2.8" Height="59" Click="Button_SignInManager" >
+        <Button Name="SignInAsManagerButton"  Canvas.Top="280"   Content="Quản lí"  FontSize="20" Foreground="White" Background="Transparent"  BorderBrush="Aqua"  BorderThickness="3"  HorizontalAlignment="Left" Margin="318,20,0,0" VerticalAlignment="Top" Width="200"  RenderTransformOrigin="0.8,2.8" Height="59" Click="Button_SignInManager" >
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>
                 </Style>
             </Button.Resources>
         </Button>
-    </StackPanel>
+    </Canvas>
 
 
 </Window>

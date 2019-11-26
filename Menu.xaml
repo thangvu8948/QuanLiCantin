@@ -1,0 +1,24 @@
+﻿<Window x:Class="QuanLiCantin.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLiCantin"
+        mc:Ignorable="d"
+        Title="Login" Height="450" Width="800"
+        Background="Black" Foreground="White">
+    <Canvas Name="canvasMenu">
+        <TabControl HorizontalAlignment="Left"  Margin="190,66,0,0" VerticalAlignment="Top" Width="150">
+            <TabItem Header="Thực đơn" Height="100" Width="150">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Thanh toán" Width="150">
+                <Grid Background="#FFE5E5E5" Margin="-150,-22,150,22" Width="150"/>
+            </TabItem>
+            <TabItem Header="TabItem" Width="150">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+
+    </Canvas>
+</Window>
