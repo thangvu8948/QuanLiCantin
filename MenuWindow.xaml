@@ -1,0 +1,26 @@
+﻿<Window x:Class="QuanLiCantin.MenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLiCantin"
+        mc:Ignorable="d"
+        Title="Login" Height="450" Width="800"
+        Background="White" Foreground="Black">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <TextBlock Text="Nguyễn văn A" FontSize="20" Padding="10, 3"/>
+            <TextBlock Text="Nhân viên" Padding="10, 3"/>
+            <Button Content="Thực đơn" Margin="0, 30, 0, 0" Padding= "5, 10" FontSize="25" FontWeight="Bold" HorizontalAlignment="Stretch"/>
+            <Button Content="Đặt món" Padding= "5, 10" FontSize="25" FontWeight="Bold" HorizontalAlignment="Stretch"/>
+            <Button Content="Thanh toán" Padding= "5, 10" FontSize="25" FontWeight="Bold" HorizontalAlignment="Stretch"/>
+            <Button Content="Đăng xuất" Padding= "5, 10" FontSize="25" FontWeight="Bold" HorizontalAlignment="Stretch"/>
+
+        </StackPanel>
+        <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="226,118,0,0" VerticalAlignment="Top" Width="126" Height="40" Click="Button_Click"/>
+    </Grid>
+</Window>

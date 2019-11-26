@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 namespace QuanLiCantin
 {
     /// <summary>
@@ -118,10 +117,24 @@ namespace QuanLiCantin
             buttonSignIn.Background = Brushes.Transparent;
             buttonSignIn.Foreground = Brushes.Aquamarine;
             buttonSignIn.Content = "Đăng nhập";
-            
+            buttonSignIn.Click += SignIn;
             Canvas.SetTop(buttonSignIn, 380);
             Canvas.SetLeft(buttonSignIn, 430);
             canvas.Children.Add(buttonSignIn);
+        }
+
+        private void SignIn(object sender, RoutedEventArgs e)
+        {
+            if (signInMode == false)
+            {
+                MenuWindow menu = new MenuWindow();
+                menu.Show();
+                this.Close();
+            } else
+            {
+                //do something
+            }
+
         }
 
         private void BackToMainFromLogin(object sender, RoutedEventArgs e)
