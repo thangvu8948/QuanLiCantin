@@ -15,9 +15,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <DockPanel x:Name="LeftPanel" HorizontalAlignment="Left" Height="569" LastChildFill="False" VerticalAlignment="Top" Width="214" Grid.RowSpan="2" Background="#FF151313"/>
-        <Button x:Name="Warehouse" Content="    Warehouse" HorizontalAlignment="Left" Height="79" Margin="0,189,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Warehouse_Click" MouseEnter="Warehouse_MouseEnter" BorderBrush="#FF151313" MouseLeave="Warehouse_MouseLeave" Grid.Row="1"/>
-        <Button x:Name="Exit" Content="    Exit            " HorizontalAlignment="Left" Height="79" Margin="0,268,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Exit_Click" BorderBrush="#FF151313" MouseEnter="Exit_MouseEnter" MouseLeave="Exit_MouseLeave" Grid.Row="1"/>
-        <Button x:Name="Employee" Content=" Employee" HorizontalAlignment="Left" Height="79" Margin="0,110,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Employee_Click" MouseEnter="Employee_MouseEnter" BorderBrush="#FF151313" MouseLeave="Employee_MouseLeave" Grid.Row="1" IsCancel="True"/>
+        <Button x:Name="Food" Content="  Food        " HorizontalAlignment="Left" Height="79" Margin="0,104,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Food_Click" MouseEnter="Food_MouseEnter" BorderBrush="#FF151313" MouseLeave="Food_MouseLeave" Grid.Row="1" IsCancel="True"/>
+        <Button x:Name="Employee" Content=" Employee" HorizontalAlignment="Left" Height="79" Margin="0,182,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Employee_Click" MouseEnter="Employee_MouseEnter" BorderBrush="#FF151313" MouseLeave="Employee_MouseLeave" Grid.Row="1" IsCancel="True"/>
+        <Button x:Name="Exit" Content="    Exit            " HorizontalAlignment="Left" Height="79" Margin="0,340,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Exit_Click" BorderBrush="#FF151313" MouseEnter="Exit_MouseEnter" MouseLeave="Exit_MouseLeave" Grid.Row="1"/>
+        <Button x:Name="Warehouse" Content="    Warehouse" HorizontalAlignment="Left" Height="79" Margin="0,261,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Warehouse_Click" MouseEnter="Warehouse_MouseEnter" BorderBrush="#FF151313" MouseLeave="Warehouse_MouseLeave" Grid.Row="1"/>
 
     </Grid>
 </Window>
