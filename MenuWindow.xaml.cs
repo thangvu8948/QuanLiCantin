@@ -38,7 +38,6 @@ namespace QuanLiCantin
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Getting Connection ...");
             SqlConnection conn = DBUtils.GetDBConnection();
 
             try
@@ -281,7 +280,7 @@ namespace QuanLiCantin
             var screen = new ThanhToanWindow();
             if (screen.ShowDialog() == true)
             {
-
+                _orders.Clear();
             }
         }
 

@@ -113,8 +113,8 @@
         </Grid>
 
         <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center">
-            <Button Content="Cancel" Width="150" Margin="0,0,10,10"/>
-            <Button Content="Thanh toán" Width=" 150" Margin="10, 0, 0, 10"/>
+            <Button Content="Cancel" Width="150" Margin="0,0,10,10" Click="CancelClick" IsCancel="True"/>
+            <Button Content="Thanh toán" Width=" 150" Margin="10, 0, 0, 10" IsDefault="True" Click="ThanhToanClick"/>
         </StackPanel>
     </Grid>
 </Window>
