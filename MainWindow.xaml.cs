@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,6 +50,8 @@ namespace QuanLiCantin
             foreach (var button in buttons)
                 canvas.Children.Remove(button);
         }
+        TextBox boxLoginUser;
+        PasswordBox boxLoginPassword;
         private void drawLogin()
         {
             TextBlock textLoginUser = new TextBlock();
@@ -60,13 +64,13 @@ namespace QuanLiCantin
             Canvas.SetLeft(textLoginUser, leftPadding);
             canvas.Children.Add(textLoginUser);
 
-            TextBox boxLoginUser = new TextBox();
+            boxLoginUser = new TextBox();
             boxLoginUser.Height = 40;
             boxLoginUser.Width = 500;
             boxLoginUser.FontSize = 18;
             boxLoginUser.Background = Brushes.Black;
             boxLoginUser.Foreground = Brushes.White;
-            
+
             boxLoginUser.BorderThickness = new Thickness(3);
             Canvas.SetTop(boxLoginUser, 240);
             Canvas.SetLeft(boxLoginUser, leftPadding);
@@ -82,7 +86,7 @@ namespace QuanLiCantin
             Canvas.SetLeft(textLoginPassword, leftPadding);
             canvas.Children.Add(textLoginPassword);
 
-            PasswordBox boxLoginPassword = new PasswordBox();
+            boxLoginPassword = new PasswordBox();
             boxLoginPassword.Height = 40;
             boxLoginPassword.Width = 500;
             boxLoginPassword.FontSize = 18;
@@ -110,6 +114,7 @@ namespace QuanLiCantin
 
             //Button Sign in
             Button buttonSignIn = new Button();
+            buttonSignIn.IsDefault = true;
             buttonSignIn.Height = 50;
             buttonSignIn.Width = 220;
             buttonSignIn.BorderThickness = new Thickness(2);
@@ -126,18 +131,52 @@ namespace QuanLiCantin
 
         private void SignIn(object sender, RoutedEventArgs e)
         {
-            if (signInMode == false)
-            {
-                MenuWindow menu = new MenuWindow();
-                menu.Show();
-                this.Close();
-            } else
-            {
-                var mng = new ManagerWindow();
-                mng.Show();
-                this.Close();
-            }
 
+            if (boxLoginUser.Text.Length == 0 || boxLoginPassword.Password.Length == 0)
+            {
+                MessageBox.Show("Vui lòng nhập đủ các trường");
+                return;
+            }
+            int accountType = signInMode == false ? 2 : 1;
+            string sql = $"Select * from NhanVien where TenDN = '{boxLoginUser.Text}' and LoaiNV={accountType} and MatKhau='{boxLoginPassword.Password}'";
+            SqlConnection conn = DBUtils.GetDBConnection();
+            try
+            {
+                conn.Open();
+
+
+                // Tạo một đối tượng Command.
+                SqlCommand cmd = new SqlCommand();
+
+                // Liên hợp Command với Connection.
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+
+                using (DbDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        if (signInMode == false)
+                        {
+                            MenuWindow menu = new MenuWindow();
+                            menu.Show();
+                            this.Close();                        }
+                        else
+                        {
+                            var mng = new ManagerWindow();
+                            mng.Show();
+                            this.Close();
+                        }
+                        return;
+                    }
+                    MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu");
+                    conn.Close();
+                }
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("Lỗi kết nối, vui lòng thử lại");
+            }
         }
 
         private void BackToMainFromLogin(object sender, RoutedEventArgs e)
