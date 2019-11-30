@@ -1,0 +1,23 @@
+﻿<Window x:Class="QuanLiCantin.ManagerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLiCantin"
+        mc:Ignorable="d"
+        Title="ManagerWindow" Height="600" Width="1000">
+    <Grid x:Name="AppBG" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DockPanel x:Name="LeftPanel" HorizontalAlignment="Left" Height="569" LastChildFill="False" VerticalAlignment="Top" Width="214" Grid.RowSpan="2" Background="#FF151313"/>
+        <Button x:Name="Warehouse" Content="    Warehouse" HorizontalAlignment="Left" Height="79" Margin="0,189,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Warehouse_Click" MouseEnter="Warehouse_MouseEnter" BorderBrush="#FF151313" MouseLeave="Warehouse_MouseLeave" Grid.Row="1"/>
+        <Button x:Name="Exit" Content="    Exit            " HorizontalAlignment="Left" Height="79" Margin="0,268,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Exit_Click" BorderBrush="#FF151313" MouseEnter="Exit_MouseEnter" MouseLeave="Exit_MouseLeave" Grid.Row="1"/>
+        <Button x:Name="Employee" Content=" Employee" HorizontalAlignment="Left" Height="79" Margin="0,110,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Employee_Click" MouseEnter="Employee_MouseEnter" BorderBrush="#FF151313" MouseLeave="Employee_MouseLeave" Grid.Row="1" IsCancel="True"/>
+
+    </Grid>
+</Window>

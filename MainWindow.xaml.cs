@@ -37,6 +37,7 @@ namespace QuanLiCantin
         private void Button_SignInManager(object sender, RoutedEventArgs e)
         {
             deleteSomethingInMain();
+            signInMode = true;
             drawLogin();
         }
 
@@ -132,7 +133,9 @@ namespace QuanLiCantin
                 this.Close();
             } else
             {
-                //do something
+                var mng = new ManagerWindow();
+                mng.Show();
+                this.Close();
             }
 
         }
@@ -140,6 +143,7 @@ namespace QuanLiCantin
         private void BackToMainFromLogin(object sender, RoutedEventArgs e)
         {
             MainWindow main = new MainWindow();
+            signInMode = false;
             main.Show();
             this.Close();
         }
