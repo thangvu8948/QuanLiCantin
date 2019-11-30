@@ -20,7 +20,7 @@
         <Button Name="SignInAsManagerButton"  Canvas.Top="280"   Content="Quản lí"  FontSize="20" Foreground="White" Background="Transparent"  BorderBrush="Aqua"  BorderThickness="3"  HorizontalAlignment="Left" Margin="318,20,0,0" VerticalAlignment="Top" Width="200"  RenderTransformOrigin="0.8,2.8" Height="59" Click="Button_SignInManager" >
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="10"/>
+                    <Setter Property="CornerRadius" Value="100"/>
                 </Style>
             </Button.Resources>
         </Button>

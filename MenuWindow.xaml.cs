@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -29,9 +30,9 @@ namespace QuanLiCantin
 
         private void TabControl_Selected(object sender, RoutedEventArgs e)
         {
-            var tab = sender as TabItem;
+/*            var tab = sender as TabItem;
             tab.Foreground = Brushes.Yellow;
-            tab.Background = Brushes.Black;
+            tab.Background = Brushes.Black;*/
 
         }
 
@@ -45,10 +46,10 @@ namespace QuanLiCantin
                 Debug.WriteLine("Openning Connection ...");
                 conn.Open();
                 Debug.WriteLine("Connection successful!");
-                List<Product> products = getProductList(conn);
+                BindingList<Product> products = ProductDAO.GetAllProducts(conn);
                 if (products != null)
                 {
-                    MessageBox.Show($"{products[0]._name} \r\n {products[0]._price}");
+                    MessageBox.Show($"{products[0].Name} \r\n {products[0].Price}");
                 } else
                 {
                     MessageBox.Show("No food");
@@ -64,39 +65,144 @@ namespace QuanLiCantin
 
         }
 
-        private List<Product> getProductList(SqlConnection conn)
+        class Product
         {
-            string sql = "Select * from THUCDON";
-
-            // Tạo một đối tượng Command.
-            SqlCommand cmd = new SqlCommand();
-
-            // Liên hợp Command với Connection.
-            cmd.Connection = conn;
-            cmd.CommandText = sql;
+            public string ID { get; set; }
+            public string Name { get; set; }
+            public int Type { get; set; }
+            public long Price { get; set; }
+            public int Remain { get; set; }
+            public string Image { get; set; }
 
 
-            using (DbDataReader reader = cmd.ExecuteReader())
+        }
+        class Order
+        {
+            public string ID { get; set; }
+            public string Name { get; set; }
+            public int Soluong { get; set; }
+            public long PriceOfOne { get; set; }
+        }
+
+        BindingList<Product> _products = null;
+        BindingList<Order> _orders = null;
+
+        class ProductDAO
+        {
+            public static BindingList<Product> GetAllProducts(SqlConnection conn)
             {
-                if (reader.HasRows)
-                {
-                    List<Product> listProduct = new List<Product>();
-                    while (reader.Read())
-                    {
-                        // Chỉ số của cột Emp_ID trong câu lệnh SQL.
-                        string id = Convert.ToString(reader.GetValue(0)); // 0
-                        string tenmon = Convert.ToString(reader.GetValue(1));
-                        long giatien = Convert.ToInt64(reader.GetValue(2));
-                        int soluong = Convert.ToInt32(reader.GetValue(3));
-                        int loai = Convert.ToInt32(reader.GetValue(4));
+                string sql = "Select * from THUCDON";
 
-                        listProduct.Add(new Product(id, tenmon, loai, giatien, soluong));
+                // Tạo một đối tượng Command.
+                SqlCommand cmd = new SqlCommand();
+
+                // Liên hợp Command với Connection.
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+
+
+                using (DbDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        BindingList<Product> listProduct = new BindingList<Product>();
+                        while (reader.Read())
+                        {
+                            // Chỉ số của cột Emp_ID trong câu lệnh SQL.
+                            string id = Convert.ToString(reader.GetValue(0)).Trim(); // 0
+                            string tenmon = Convert.ToString(reader.GetValue(1));
+                            long giatien = Convert.ToInt64(reader.GetValue(2));
+                            int soluong = Convert.ToInt32(reader.GetValue(3));
+                            int loai = Convert.ToInt32(reader.GetValue(4));
+
+
+                            var product = new Product()
+                            {
+                                ID = id,
+                                Name = tenmon,
+                                Price = giatien,
+                                Remain = soluong,
+                                Type = loai,
+                                Image = "Image/acer_swift_3.jpg"
+                            };
+                            listProduct.Add(product);
+                        }
+                        return listProduct;
                     }
-                    return listProduct;
+                    return null;
                 }
-                return null;
             }
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            SqlConnection conn = DBUtils.GetDBConnection();
+            /*            try
+                        {
+                            conn.Open();
+                            _products = ProductDAO.GetAllProducts(conn);
+                        }
+                        catch (Exception e1)
+                        {
+                            MessageBox.Show("Failed", "app");
+                            Debug.WriteLine("Error: " + e1.Message);
+                        }*/
+            conn.Open();
+            _products = ProductDAO.GetAllProducts(conn);
+            conn.Close();
+
+
+            var order1 = new Order()
+            {
+                ID = "1",
+                Name = "Đùi gà",
+                Soluong = 5,
+                PriceOfOne = 10000
+            };
+            var order2 = new Order()
+            {
+                ID = "2",
+                Name = "Phở",
+                Soluong = 2,
+                PriceOfOne = 30000
+            };
+            _orders = new BindingList<Order>();
+            _orders.Add(order1);
+            _orders.Add(order2);
+            OrderedList.ItemsSource = _orders;
+
+            MenuList.ItemsSource = _products;
+            MenuList.MouseLeftButtonUp += ChooseProduct;
+        }
+
+        private void StackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+         //   var obj = sender as ListViewItem;
+            MessageBox.Show($"This is");
+        }
+
+        private void ChooseProduct(object sender, MouseButtonEventArgs e)
+        {
+            DependencyObject dep = (DependencyObject)e.OriginalSource;
+
+            while ((dep != null) && !(dep is ListViewItem))
+            {
+                dep = VisualTreeHelper.GetParent(dep);
+            }
+
+            if (dep == null)
+                return;
+
+            Product item = (Product)MenuList.ItemContainerGenerator.ItemFromContainer(dep);
+
+            MessageBox.Show($"This is {item.Name}");
+        }
+
+        private void StackPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var obj = sender as ListViewItem;
+            MessageBox.Show($"This is {obj.ToString()}");
+        }
     }
-   
+    
 }
