@@ -23,11 +23,30 @@ namespace QuanLiCantin
         public ManagerWindow()
         {
             InitializeComponent();
-            
+        }
+
+        private void Food_Click(object sender, RoutedEventArgs e)
+        {
+            Food.Foreground = Brushes.Yellow;
+            Employee.Foreground = Brushes.White;
+            Warehouse.Foreground = Brushes.White;
+            Exit.Foreground = Brushes.White;
+        }
+
+
+        private void Food_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Food.Background = Brushes.Gray;
+        }
+
+        private void Food_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Food.Background = LeftPanel.Background;
         }
 
         private void Employee_Click(object sender, RoutedEventArgs e)
         {
+            Food.Foreground = Brushes.White;
             Employee.Foreground = Brushes.Yellow;
             Warehouse.Foreground = Brushes.White;
             Exit.Foreground = Brushes.White;    
@@ -45,6 +64,7 @@ namespace QuanLiCantin
 
         private void Warehouse_Click(object sender, RoutedEventArgs e)
         {
+            Food.Foreground = Brushes.White;
             Employee.Foreground = Brushes.White;
             Warehouse.Foreground = Brushes.Yellow;
             Exit.Foreground = Brushes.White;
@@ -76,5 +96,6 @@ namespace QuanLiCantin
         {
             Exit.Background = LeftPanel.Background;
         }
+
     }
 }
