@@ -64,13 +64,18 @@
     <Compile Include="ChonSoLuongWindow.xaml.cs">
       <DependentUpon>ChonSoLuongWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Global.cs" />
     <Compile Include="ManagerWindow.xaml.cs">
       <DependentUpon>ManagerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ModifyOrdered.xaml.cs">
       <DependentUpon>ModifyOrdered.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Order.cs" />
     <Compile Include="RelativeToAbsolutePathConverter.cs" />
+    <Compile Include="ThanhToanWindow.xaml.cs">
+      <DependentUpon>ThanhToanWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Warehouse.xaml.cs">
       <DependentUpon>Warehouse.xaml</DependentUpon>
     </Compile>
@@ -111,6 +116,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ModifyOrdered.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ThanhToanWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

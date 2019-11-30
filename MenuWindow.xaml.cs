@@ -66,48 +66,8 @@ namespace QuanLiCantin
 
         }
 
-        class Product
-        {
-            public string ID { get; set; }
-            public string Name { get; set; }
-            public int Type { get; set; }
-            public long Price { get; set; }
-            public int Remain { get; set; }
-            public string Image { get; set; }
-
-
-        }
-        class Order : INotifyPropertyChanged
-        {
-            private int soluong;
-            public string ID { get; set; }
-            public string Name { get; set; }
-            public int SoLuong
-            {
-                get
-                {
-                    return soluong;
-                }
-                set
-                {
-                    soluong = value;
-                    OnPropertyChanged("SoLuong");
-                }
-            }
-
-            private void OnPropertyChanged(string v)
-            {
-                PropertyChangedEventHandler handler = PropertyChanged;
-                if (handler != null)
-                {
-                    handler(this, new PropertyChangedEventArgs(v));
-                }
-            }
-
-            public long PriceOfOne { get; set; }
-
-            public event PropertyChangedEventHandler PropertyChanged;
-        }
+        
+        
 
         BindingList<Product> _products = null;
         BindingList<Order> _orders = null;
@@ -308,6 +268,26 @@ namespace QuanLiCantin
             _products = ProductDAO.GetAllProducts(_typeFood);
             MenuList.ItemsSource = _products;
 
+        }
+
+        private void ThanhToanClick(object sender, RoutedEventArgs e)
+        {
+            Global.orders.Clear();
+            foreach(var order in _orders)
+            {
+                Global.orders.Add(order);
+            }
+
+            var screen = new ThanhToanWindow();
+            if (screen.ShowDialog() == true)
+            {
+
+            }
+        }
+
+        private void HuyOrderClick(object sender, RoutedEventArgs e)
+        {
+            _orders.Clear();
         }
     }
 

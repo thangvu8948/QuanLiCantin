@@ -50,24 +50,26 @@
                 </ListView.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate >
-                        <StackPanel Width="300" Height="300" HorizontalAlignment="Center"  Orientation="Vertical" MouseLeftButtonDown="ChooseProduct">
+                        <StackPanel Width="280" Height="300"   Orientation="Vertical" MouseLeftButtonDown="ChooseProduct">
                             <Image Margin="2"
                                Source="{Binding Image}"
                                Width="250" Height="200"
                                RenderOptions.BitmapScalingMode="HighQuality"
                                 />
-                            <Border BorderBrush="{x:Null}" Height="30" Width="300" HorizontalAlignment="Center">
+
+                            <Border BorderBrush="{x:Null}" Height="60"  Width="280">
                                 <TextBlock TextWrapping="Wrap"
                                        Text="{Binding Name}"
                                        VerticalAlignment="Center"
-                                       TextAlignment="Center"
                                        HorizontalAlignment="Center"
                                        Foreground="Red"
+                                       TextAlignment="Center"
                                        FontWeight="Bold"
-                                       FontSize="13"/>
+                                           Width="280"
+                                       FontSize="25"/>
 
                             </Border>
-                            <Border BorderBrush="{x:Null}" Height="30"  Width="300">
+                            <Border BorderBrush="{x:Null}" Height="30"  Width="280">
                                 <TextBlock TextWrapping="Wrap"
                                        Text="{Binding Price}"
                                        VerticalAlignment="Center"
@@ -75,7 +77,8 @@
                                        Foreground="Red"
                                        TextAlignment="Center"
                                        FontWeight="Bold"
-                                       FontSize="13"/>
+                                           Width="200"
+                                       FontSize="20"/>
 
                             </Border>
                         </StackPanel>
@@ -155,7 +158,10 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            <Button Grid.Row="2" Content="Thanh Toán" Margin="2,0,2,20"/>
+            <StackPanel Orientation="Vertical" Grid.Row="2">
+                <Button Content="Thanh Toán" Margin="2,0,2,10" Click="ThanhToanClick"/>
+                <Button Content="Hủy toàn bộ" Margin="2,0,2,20" Click="HuyOrderClick" />
+            </StackPanel>
         </Grid>
         
         
