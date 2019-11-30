@@ -61,10 +61,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChonSoLuongWindow.xaml.cs">
+      <DependentUpon>ChonSoLuongWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ManagerWindow.xaml.cs">
+      <DependentUpon>ManagerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RelativeToAbsolutePathConverter.cs" />
+    <Compile Include="Warehouse.xaml.cs">
+      <DependentUpon>Warehouse.xaml</DependentUpon>
+    </Compile>
+    <Page Include="ChonSoLuongWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ManagerWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MenuWindow.xaml">
       <SubType>Designer</SubType>
@@ -90,6 +107,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Warehouse.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Model.cs" />
@@ -121,7 +142,31 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\acer_swift_3.jpg" />
+    <Resource Include="Images\10\download.jpg" />
+    <Resource Include="Images\11\download.jpg" />
+    <Resource Include="Images\12\download.jpg" />
+    <Resource Include="Images\13\download.jpg" />
+    <Resource Include="Images\14\download.jpg" />
+    <Resource Include="Images\15\download.jpg" />
+    <Resource Include="Images\16\download.jpg" />
+    <Resource Include="Images\17\download.jpg" />
+    <Resource Include="Images\18\download.jpg" />
+    <Resource Include="Images\19\download.jpg" />
+    <Resource Include="Images\1\download.jpg" />
+    <Resource Include="Images\20\download.jpg" />
+    <Resource Include="Images\21\download.jpg" />
+    <Resource Include="Images\22\download.jpg" />
+    <Resource Include="Images\23\download.jpg" />
+    <Resource Include="Images\24\download.jpg" />
+    <Resource Include="Images\25\download.jpg" />
+    <Resource Include="Images\2\download.jpg" />
+    <Resource Include="Images\3\download.jpg" />
+    <Resource Include="Images\4\download.jpg" />
+    <Resource Include="Images\5\download.jpg" />
+    <Resource Include="Images\6\download.jpg" />
+    <Resource Include="Images\7\download.jpg" />
+    <Resource Include="Images\8\download.jpg" />
+    <Resource Include="Images\9\download.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

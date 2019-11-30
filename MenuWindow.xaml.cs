@@ -91,7 +91,7 @@ namespace QuanLiCantin
         {
             public static BindingList<Product> GetAllProducts(SqlConnection conn)
             {
-                string sql = "Select * from THUCDON";
+                string sql = "Select * from MonAn";
 
                 // Tạo một đối tượng Command.
                 SqlCommand cmd = new SqlCommand();
@@ -123,7 +123,7 @@ namespace QuanLiCantin
                                 Price = giatien,
                                 Remain = soluong,
                                 Type = loai,
-                                Image = "Image/acer_swift_3.jpg"
+                                Image = $"Images/{id}/download.jpg"
                             };
                             listProduct.Add(product);
                         }
@@ -152,23 +152,8 @@ namespace QuanLiCantin
             conn.Close();
 
 
-            var order1 = new Order()
-            {
-                ID = "1",
-                Name = "Đùi gà",
-                Soluong = 5,
-                PriceOfOne = 10000
-            };
-            var order2 = new Order()
-            {
-                ID = "2",
-                Name = "Phở",
-                Soluong = 2,
-                PriceOfOne = 30000
-            };
+
             _orders = new BindingList<Order>();
-            _orders.Add(order1);
-            _orders.Add(order2);
             OrderedList.ItemsSource = _orders;
 
             MenuList.ItemsSource = _products;
@@ -195,13 +180,28 @@ namespace QuanLiCantin
 
             Product item = (Product)MenuList.ItemContainerGenerator.ItemFromContainer(dep);
 
-            MessageBox.Show($"This is {item.Name}");
+            var sl = new ChonSoLuongWindow();
+
+            if (sl.ShowDialog() == true)
+            {
+                var order = new Order()
+                {
+                    ID = item.ID,
+                    Soluong = sl.AlteredSoluong,
+                    Name = item.Name,
+                    PriceOfOne = item.Price
+                };
+                _orders.Add(order);
+
+            }
+
+
+            //    MessageBox.Show($"This is {item.Name}");
         }
 
         private void StackPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var obj = sender as ListViewItem;
-            MessageBox.Show($"This is {obj.ToString()}");
+
         }
     }
     
