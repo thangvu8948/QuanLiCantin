@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLiCantin"
         mc:Ignorable="d"
-        Title="Chọn số lượng" Height="136.327" Width="457.373"
+        Title="Chọn số lượng" Height="140" Width="460"
         Foreground="Black">
     <Canvas>
         <Label Content="Số lượng" Foreground="Black" HorizontalAlignment="Left" Margin="98,22,0,0" VerticalAlignment="Top"/>

@@ -119,8 +119,8 @@
                 </ListView.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel MouseLeftButtonUp="StackPanel_MouseLeftButtonDown" Width="160" Height="30" HorizontalAlignment="Center"  Orientation="Horizontal">
-                            <Border BorderBrush="{x:Null}" Height="30" Width="100" HorizontalAlignment="Center">
+                        <StackPanel MouseLeftButtonUp="StackPanel_MouseLeftButtonDown" Width="160" Height="50" HorizontalAlignment="Center"  Orientation="Horizontal">
+                            <Border BorderBrush="{x:Null}" Height="50" Width="100" HorizontalAlignment="Center">
                                 <TextBlock TextWrapping="Wrap"
                                        Text="{Binding Name}"
                                        VerticalAlignment="Center"
@@ -129,18 +129,19 @@
                                        Foreground="Red"
                                        FontWeight="Bold"
                                        FontSize="13"
-                                           Height="30" Width="100"/>
+                                           Height="50" Width="100"/>
 
                             </Border>
-                            <Border BorderBrush="AliceBlue"  Width="60" Height="30">
+                            <Border BorderBrush="AliceBlue"  Width="60" Height="50">
                                 <TextBlock TextWrapping="Wrap"
-                                       Text="{Binding Soluong}"
+                                       Text="{Binding SoLuong}"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Right"
                                        Foreground="Red"
                                        TextAlignment="Right"
                                        FontWeight="Bold"
                                        FontSize="13"
+                                           Height="50"
                                           />
 
                             </Border>

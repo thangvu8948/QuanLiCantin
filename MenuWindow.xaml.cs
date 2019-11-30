@@ -30,9 +30,9 @@ namespace QuanLiCantin
 
         private void TabControl_Selected(object sender, RoutedEventArgs e)
         {
-/*            var tab = sender as TabItem;
-            tab.Foreground = Brushes.Yellow;
-            tab.Background = Brushes.Black;*/
+            /*            var tab = sender as TabItem;
+                        tab.Foreground = Brushes.Yellow;
+                        tab.Background = Brushes.Black;*/
 
         }
 
@@ -50,7 +50,8 @@ namespace QuanLiCantin
                 if (products != null)
                 {
                     MessageBox.Show($"{products[0].Name} \r\n {products[0].Price}");
-                } else
+                }
+                else
                 {
                     MessageBox.Show("No food");
 
@@ -76,12 +77,36 @@ namespace QuanLiCantin
 
 
         }
-        class Order
+        class Order : INotifyPropertyChanged
         {
+            private int soluong;
             public string ID { get; set; }
             public string Name { get; set; }
-            public int Soluong { get; set; }
+            public int SoLuong
+            {
+                get
+                {
+                    return soluong;
+                }
+                set
+                {
+                    soluong = value;
+                    OnPropertyChanged("SoLuong");
+                }
+            }
+
+            private void OnPropertyChanged(string v)
+            {
+                PropertyChangedEventHandler handler = PropertyChanged;
+                if (handler != null)
+                {
+                    handler(this, new PropertyChangedEventArgs(v));
+                }
+            }
+
             public long PriceOfOne { get; set; }
+
+            public event PropertyChangedEventHandler PropertyChanged;
         }
 
         BindingList<Product> _products = null;
@@ -92,7 +117,7 @@ namespace QuanLiCantin
         {
             public event PropertyChangedEventHandler PropertyChanged;
 
-            public static BindingList<Product> GetAllProducts( int type)
+            public static BindingList<Product> GetAllProducts(int type)
             {
                 string sql = "Select * from MonAn";
                 SqlConnection conn = DBUtils.GetDBConnection();
@@ -155,7 +180,7 @@ namespace QuanLiCantin
                     Debug.WriteLine("Error: " + e1.Message);
                 }
                 return null;
-                
+
             }
         }
 
@@ -173,8 +198,18 @@ namespace QuanLiCantin
 
         private void StackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-         //   var obj = sender as ListViewItem;
-            MessageBox.Show($"This is");
+            DependencyObject dep = (DependencyObject)e.OriginalSource;
+
+            while ((dep != null) && !(dep is ListViewItem))
+            {
+                dep = VisualTreeHelper.GetParent(dep);
+            }
+
+            if (dep == null)
+                return;
+
+            Order item = (Order)OrderedList.ItemContainerGenerator.ItemFromContainer(dep);
+
         }
 
         private void ChooseProduct(object sender, MouseButtonEventArgs e)
@@ -195,14 +230,24 @@ namespace QuanLiCantin
 
             if (sl.ShowDialog() == true)
             {
-                var order = new Order()
+                for(int i = 0; i< _orders.Count; i++)
+                {
+                    if (_orders[i].ID == item.ID)
+                    {
+                        _orders[i].SoLuong += sl.AlteredSoluong;
+                        OrderedList.ItemsSource = _orders;
+                        return;
+                    }
+                }
+                var order2 = new Order()
                 {
                     ID = item.ID,
-                    Soluong = sl.AlteredSoluong,
+                    SoLuong = sl.AlteredSoluong,
                     Name = item.Name,
                     PriceOfOne = item.Price
                 };
-                _orders.Add(order);
+                _orders.Add(order2);
+
 
             }
 
@@ -214,7 +259,7 @@ namespace QuanLiCantin
         {
 
         }
-   
+
         private void All_select(object sender, RoutedEventArgs e)
         {
             _typeFood = 0;
@@ -255,5 +300,5 @@ namespace QuanLiCantin
 
         }
     }
-    
+
 }
