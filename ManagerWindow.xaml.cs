@@ -23,6 +23,7 @@ namespace QuanLiCantin
         public ManagerWindow()
         {
             InitializeComponent();
+ 
         }
 
         private void Food_Click(object sender, RoutedEventArgs e)
@@ -49,7 +50,7 @@ namespace QuanLiCantin
             Food.Foreground = Brushes.White;
             Employee.Foreground = Brushes.Yellow;
             Warehouse.Foreground = Brushes.White;
-            Exit.Foreground = Brushes.White;    
+            Exit.Foreground = Brushes.White;
         }
 
         private void Employee_MouseEnter(object sender, MouseEventArgs e)
@@ -95,7 +96,19 @@ namespace QuanLiCantin
         private void Exit_MouseLeave(object sender, MouseEventArgs e)
         {
             Exit.Background = LeftPanel.Background;
+            
         }
 
+        private void Warehouse_Loaded(object sender, RoutedEventArgs e)
+        {
+            //var ctrls = ManagerUI.Children.OfType<Warehouse>().ToList();
+            //foreach (var ctrl in ctrls)
+               // ManagerUI.Children.Remove(ctrl);
+        }
+
+        private void QuitApp_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

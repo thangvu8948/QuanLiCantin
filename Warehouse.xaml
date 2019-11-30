@@ -5,4 +5,34 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuanLiCantin"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="White" Width="778" Height="564" Loaded="WarehouseUI_Loaded"/>
+             d:DesignHeight="450" d:DesignWidth="800" Background="#FFE2D4D4" Width="778" Height="544" Loaded="WarehouseUI_Loaded">
+    <DataGrid x:Name="ItemList" Background="#FFE2D4D4" Margin="1,0,0,1" RenderTransformOrigin="1.218,0.295" SelectionChanged="ItemList_SelectionChanged" BorderBrush="#89000000">
+        <DataGrid.Resources>
+            <Style TargetType="{x:Type DataGridColumnHeader}">
+                <Setter Property="Background" Value="Turquoise"/>
+                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="BorderThickness" Value="1, 2, 2, 3"/>
+            </Style>
+
+            <Style TargetType="{x:Type DataGridCell}">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="BorderThickness" Value="1, 2, 2, 3"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            </Style>
+        </DataGrid.Resources>
+        
+        <DataGrid.Columns>
+            <DataGridTextColumn Header= "ID" Binding="{Binding ItemID}" Width= "200"/>
+            <DataGridTextColumn Header= "Ten" Binding="{Binding ItemName}" Width= "200"/>
+            <DataGridTextColumn Header= "Don vi tinh" Binding="{Binding ItemQuantityUnit}" Width= "200"/>
+            <DataGridTextColumn Header= "Khoi luong" Binding="{Binding ItemQuantity}" Width= "*"/>
+        </DataGrid.Columns>
+    </DataGrid>
+</UserControl>
