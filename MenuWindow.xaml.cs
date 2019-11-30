@@ -210,6 +210,16 @@ namespace QuanLiCantin
 
             Order item = (Order)OrderedList.ItemContainerGenerator.ItemFromContainer(dep);
 
+            var screen = new ModifyOrdered(item.SoLuong);
+            if (screen.ShowDialog() == true)
+            {
+                var i = OrderedList.SelectedIndex;
+                _orders[i].SoLuong = screen.alteredCount;
+                if (_orders[i].SoLuong == 0)
+                {
+                    _orders.RemoveAt(i);
+                }
+            }
         }
 
         private void ChooseProduct(object sender, MouseButtonEventArgs e)

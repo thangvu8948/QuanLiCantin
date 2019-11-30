@@ -15,36 +15,39 @@ using System.Windows.Shapes;
 namespace QuanLiCantin
 {
     /// <summary>
-    /// Interaction logic for ChonSoLuongWindow.xaml
+    /// Interaction logic for ModifyOrdered.xaml
     /// </summary>
-    public partial class ChonSoLuongWindow : Window
+    public partial class ModifyOrdered : Window
     {
-        public int AlteredSoluong = 1;
-
-        public ChonSoLuongWindow()
+        public ModifyOrdered(int data)
         {
             InitializeComponent();
-
+            alterSoluongBox.Text = data.ToString();
         }
-
-        private void SendBack(object sender, RoutedEventArgs e)
+        public int alteredCount;
+        private void DieuChinhSoluongClick(object sender, RoutedEventArgs e)
         {
             try
             {
-                int temp = Convert.ToInt32(Soluong.Text);
+                int temp = Convert.ToInt32(alterSoluongBox.Text);
                 if (temp < 0) throw new Exception("Nhỏ hơn 0");
                 else
                 {
-                    AlteredSoluong = temp;
+                    alteredCount = temp;
                 }
                 this.DialogResult = true;
                 this.Close();
-                return;
-            } catch(Exception err)
+            } catch(Exception exc)
             {
-                MessageBox.Show("Vui lòng nhập số");
-            } 
-            
+                MessageBox.Show("Vui lòng nhập số hợp lệ");
+            }
+        }
+
+        private void DeleteClick(object sender, RoutedEventArgs e)
+        {
+            alteredCount = 0;
+            this.DialogResult = true;
+            this.Close();
         }
 
         private void CancelClick(object sender, RoutedEventArgs e)

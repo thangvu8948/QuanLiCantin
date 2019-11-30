@@ -67,6 +67,9 @@
     <Compile Include="ManagerWindow.xaml.cs">
       <DependentUpon>ManagerWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ModifyOrdered.xaml.cs">
+      <DependentUpon>ModifyOrdered.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RelativeToAbsolutePathConverter.cs" />
     <Compile Include="Warehouse.xaml.cs">
       <DependentUpon>Warehouse.xaml</DependentUpon>
@@ -107,6 +110,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ModifyOrdered.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Warehouse.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
