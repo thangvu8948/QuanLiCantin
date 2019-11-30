@@ -45,7 +45,15 @@ namespace QuanLiCantin
                 Debug.WriteLine("Openning Connection ...");
                 conn.Open();
                 Debug.WriteLine("Connection successful!");
-                query(conn);
+                List<Product> products = getProductList(conn);
+                if (products != null)
+                {
+                    MessageBox.Show($"{products[0]._name} \r\n {products[0]._price}");
+                } else
+                {
+                    MessageBox.Show("No food");
+
+                }
                 MessageBox.Show("OK", "APp");
             }
             catch (Exception e1)
@@ -56,9 +64,9 @@ namespace QuanLiCantin
 
         }
 
-        private void query(SqlConnection conn)
+        private List<Product> getProductList(SqlConnection conn)
         {
-            string sql = "Select * from category";
+            string sql = "Select * from THUCDON";
 
             // Tạo một đối tượng Command.
             SqlCommand cmd = new SqlCommand();
@@ -72,22 +80,23 @@ namespace QuanLiCantin
             {
                 if (reader.HasRows)
                 {
-
+                    List<Product> listProduct = new List<Product>();
                     while (reader.Read())
                     {
                         // Chỉ số của cột Emp_ID trong câu lệnh SQL.
-                        int id = Convert.ToInt32(reader.GetValue(0)); // 0
+                        string id = Convert.ToString(reader.GetValue(0)); // 0
+                        string tenmon = Convert.ToString(reader.GetValue(1));
+                        long giatien = Convert.ToInt64(reader.GetValue(2));
+                        int soluong = Convert.ToInt32(reader.GetValue(3));
+                        int loai = Convert.ToInt32(reader.GetValue(4));
 
-
-                        string tenloai = Convert.ToString(reader.GetValue(1));
-
-                        Debug.WriteLine("Ten loai:" + tenloai);
-                        Debug.WriteLine("Ma loai: " + id);
+                        listProduct.Add(new Product(id, tenmon, loai, giatien, soluong));
                     }
+                    return listProduct;
                 }
+                return null;
             }
         }
-
     }
    
 }
