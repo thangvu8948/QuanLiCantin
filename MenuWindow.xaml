@@ -24,7 +24,7 @@
             <Button Content="Thực đơn" Margin="0, 80, 0, 0" Padding= "5, 10" Height="60" FontSize="20" FontWeight="Bold" HorizontalAlignment="Stretch"/>
             <Button Content="Đặt món" Padding= "5, 10" FontSize="20" Height="60" FontWeight="Bold" HorizontalAlignment="Stretch"/>
             <Button Content="Thanh toán" Padding= "5, 10" FontSize="20" Height="60" FontWeight="Bold" HorizontalAlignment="Stretch"/>
-            <Button Content="Đăng xuất" Padding= "5, 10" FontSize="20" Height="60" FontWeight="Bold" HorizontalAlignment="Stretch"/>
+            <Button Content="Đăng xuất" Padding= "5, 10" FontSize="20" Height="60" FontWeight="Bold" HorizontalAlignment="Stretch" Click="DangXuatClick"/>
 
         </StackPanel>
 

@@ -288,6 +288,13 @@ namespace QuanLiCantin
         {
             _orders.Clear();
         }
+
+        private void DangXuatClick(object sender, RoutedEventArgs e)
+        {
+            var main_window = new MainWindow();
+            main_window.Show();
+            this.Close
+        }
     }
 
 }
