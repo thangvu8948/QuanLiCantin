@@ -23,7 +23,8 @@ namespace QuanLiCantin
         public ManagerWindow()
         {
             InitializeComponent();
- 
+            ManagerUI.Children.Remove(WH_UI);
+            
         }
 
         private void Food_Click(object sender, RoutedEventArgs e)
@@ -32,6 +33,7 @@ namespace QuanLiCantin
             Employee.Foreground = Brushes.White;
             Warehouse.Foreground = Brushes.White;
             Exit.Foreground = Brushes.White;
+            ManagerUI.Children.Remove(WH_UI);
         }
 
 
@@ -51,6 +53,7 @@ namespace QuanLiCantin
             Employee.Foreground = Brushes.Yellow;
             Warehouse.Foreground = Brushes.White;
             Exit.Foreground = Brushes.White;
+            ManagerUI.Children.Remove(WH_UI);
         }
 
         private void Employee_MouseEnter(object sender, MouseEventArgs e)
@@ -65,10 +68,14 @@ namespace QuanLiCantin
 
         private void Warehouse_Click(object sender, RoutedEventArgs e)
         {
-            Food.Foreground = Brushes.White;
-            Employee.Foreground = Brushes.White;
-            Warehouse.Foreground = Brushes.Yellow;
-            Exit.Foreground = Brushes.White;
+            if (!ManagerUI.Children.Contains(WH_UI))
+            {
+                Food.Foreground = Brushes.White;
+                Employee.Foreground = Brushes.White;
+                Warehouse.Foreground = Brushes.Yellow;
+                Exit.Foreground = Brushes.White;
+                ManagerUI.Children.Add(WH_UI);
+            }
         }
 
         private void Warehouse_MouseEnter(object sender, MouseEventArgs e)
@@ -96,14 +103,11 @@ namespace QuanLiCantin
         private void Exit_MouseLeave(object sender, MouseEventArgs e)
         {
             Exit.Background = LeftPanel.Background;
-            
         }
 
         private void Warehouse_Loaded(object sender, RoutedEventArgs e)
         {
-            //var ctrls = ManagerUI.Children.OfType<Warehouse>().ToList();
-            //foreach (var ctrl in ctrls)
-               // ManagerUI.Children.Remove(ctrl);
+ 
         }
 
         private void QuitApp_Click(object sender, RoutedEventArgs e)
