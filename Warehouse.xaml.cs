@@ -27,7 +27,7 @@ namespace QuanLiCantin
     public partial class Warehouse : UserControl
     {
         ObservableCollection<WarehouseItem> wh_items = null;
-        readonly bool load_from_sql = false;
+        
 
         private void Rebind()
         {
@@ -37,14 +37,8 @@ namespace QuanLiCantin
         public Warehouse()
         {
             InitializeComponent();
-            if (load_from_sql == true)
-            {
-                wh_items = WarehouseSQL.GetItemsFromName();
-            }
-            else
-            {
-                wh_items = LoadRandomItem();
-            }
+            WH_UI.Children.Remove(ItemAddBox);
+            wh_items = LoadRandomItem();
             Rebind();
             DataContext = this;
         }
@@ -108,6 +102,10 @@ namespace QuanLiCantin
                 _unit = unit;
                 _qu = quantity;
             }
+
+            public WarehouseItem((string, string, string, double) initializer)
+                => (_id, _name, _unit, _qu) = initializer;
+                
         }
 
         private ObservableCollection<WarehouseItem> LoadRandomItem()
@@ -224,19 +222,62 @@ namespace QuanLiCantin
             }
         }
 
-        private void WarehouseUI_Loaded(object sender, RoutedEventArgs e)
-        {
-        }
 
         private void ItemTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Rebind();
         }
 
+
+        //Warehouse UI (Un)load functions
+
+        private void WarehouseUI_Loaded(object sender, RoutedEventArgs e)
+        {
+        }
+
+
+        private void WarehouseUI_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (WH_UI.Children.Contains(ItemAddBox))
+                WH_UI.Children.Remove(ItemAddBox);
+        }
+
+        protected bool itemAddFirstLoad = true;
+
+        private void ItemAddBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            ItemAddBox.EmptyAllField();
+        }
+
+
+        private void ItemAddBox_Unloaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void AddItemButton_Click(object sender, RoutedEventArgs e)
         {
-            if (load_from_sql == false)
-                 wh_items.Add(new WarehouseItem("A", "A", "A", 1));
+            WH_UI.Children.Add(ItemAddBox);
+            ItemAddBox.EmptyAllField();
+            if (itemAddFirstLoad is true)
+            {
+                ItemAddBox.Confirm.Click += Item_Add_Confirm;
+                ItemAddBox.Quit.Click += Item_Add_Quit;
+                itemAddFirstLoad = false;
+            }
         }
+
+        private void Item_Add_Confirm(object sender, RoutedEventArgs e)
+        {
+            wh_items.Add(new WarehouseItem(ItemAddBox.GetInputData()));
+            Rebind();
+            WH_UI.Children.Remove(ItemAddBox);
+        }
+
+        private void Item_Add_Quit(object sender, RoutedEventArgs e)
+        {
+            WH_UI.Children.Remove(ItemAddBox);
+        }
+
     }
 }

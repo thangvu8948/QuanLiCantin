@@ -5,8 +5,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuanLiCantin"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="Black">
-    <Grid>
-            
+             d:DesignHeight="450" d:DesignWidth="800" Background="#FF05E9E9" BorderBrush="#E59700FF" BorderThickness="5, 5, 5, 5
+             " Width="500" Height="210">
+    <Grid x:Name="WHItemAddUI" Background="#FF342C2C">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="6*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock HorizontalAlignment="Left" Height="46" Margin="66,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="362" TextAlignment="Center"
+                   FontSize="30" FontWeight ="DemiBold" Text="Thêm mặt hàng" Foreground="White" Grid.ColumnSpan="2"/>
+        <TextBlock HorizontalAlignment="Left" Height="31" Margin="4,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="36" TextAlignment="Left"
+            FontSize="20" FontWeight ="DemiBold" Text="ID" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Left" Height="33" Margin="4,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46" TextAlignment="Left"
+            FontSize="20" FontWeight ="DemiBold" Text="ĐVT" Foreground="White"/>
+        <TextBox x:Name="UnitInputBox" HorizontalAlignment="Left" Height="34" Margin="64,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="107" BorderBrush="#E500FFFF"
+                 BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="Medium" Padding="5,0,0,0" TextChanged="UnitInputBox_TextChanged" Grid.ColumnSpan="2" FontSize="15"/>
+        <TextBox x:Name="IDInputBox" HorizontalAlignment="Left" Height="34" Margin="64,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="106" BorderBrush="#E500FFFF"
+            BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="Medium" Padding="5,0,0,0" TextChanged="IDInputBox_TextChanged" Grid.ColumnSpan="2" FontSize="15"/>
+        <TextBlock HorizontalAlignment="Left" Height="31" Margin="126,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="73" TextAlignment="Left"
+            FontSize="20" FontWeight ="DemiBold" Text="Tên MH" Foreground="White" Grid.Column="1"/>
+        <TextBox x:Name="NameInputBox" HorizontalAlignment="Left" Height="34" Margin="200,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210" BorderBrush="#E500FFFF"
+            BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="Medium" Padding="5,0,0,0" TextChanged="NameInputBox_TextChanged" Grid.Column="1" FontSize="15"/>
+        <TextBlock HorizontalAlignment="Left" Height="33" Margin="128,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" TextAlignment="Left"
+            FontSize="20" FontWeight ="DemiBold" Text="KL " Foreground="White" Grid.Column="1"/>
+        <TextBox x:Name="QuantityInputBox" HorizontalAlignment="Left" Height="34" Margin="199,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" BorderBrush="#E500FFFF"
+            BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="Medium" Padding="5,0,0,0" TextChanged="QuantityInputBox_TextChanged" Grid.Column="1" FontSize="15"/>
+        <Button x:Name="Quit" Grid.ColumnSpan="2" Content="Thoát" HorizontalAlignment="Left" Height="37" Margin="43,159,0,0" VerticalAlignment="Top" Width="150" Background="{x:Null}" BorderThickness="2,2,2,2"/>
+        <Button x:Name="Confirm" Content="Xác nhận" HorizontalAlignment="Left" Height="37" Margin="226,159,0,0" VerticalAlignment="Top" Width="150" Background="{x:Null}" Grid.Column="1" BorderThickness="2,2,2,2" Click="Confirm_Click"/>
     </Grid>
 </UserControl>
