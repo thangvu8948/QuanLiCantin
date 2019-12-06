@@ -63,7 +63,7 @@ namespace QuanLiCantin
 
         private void Quit_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         public (string, string, string, double) GetInputData()

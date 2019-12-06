@@ -26,40 +26,49 @@ namespace QuanLiCantin
     /// </summary>
     public partial class Warehouse : UserControl
     {
-        ObservableCollection<WarehouseItem> wh_items = null;
-        
+        private static ObservableCollection<WarehouseItem> ITEMS { get; set; } = null;
+        private static CollectionView DisplayItems { get; set; } = null;
+        private readonly bool use_sql = false;
 
-        private void Rebind()
-        {
-            ItemTable.ItemsSource = wh_items;
-        }
 
         public Warehouse()
         {
             InitializeComponent();
             WH_UI.Children.Remove(ItemAddBox);
-            wh_items = LoadRandomItem();
-            Rebind();
-            DataContext = this;
+            if (!use_sql)
+                ITEMS = new ObservableCollection<WarehouseItem>(LoadRandomItem());
+            else
+                ITEMS = new ObservableCollection<WarehouseItem>(WarehouseSQL.GetAllItems());
+            DisplayItems = new ListCollectionView(ITEMS);
+            ItemTable.ItemsSource = DisplayItems;
         }
 
-        class WarehouseItem : INotifyPropertyChanged
+
+        class WarehouseItem : INotifyPropertyChanged, IComparable<WarehouseItem>
         {
             private string _id, _name, _unit;
             private double _qu;
 
             public event PropertyChangedEventHandler PropertyChanged;
 
-            private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+            private void NotifyPropertyChanged(string propertyName)
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
 
             public string ID
-            { 
+            {
                 get
                 {
                     return _id;
+                }
+                set
+                {
+                    if (_id != value)
+                    {
+                        _id = value;
+                        NotifyPropertyChanged("ID");
+                    }
                 }
             }
             public string Name
@@ -70,8 +79,11 @@ namespace QuanLiCantin
                 }
                 set
                 {
-                    _name = value;
-                    NotifyPropertyChanged();
+                    if (_name != value)
+                    {
+                        _name = value;
+                        NotifyPropertyChanged("Name");
+                    }
                 }
             }
             public string QuantityUnit
@@ -79,6 +91,14 @@ namespace QuanLiCantin
                 get
                 {
                     return _unit;
+                }
+                set
+                {
+                    if (_unit != value)
+                    {
+                        _unit = value;
+                        NotifyPropertyChanged("QuantityUnit");
+                    }
                 }
             }
             public double Quantity
@@ -89,8 +109,11 @@ namespace QuanLiCantin
                 }
                 set
                 {
-                    _qu = value;
-                    NotifyPropertyChanged();
+                    if (_qu != value)
+                    {
+                        _qu = value;
+                        NotifyPropertyChanged("Quantity");
+                    }
                 }
             }
 
@@ -105,35 +128,101 @@ namespace QuanLiCantin
 
             public WarehouseItem((string, string, string, double) initializer)
                 => (_id, _name, _unit, _qu) = initializer;
-                
+
+            public override bool Equals(object obj)
+            {
+                return obj is WarehouseItem && Equals(obj as WarehouseItem);
+            }
+
+            public bool Equals(WarehouseItem item)
+            {
+                return ID == item.ID;
+            }
+
+            public override int GetHashCode()
+            {
+                return ID.GetHashCode();
+            }
+
+            public int CompareTo(WarehouseItem item)
+            {
+                if (item == null)
+                    return 1;
+                return ID.CompareTo(item.ID);
+            }
         }
 
         private ObservableCollection<WarehouseItem> LoadRandomItem()
         {
-            var list = new ObservableCollection<WarehouseItem>();
-
-            list.Add(new WarehouseItem("09125", "Gao", "kg", 25));
-            list.Add(new WarehouseItem("63821", "Thit bo", "kg", 5));
-            list.Add(new WarehouseItem("51004", "Spaghetti", "kg", 7.2));
-            list.Add(new WarehouseItem("19822", "Sua bo", "Lit", 50));
+            var list = new ObservableCollection<WarehouseItem>
+            {
+                new WarehouseItem("1", "Gạo", "kg", 25),
+                new WarehouseItem("2", "Thịt bò", "kg", 5),
+                new WarehouseItem("3", "Spaghetti", "kg", 7.2),
+                new WarehouseItem("4", "Sữa bò", "lít", 50),
+                new WarehouseItem("5", "Yogurt", "hộp", 70),
+                new WarehouseItem("6", "Phở", "kg", 1.5),
+                new WarehouseItem("7", "Siro dâu", "lít", 18),
+                new WarehouseItem("8", "Dầu ăn", "lít", 100),
+            };
 
             return list;
         }
 
         class WarehouseSQL
         {
-            public static ObservableCollection<WarehouseItem> GetItemsFromName(string itemName = null)
+            public static ObservableCollection<WarehouseItem> GetAllItems()
             {
-                string query = itemName is null ?
-                    "SELECT * from HangTonKho" :
-                    $"SELECT * from HangTonKho WHERE TenMH = '{itemName}'";
+                var conn = DBUtils.GetDBConnection();
+                try
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("SELECT * FROM HangTonKho", conn))
+                    using (DbDataReader r = cmd.ExecuteReader())
+                    {
+                        if (r.HasRows)
+                        {
+                            var item_list = new ObservableCollection<WarehouseItem>();
+                            while (r.Read())
+                            {
+                                var id = Convert.ToString(r.GetValue(1)).Trim();
+                                var name = Convert.ToString(r.GetValue(2));
+                                var unit = Convert.ToString(r.GetValue(3));
+                                var quantity = Convert.ToDouble(r.GetValue(4));
+
+                                item_list.Add(new WarehouseItem(id, name, unit, quantity));
+                            }
+                            return item_list;
+                        }
+                        return null;
+                    }
+                }
+
+                catch (Exception e)
+                {
+                    MessageBox.Show("Error loading data");
+                    Debug.WriteLine($"Error: {e.Message}");
+                }
+                finally
+                {
+                    conn.Close();
+                    conn.Dispose();
+                }
+                return null;
+            }
+
+            public static ObservableCollection<WarehouseItem> GetItemsByProperty
+                (int columnIndex, string value_to_match)
+            {
+                string[] properties = { "ID", "Ten_MH", "ĐVT", "KhoiLuongTon" };
+                string query = $"SELECT * FROM HangTonKho where {properties[columnIndex]} = @value_to_match";
 
                 var conn = DBUtils.GetDBConnection();
                 try
                 {
                     conn.Open();
                     var cmd = new SqlCommand(query, conn);
-                    
+                    cmd.Parameters.AddWithValue("@value_to_match", value_to_match);
                     using (DbDataReader r = cmd.ExecuteReader())
                     {
                         if (r.HasRows)
@@ -166,19 +255,24 @@ namespace QuanLiCantin
                 return null;
             }
 
-            public static void UpdateItemQuantity(string itemName, double updatedValue)
+            public static void UpdateItemByName(string name, int columnIndex, string updatedValue)
             {
                 var conn = DBUtils.GetDBConnection();
+                string[] properties = { "ID", "Ten_MH", "ĐVT", "KhoiLuongTon" };
 
-                string query = $"UPDATE HangTonKho SET KhoiLuongTon = @quantity WHERE TenMH = @name";
+                string query = $"UPDATE HangTonKho " +
+                    $"SET {properties[columnIndex]} = @new_value " +
+                    $"WHERE Ten_MH = @name";
+
+                int affectedRows = 0;
+
                 try
                 {
                     conn.Open();
                     var cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.Add("@quantity", System.Data.SqlDbType.Float).Value = updatedValue;
-                    cmd.Parameters.Add("@name", System.Data.SqlDbType.NVarChar).Value = itemName;
-
-                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("@name", name);
+                    cmd.Parameters.AddWithValue("@new_value", updatedValue);
+                    affectedRows = cmd.ExecuteNonQuery();
                 }
                 catch (Exception e)
                 {
@@ -187,6 +281,8 @@ namespace QuanLiCantin
                 }
                 finally
                 {
+                    if (affectedRows > 0)
+                        ITEMS = GetAllItems();
                     conn.Close();
                     conn.Dispose();
                 }
@@ -196,18 +292,21 @@ namespace QuanLiCantin
             {
                 var conn = DBUtils.GetDBConnection();
 
-                string query = 
+                string query =
                     $"INSERT INTO HangTonKho " +
                     $"VALUES = (@id, @name, @unit, @quantity)";
+
+                int affectedRows = 0;
+
                 try
                 {
                     conn.Open();
                     var cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.Add("@id", System.Data.SqlDbType.NVarChar).Value = id;
-                    cmd.Parameters.Add("@name", System.Data.SqlDbType.NVarChar).Value = name;
-                    cmd.Parameters.Add("@unit", System.Data.SqlDbType.NVarChar).Value = unit;
-                    cmd.Parameters.Add("@quantity", System.Data.SqlDbType.Float).Value = quantity;
-                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@name", name);
+                    cmd.Parameters.AddWithValue("@unit", unit);
+                    cmd.Parameters.AddWithValue("@quantity", quantity);
+                    affectedRows = cmd.ExecuteNonQuery();
                 }
                 catch (Exception e)
                 {
@@ -216,16 +315,18 @@ namespace QuanLiCantin
                 }
                 finally
                 {
+                    if (affectedRows > 0)
+                        ITEMS = GetAllItems();
                     conn.Close();
                     conn.Dispose();
                 }
+
             }
         }
 
 
         private void ItemTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Rebind();
         }
 
 
@@ -269,8 +370,16 @@ namespace QuanLiCantin
 
         private void Item_Add_Confirm(object sender, RoutedEventArgs e)
         {
-            wh_items.Add(new WarehouseItem(ItemAddBox.GetInputData()));
-            Rebind();
+            var item = new WarehouseItem(ItemAddBox.GetInputData());
+            if (use_sql)
+            {
+                WarehouseSQL.AddItem(item.ID, item.Name, item.QuantityUnit, item.Quantity);
+                ITEMS = WarehouseSQL.GetAllItems();
+            }
+            else
+            {
+                ITEMS.Add(item);
+            }
             WH_UI.Children.Remove(ItemAddBox);
         }
 
@@ -278,6 +387,5 @@ namespace QuanLiCantin
         {
             WH_UI.Children.Remove(ItemAddBox);
         }
-
     }
 }

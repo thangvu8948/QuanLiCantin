@@ -109,10 +109,5 @@ namespace QuanLiCantin
         {
  
         }
-
-        private void QuitApp_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
     }
 }

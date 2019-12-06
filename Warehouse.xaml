@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="#FFE2D4D4" Width="778" Height="544" Loaded="WarehouseUI_Loaded" Unloaded="WarehouseUI_Unloaded">
     <Grid x:Name="WH_UI">
-        <DataGrid x:Name="ItemTable" ItemsSource="{Binding wh_items}" AutoGenerateColumns="False" Background="#FFE2D4D4" Margin="1,0,0,106" RenderTransformOrigin="1.218,0.295" SelectionChanged="ItemTable_SelectionChanged" BorderBrush="#89A04949">
+        <DataGrid x:Name="ItemTable" ItemsSource="{Binding wh_items}" AutoGenerateColumns="False" Background="#FFE2D4D4" Margin="1,58,3,119" RenderTransformOrigin="1.218,0.295" SelectionChanged="ItemTable_SelectionChanged" BorderBrush="#89A04949">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="Background" Value="Turquoise"/>
@@ -31,12 +31,12 @@
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header= "ID" Binding="{Binding ID}" Width= "200"/>
-                <DataGridTextColumn Header= "Ten" Binding="{Binding Name}" Width= "200"/>
-                <DataGridTextColumn Header= "Don vi tinh" Binding="{Binding QuantityUnit}" Width= "200"/>
-                <DataGridTextColumn Header= "Khoi luong" Binding="{Binding Quantity}" Width= "*"/>
+                <DataGridTextColumn Header= "Tên" Binding="{Binding Name}" Width= "200"/>
+                <DataGridTextColumn Header= "Đơn vị tính" Binding="{Binding QuantityUnit}" Width= "150"/>
+                <DataGridTextColumn Header= "Khối lượng tồn" Binding="{Binding Quantity}" Width= "*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="AddItemButton" Content="Thêm mặt hàng..." HorizontalAlignment="Left" Height="55" Margin="9,445,0,0" VerticalAlignment="Top" Width="251" Click="AddItemButton_Click"/>
-        <local:WarehouseAddUI x:Name="ItemAddBox" HorizontalAlignment="Left" Height="215" VerticalAlignment="Top" Width="500" Margin="116,118,0,0" Loaded="ItemAddBox_Loaded" Unloaded="ItemAddBox_Unloaded"/>
+        <Button x:Name="AddItemButton" Content="Thêm mặt hàng..." HorizontalAlignment="Left" Height="55" Margin="9,435,0,0" VerticalAlignment="Top" Width="251" Click="AddItemButton_Click"/>
+        <local:WarehouseAddUI x:Name="ItemAddBox" HorizontalAlignment="Left" Height="215" VerticalAlignment="Top" Width="500" Margin="116,158,0,0" Loaded="ItemAddBox_Loaded" Unloaded="ItemAddBox_Unloaded"/>
     </Grid>
 </UserControl>
