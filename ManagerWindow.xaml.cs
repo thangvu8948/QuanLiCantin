@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -18,13 +19,33 @@ namespace QuanLiCantin
     /// Interaction logic for ManagerWindow.xaml
     /// </summary>
     public partial class ManagerWindow : Window
-    { 
+    {
+        private readonly System.Windows.Threading.DispatcherTimer clock;
+        private bool is_clock_loaded = false;
 
         public ManagerWindow()
         {
             InitializeComponent();
+            UsernameBox.Text = $"{MainWindow.GetUsername().ToUpper()}";
+
+
             ManagerUI.Children.Remove(WH_UI);
-            
+            clock = new System.Windows.Threading.DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(200)
+            };
+            if (is_clock_loaded is false)
+            {
+                clock.Tick += Clock_Tick;
+                is_clock_loaded = true;
+            }
+            clock.Start();
+        }
+
+        private void Clock_Tick(object sender, EventArgs e)
+        {
+            Timer.Text = 
+                DateTime.Now.ToString("HH:mm:ss\nddd, dd/MM/yyyy", new CultureInfo("vi-VN"));
         }
 
         private void Food_Click(object sender, RoutedEventArgs e)
@@ -34,6 +55,7 @@ namespace QuanLiCantin
             Warehouse.Foreground = Brushes.White;
             Exit.Foreground = Brushes.White;
             ManagerUI.Children.Remove(WH_UI);
+            ManagerMode.Text = string.Empty;
         }
 
 
@@ -54,6 +76,7 @@ namespace QuanLiCantin
             Warehouse.Foreground = Brushes.White;
             Exit.Foreground = Brushes.White;
             ManagerUI.Children.Remove(WH_UI);
+            ManagerMode.Text = "QUẢN LÝ NHÂN VIÊN";
         }
 
         private void Employee_MouseEnter(object sender, MouseEventArgs e)
@@ -75,6 +98,7 @@ namespace QuanLiCantin
                 Warehouse.Foreground = Brushes.Yellow;
                 Exit.Foreground = Brushes.White;
                 ManagerUI.Children.Add(WH_UI);
+                ManagerMode.Text = "QUẢN LÝ KHO";
             }
         }
 
@@ -92,6 +116,7 @@ namespace QuanLiCantin
         {
             var main_window = new MainWindow();
             main_window.Show();
+            clock.Stop();
             this.Close();
         }
 

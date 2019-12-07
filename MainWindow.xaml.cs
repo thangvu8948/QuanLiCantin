@@ -50,8 +50,8 @@ namespace QuanLiCantin
             foreach (var button in buttons)
                 canvas.Children.Remove(button);
         }
-        TextBox boxLoginUser;
-        PasswordBox boxLoginPassword;
+        static TextBox boxLoginUser;
+        static PasswordBox boxLoginPassword;
         private void drawLogin()
         {
             TextBlock textLoginUser = new TextBlock();
@@ -131,7 +131,7 @@ namespace QuanLiCantin
 
         private void SignIn(object sender, RoutedEventArgs e)
         {
-
+            
             if (boxLoginUser.Text.Length == 0 || boxLoginPassword.Password.Length == 0)
             {
                 MessageBox.Show("Vui lòng nhập đủ các trường");
@@ -187,5 +187,9 @@ namespace QuanLiCantin
             this.Close();
         }
 
+        public static string GetUsername()
+        {
+            return boxLoginUser.Text;
+        }
     }
 }
