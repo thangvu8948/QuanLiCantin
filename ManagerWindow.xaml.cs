@@ -32,7 +32,7 @@ namespace QuanLiCantin
             ManagerUI.Children.Remove(WH_UI);
             clock = new System.Windows.Threading.DispatcherTimer
             {
-                Interval = TimeSpan.FromMilliseconds(200)
+                Interval = TimeSpan.FromMilliseconds(100)
             };
             if (is_clock_loaded is false)
             {
