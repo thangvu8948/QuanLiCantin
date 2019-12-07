@@ -20,15 +20,14 @@ namespace QuanLiCantin
     /// </summary>
     public partial class ManagerWindow : Window
     {
-        private readonly System.Windows.Threading.DispatcherTimer clock;
+        private readonly System.Windows.Threading.DispatcherTimer clock = null;
         private bool is_clock_loaded = false;
-
+        private readonly CultureInfo locale = new CultureInfo("vi-VN");
         public ManagerWindow()
         {
             InitializeComponent();
-            UsernameBox.Text = $"{MainWindow.GetUsername().ToUpper()}";
-
-
+            UsernameBox.Text = $"{MainWindow.GetUsername().Trim().ToUpper()}";
+            Food.Foreground = Brushes.Yellow;
             ManagerUI.Children.Remove(WH_UI);
             clock = new System.Windows.Threading.DispatcherTimer
             {
@@ -45,7 +44,7 @@ namespace QuanLiCantin
         private void Clock_Tick(object sender, EventArgs e)
         {
             Timer.Text = 
-                DateTime.Now.ToString("HH:mm:ss\nddd, dd/MM/yyyy", new CultureInfo("vi-VN"));
+                DateTime.Now.ToString("HH:mm:ss\nddd, dd/MM/yyyy", locale);
         }
 
         private void Food_Click(object sender, RoutedEventArgs e)
@@ -54,8 +53,11 @@ namespace QuanLiCantin
             Employee.Foreground = Brushes.White;
             Warehouse.Foreground = Brushes.White;
             Exit.Foreground = Brushes.White;
-            ManagerUI.Children.Remove(WH_UI);
+
+            OptionIndicator.Margin = Food.Margin;
             ManagerMode.Text = string.Empty;
+
+            ManagerUI.Children.Remove(WH_UI);
         }
 
 
@@ -75,8 +77,11 @@ namespace QuanLiCantin
             Employee.Foreground = Brushes.Yellow;
             Warehouse.Foreground = Brushes.White;
             Exit.Foreground = Brushes.White;
-            ManagerUI.Children.Remove(WH_UI);
+
             ManagerMode.Text = "QUẢN LÝ NHÂN VIÊN";
+            OptionIndicator.Margin = Employee.Margin;
+
+            ManagerUI.Children.Remove(WH_UI);
         }
 
         private void Employee_MouseEnter(object sender, MouseEventArgs e)
@@ -97,8 +102,11 @@ namespace QuanLiCantin
                 Employee.Foreground = Brushes.White;
                 Warehouse.Foreground = Brushes.Yellow;
                 Exit.Foreground = Brushes.White;
-                ManagerUI.Children.Add(WH_UI);
+
+                OptionIndicator.Margin = Warehouse.Margin;
                 ManagerMode.Text = "QUẢN LÝ KHO";
+
+                ManagerUI.Children.Add(WH_UI);
             }
         }
 

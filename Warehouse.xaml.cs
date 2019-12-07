@@ -41,6 +41,7 @@ namespace QuanLiCantin
                 ITEMS = new ObservableCollection<WarehouseItem>(WarehouseSQL.GetAllItems());
             DisplayItems = new ListCollectionView(ITEMS);
             ItemTable.ItemsSource = DisplayItems;
+            
         }
 
 
@@ -358,8 +359,8 @@ namespace QuanLiCantin
 
         private void AddItemButton_Click(object sender, RoutedEventArgs e)
         {
-            WH_UI.Children.Add(ItemAddBox);
-            ItemAddBox.EmptyAllField();
+            if (!WH_UI.Children.Contains(ItemAddBox))
+                 WH_UI.Children.Add(ItemAddBox);
             if (itemAddFirstLoad is true)
             {
                 ItemAddBox.Confirm.Click += Item_Add_Confirm;
@@ -386,6 +387,21 @@ namespace QuanLiCantin
         private void Item_Add_Quit(object sender, RoutedEventArgs e)
         {
             WH_UI.Children.Remove(ItemAddBox);
+        }
+
+        private void ItemAddBox_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ItemAddBox.Opacity = 1.0;
+        }
+
+        private void ItemAddBox_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ItemAddBox.Opacity = 0.6;
+        }
+
+        private void ShowAllItemsButton_Click(object sender, RoutedEventArgs e)
+        {
+            DisplayItems = new ListCollectionView(ITEMS);
         }
     }
 }

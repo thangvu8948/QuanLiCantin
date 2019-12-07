@@ -7,7 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Width="778" Height="544" Loaded="WarehouseUI_Loaded" Unloaded="WarehouseUI_Unloaded">
     <Grid x:Name="WH_UI">
-        <DataGrid x:Name="ItemTable" ItemsSource="{Binding wh_items}" AutoGenerateColumns="False" Background="#FFE2D4D4" Margin="1,58,3,119" RenderTransformOrigin="1.218,0.295" SelectionChanged="ItemTable_SelectionChanged" BorderBrush="#89A04949">
+        <DataGrid x:Name="ItemTable" ItemsSource="{Binding display_items}" AutoGenerateColumns="False" Background="#FFE2D4D4" Margin="1,58,0,119" RenderTransformOrigin="1.218,0.295" SelectionChanged="ItemTable_SelectionChanged" BorderBrush="#89A04949"
+                  IsReadOnly="True">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="Background" Value="Turquoise"/>
@@ -36,7 +37,9 @@
                 <DataGridTextColumn Header= "Khối lượng tồn" Binding="{Binding Quantity}" Width= "*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="AddItemButton" Content="Thêm mặt hàng..." HorizontalAlignment="Left" Height="55" Margin="9,435,0,0" VerticalAlignment="Top" Width="251" Click="AddItemButton_Click"/>
-        <local:WarehouseAddUI x:Name="ItemAddBox" HorizontalAlignment="Left" Height="215" VerticalAlignment="Top" Width="500" Margin="116,158,0,0" Loaded="ItemAddBox_Loaded" Unloaded="ItemAddBox_Unloaded"/>
+        <Button x:Name="AddItemButton" Content="Thêm mặt hàng..." HorizontalAlignment="Left" Height="55" Margin="3,397,0,0" VerticalAlignment="Top" Width="251" Click="AddItemButton_Click"/>
+        <local:WarehouseAddUI x:Name="ItemAddBox" HorizontalAlignment="Left" Height="215" VerticalAlignment="Top" Width="500" Margin="116,144,0,0" Loaded="ItemAddBox_Loaded" Unloaded="ItemAddBox_Unloaded" MouseEnter="ItemAddBox_MouseEnter" MouseLeave="ItemAddBox_MouseLeave"/>
+        <Button x:Name="ShowAllItemsButton" Content="Hiện tất cả" HorizontalAlignment="Left" Height="48" Margin="551,10,0,0" VerticalAlignment="Top" Width="215" Click="ShowAllItemsButton_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
+                BorderThickness="2,2,2,2"/>
     </Grid>
 </UserControl>
