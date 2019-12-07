@@ -37,9 +37,15 @@
                 <DataGridTextColumn Header= "Khối lượng tồn" Binding="{Binding Quantity}" Width= "*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="AddItemButton" Content="Thêm mặt hàng..." HorizontalAlignment="Left" Height="55" Margin="3,397,0,0" VerticalAlignment="Top" Width="251" Click="AddItemButton_Click"/>
+        <Button x:Name="AddItemButton" Content="Thêm mặt hàng..." HorizontalAlignment="Left" Height="48" Margin="3,401,0,0" VerticalAlignment="Top" Width="251" Click="AddItemButton_Click"/>
         <local:WarehouseAddUI x:Name="ItemAddBox" HorizontalAlignment="Left" Height="215" VerticalAlignment="Top" Width="500" Margin="116,144,0,0" Loaded="ItemAddBox_Loaded" Unloaded="ItemAddBox_Unloaded" MouseEnter="ItemAddBox_MouseEnter" MouseLeave="ItemAddBox_MouseLeave"/>
         <Button x:Name="ShowAllItemsButton" Content="Hiện tất cả" HorizontalAlignment="Left" Height="48" Margin="551,10,0,0" VerticalAlignment="Top" Width="215" Click="ShowAllItemsButton_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
                 BorderThickness="2,2,2,2"/>
+        <TextBox x:Name="FindBox" HorizontalAlignment="Left" Height="48" Margin="416,401,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="265" Foreground="Black" Background="White"
+                 BorderThickness="2,2,2,2" BorderBrush="Black" TextAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" FontWeight="DemiBold" FontSize="18" TextChanged="FindBox_TextChanged"/>
+        <TextBlock HorizontalAlignment="Left" Height="32" Margin="334,412,0,0" TextWrapping="Wrap" Text="Tìm hàng:" VerticalAlignment="Top" Width="82" Foreground="Black"
+                   FontSize="18" FontWeight="Medium"/>
+        <Button x:Name="SearchButton" Content="Tìm" HorizontalAlignment="Left" Height="48" Margin="679,401,0,0" VerticalAlignment="Top" Width="81" Click="SearchButton_Click"
+                BorderThickness="2,2,2,2" BorderBrush="Black"/>
     </Grid>
 </UserControl>

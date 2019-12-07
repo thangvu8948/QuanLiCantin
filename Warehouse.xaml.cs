@@ -401,7 +401,23 @@ namespace QuanLiCantin
 
         private void ShowAllItemsButton_Click(object sender, RoutedEventArgs e)
         {
-            DisplayItems = new ListCollectionView(ITEMS);
+            DisplayItems.Filter = null;
+        }
+
+        public bool Contains(object obj)
+        {
+            var item = obj as WarehouseItem;
+            return (item.Name.ToLower().Contains(FindBox.Text.ToLower().Trim()));
+        }
+
+        private void FindBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (FindBox.Text != String.Empty)
+                 DisplayItems.Filter = new Predicate<object>(Contains);
         }
     }
 }
