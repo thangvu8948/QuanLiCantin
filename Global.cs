@@ -10,5 +10,6 @@ namespace QuanLiCantin
     class Global
     {
         public static List<Order> orders = new List<Order>();
+        public static NhanVien nhanVien;
     }
 }

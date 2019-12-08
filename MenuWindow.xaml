@@ -19,11 +19,10 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
-            <TextBlock Text="Nguyễn văn A" FontSize="20" Padding="10, 3"/>
+            <TextBlock Name ="TenNVText" Text="{Binding TenNV}" FontSize="20" Padding="10, 3"/>
             <TextBlock Text="Nhân viên" Padding="10, 3"/>
-            <Button Content="Thực đơn" Margin="0, 80, 0, 0" Padding= "5, 10" Height="60" FontSize="20" FontWeight="Bold" HorizontalAlignment="Stretch"/>
-            <Button Content="Đặt món" Padding= "5, 10" FontSize="20" Height="60" FontWeight="Bold" HorizontalAlignment="Stretch"/>
-            <Button Content="Thanh toán" Padding= "5, 10" FontSize="20" Height="60" FontWeight="Bold" HorizontalAlignment="Stretch"/>
+            <Button Content="Thực đơn" Margin="0, 150, 0, 0" Padding= "5, 10" Height="60" FontSize="20" FontWeight="Bold" HorizontalAlignment="Stretch"/>
+          
             <Button Content="Đăng xuất" Padding= "5, 10" FontSize="20" Height="60" FontWeight="Bold" HorizontalAlignment="Stretch" Click="DangXuatClick"/>
 
         </StackPanel>

@@ -153,8 +153,14 @@ namespace QuanLiCantin
             _products = ProductDAO.GetAllProducts(_typeFood);
             MenuList.ItemsSource = _products;
             MenuList.MouseLeftButtonUp += ChooseProduct;
+
+            TenNVText.Text = Global.nhanVien.TenNV;
         }
 
+        private void LoadNhanVien()
+        {
+
+        }
         private void StackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DependencyObject dep = (DependencyObject)e.OriginalSource;
@@ -293,7 +299,7 @@ namespace QuanLiCantin
         {
             var main_window = new MainWindow();
             main_window.Show();
-            this.Close
+            this.Close();
         }
     }
 

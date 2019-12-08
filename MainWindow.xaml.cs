@@ -156,6 +156,15 @@ namespace QuanLiCantin
                 {
                     if (reader.HasRows)
                     {
+                       while (reader.Read())
+                        {
+                            Global.nhanVien = new NhanVien();
+                            Global.nhanVien.MaNV = (string)reader.GetValue(0);
+                            Global.nhanVien.LoaiNV = (int)reader.GetValue(1);
+                            Global.nhanVien.TenNV = (string)reader.GetValue(2);
+                            Global.nhanVien.TenDN = (string)reader.GetValue(3);
+                            Global.nhanVien.MatKhau = (string)reader.GetValue(4);
+                        }
                         if (signInMode == false)
                         {
                             MenuWindow menu = new MenuWindow();
