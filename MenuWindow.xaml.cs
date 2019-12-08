@@ -112,7 +112,7 @@ namespace QuanLiCantin
                                 long giatien = Convert.ToInt64(reader.GetValue(2));
                                 int soluong = Convert.ToInt32(reader.GetValue(3));
                                 int loai = Convert.ToInt32(reader.GetValue(4));
-
+                                string hinhanh = (string)reader.GetValue(5);
 
                                 var product = new Product()
                                 {
@@ -121,7 +121,7 @@ namespace QuanLiCantin
                                     Price = giatien,
                                     Remain = soluong,
                                     Type = loai,
-                                    Image = $"Images/{id}/download.jpg"
+                                    Image = hinhanh
                                 };
                                 listProduct.Add(product);
                             }
@@ -157,10 +157,7 @@ namespace QuanLiCantin
             TenNVText.Text = Global.nhanVien.TenNV;
         }
 
-        private void LoadNhanVien()
-        {
 
-        }
         private void StackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DependencyObject dep = (DependencyObject)e.OriginalSource;
