@@ -27,7 +27,7 @@ namespace QuanLiCantin
     public partial class Warehouse : UserControl
     {
         private static ObservableCollection<WarehouseItem> ITEMS { get; set; } = null;
-        private static CollectionView DisplayItems { get; set; } = null;
+        private static CollectionView DisplayedItems { get; set; } = null;
         private readonly bool use_sql = false;
 
 
@@ -39,23 +39,18 @@ namespace QuanLiCantin
                 ITEMS = new ObservableCollection<WarehouseItem>(LoadRandomItem());
             else
                 ITEMS = new ObservableCollection<WarehouseItem>(WarehouseSQL.GetAllItems());
-            DisplayItems = new ListCollectionView(ITEMS);
-            ItemTable.ItemsSource = DisplayItems;
-            
+            DisplayedItems = new ListCollectionView(ITEMS)
+            {
+                Filter = null
+            };
+            ItemTable.ItemsSource = DisplayedItems;        
         }
 
 
-        class WarehouseItem : INotifyPropertyChanged, IComparable<WarehouseItem>
+        class WarehouseItem
         {
             private string _id, _name, _unit;
             private double _qu;
-
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            private void NotifyPropertyChanged(string propertyName)
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
 
             public string ID
             {
@@ -65,11 +60,7 @@ namespace QuanLiCantin
                 }
                 set
                 {
-                    if (_id != value)
-                    {
-                        _id = value;
-                        NotifyPropertyChanged("ID");
-                    }
+                   _id = value;
                 }
             }
             public string Name
@@ -80,11 +71,7 @@ namespace QuanLiCantin
                 }
                 set
                 {
-                    if (_name != value)
-                    {
-                        _name = value;
-                        NotifyPropertyChanged("Name");
-                    }
+                   _name = value;
                 }
             }
             public string QuantityUnit
@@ -95,11 +82,7 @@ namespace QuanLiCantin
                 }
                 set
                 {
-                    if (_unit != value)
-                    {
-                        _unit = value;
-                        NotifyPropertyChanged("QuantityUnit");
-                    }
+                   _unit = value;
                 }
             }
             public double Quantity
@@ -110,11 +93,7 @@ namespace QuanLiCantin
                 }
                 set
                 {
-                    if (_qu != value)
-                    {
-                        _qu = value;
-                        NotifyPropertyChanged("Quantity");
-                    }
+                    _qu = value;
                 }
             }
 
@@ -129,28 +108,6 @@ namespace QuanLiCantin
 
             public WarehouseItem((string, string, string, double) initializer)
                 => (_id, _name, _unit, _qu) = initializer;
-
-            public override bool Equals(object obj)
-            {
-                return obj is WarehouseItem && Equals(obj as WarehouseItem);
-            }
-
-            public bool Equals(WarehouseItem item)
-            {
-                return ID == item.ID;
-            }
-
-            public override int GetHashCode()
-            {
-                return ID.GetHashCode();
-            }
-
-            public int CompareTo(WarehouseItem item)
-            {
-                if (item == null)
-                    return 1;
-                return ID.CompareTo(item.ID);
-            }
         }
 
         private ObservableCollection<WarehouseItem> LoadRandomItem()
@@ -165,6 +122,11 @@ namespace QuanLiCantin
                 new WarehouseItem("6", "Phở", "kg", 1.5),
                 new WarehouseItem("7", "Siro dâu", "lít", 18),
                 new WarehouseItem("8", "Dầu ăn", "lít", 100),
+                new WarehouseItem("0", "Yogurt", "hộp", 70),
+                new WarehouseItem("10", "Phở", "kg", 1.5),
+                new WarehouseItem("11", "Siro dâu", "lít", 18),
+                new WarehouseItem("12", "Dầu ăn", "lít", 100)
+
             };
 
             return list;
@@ -238,8 +200,10 @@ namespace QuanLiCantin
 
                                 item_list.Add(new WarehouseItem(id, name, unit, quantity));
                             }
+                            cmd.Dispose();
                             return item_list;
                         }
+                        cmd.Dispose();
                         return null;
                     }
                 }
@@ -274,6 +238,7 @@ namespace QuanLiCantin
                     cmd.Parameters.AddWithValue("@name", name);
                     cmd.Parameters.AddWithValue("@new_value", updatedValue);
                     affectedRows = cmd.ExecuteNonQuery();
+                    cmd.Dispose();
                 }
                 catch (Exception e)
                 {
@@ -308,6 +273,7 @@ namespace QuanLiCantin
                     cmd.Parameters.AddWithValue("@unit", unit);
                     cmd.Parameters.AddWithValue("@quantity", quantity);
                     affectedRows = cmd.ExecuteNonQuery();
+                    cmd.Dispose();
                 }
                 catch (Exception e)
                 {
@@ -317,7 +283,9 @@ namespace QuanLiCantin
                 finally
                 {
                     if (affectedRows > 0)
+                    {
                         ITEMS = GetAllItems();
+                    }
                     conn.Close();
                     conn.Dispose();
                 }
@@ -401,7 +369,7 @@ namespace QuanLiCantin
 
         private void ShowAllItemsButton_Click(object sender, RoutedEventArgs e)
         {
-            DisplayItems.Filter = null;
+            DisplayedItems.Filter = null;
         }
 
         public bool Contains(object obj)
@@ -416,8 +384,8 @@ namespace QuanLiCantin
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            if (FindBox.Text != String.Empty)
-                 DisplayItems.Filter = new Predicate<object>(Contains);
+            if (FindBox.Text != string.Empty)
+                 DisplayedItems.Filter = new Predicate<object>(Contains);
         }
     }
 }

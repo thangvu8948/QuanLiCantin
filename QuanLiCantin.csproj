@@ -64,6 +64,12 @@
     <Compile Include="ChonSoLuongWindow.xaml.cs">
       <DependentUpon>ChonSoLuongWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeManager.xaml.cs">
+      <DependentUpon>EmployeeManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeSearchUI.xaml.cs">
+      <DependentUpon>EmployeeSearchUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Global.cs" />
     <Compile Include="ManagerWindow.xaml.cs">
       <DependentUpon>ManagerWindow.xaml</DependentUpon>
@@ -79,7 +85,18 @@
     <Compile Include="Warehouse.xaml.cs">
       <DependentUpon>Warehouse.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WarehouseAddUI.xaml.cs">
+      <DependentUpon>WarehouseAddUI.xaml</DependentUpon>
+    </Compile>
     <Page Include="ChonSoLuongWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmployeeManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmployeeSearchUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -92,7 +109,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MenuWindow.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
@@ -126,6 +142,10 @@
     <Page Include="Warehouse.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WarehouseAddUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +203,12 @@
     <Resource Include="Images\7\download.jpg" />
     <Resource Include="Images\8\download.jpg" />
     <Resource Include="Images\9\download.jpg" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\ExtraIcon\icon2.jpg" />
+    <Resource Include="Images\ExtraIcon\info.png" />
+    <Resource Include="Images\ExtraIcon\UserImage.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

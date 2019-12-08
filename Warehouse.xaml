@@ -6,14 +6,15 @@
              xmlns:local="clr-namespace:QuanLiCantin"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Width="778" Height="544" Loaded="WarehouseUI_Loaded" Unloaded="WarehouseUI_Unloaded">
-    <Grid x:Name="WH_UI">
-        <DataGrid x:Name="ItemTable" ItemsSource="{Binding display_items}" AutoGenerateColumns="False" Background="#FFE2D4D4" Margin="1,58,0,119" RenderTransformOrigin="1.218,0.295" SelectionChanged="ItemTable_SelectionChanged" BorderBrush="#89A04949"
-                  IsReadOnly="True">
+    <Grid x:Name="WH_UI" Width="778" Height="544">
+        <DataGrid x:Name="ItemTable" ItemsSource="{Binding display_items}" AutoGenerateColumns="False" Background="#FFE2D4D4" Margin="1,58,0,155" SelectionChanged="ItemTable_SelectionChanged" BorderBrush="#89A04949"
+                  IsReadOnly="True" HorizontalAlignment="Left" Width="610" Height="331">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
                     <Setter Property="Background" Value="Turquoise"/>
-                    <Setter Property="FontSize" Value="24"/>
-                    <Setter Property="FontWeight" Value="SemiBold"/>
+                    <Setter Property="FontSize" Value="18"/>
+                    <Setter Property="FontWeight" Value="DemiBold"/>
                     <Setter Property="Foreground" Value="Black"/>
                     <Setter Property="BorderBrush" Value="Black"/>
                     <Setter Property="BorderThickness" Value="1, 2, 2, 3"/>
@@ -31,21 +32,21 @@
             </DataGrid.Resources>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header= "ID" Binding="{Binding ID}" Width= "200"/>
-                <DataGridTextColumn Header= "Tên" Binding="{Binding Name}" Width= "200"/>
-                <DataGridTextColumn Header= "Đơn vị tính" Binding="{Binding QuantityUnit}" Width= "150"/>
-                <DataGridTextColumn Header= "Khối lượng tồn" Binding="{Binding Quantity}" Width= "*"/>
+                <DataGridTextColumn Header= "ID" Binding="{Binding ID}" Width= "60"/>
+                <DataGridTextColumn Header= "Tên" Binding="{Binding Name}" Width= "*"/>
+                <DataGridTextColumn Header= "Đơn vị tính" Binding="{Binding QuantityUnit}" Width= "125"/>
+                <DataGridTextColumn Header= "Khối lượng tồn" Binding="{Binding Quantity}" Width= "150"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="AddItemButton" Content="Thêm mặt hàng..." HorizontalAlignment="Left" Height="48" Margin="3,401,0,0" VerticalAlignment="Top" Width="251" Click="AddItemButton_Click"/>
-        <local:WarehouseAddUI x:Name="ItemAddBox" HorizontalAlignment="Left" Height="215" VerticalAlignment="Top" Width="500" Margin="116,144,0,0" Loaded="ItemAddBox_Loaded" Unloaded="ItemAddBox_Unloaded" MouseEnter="ItemAddBox_MouseEnter" MouseLeave="ItemAddBox_MouseLeave"/>
-        <Button x:Name="ShowAllItemsButton" Content="Hiện tất cả" HorizontalAlignment="Left" Height="48" Margin="551,10,0,0" VerticalAlignment="Top" Width="215" Click="ShowAllItemsButton_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
+        <Button x:Name="AddItemButton" Content="Thêm mặt hàng..." HorizontalAlignment="Left" Height="48" Margin="615,176,0,0" VerticalAlignment="Top" Width="153" Click="AddItemButton_Click"/>
+        <local:WarehouseAddUI x:Name="ItemAddBox" HorizontalAlignment="Left" Height="215" VerticalAlignment="Top" Width="500" Margin="56,144,0,0" Loaded="ItemAddBox_Loaded" Unloaded="ItemAddBox_Unloaded" MouseEnter="ItemAddBox_MouseEnter" MouseLeave="ItemAddBox_MouseLeave"/>
+        <Button x:Name="ShowAllItemsButton" Content="Hiện tất cả" HorizontalAlignment="Left" Height="48" Margin="615,117,0,0" VerticalAlignment="Top" Width="153" Click="ShowAllItemsButton_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
                 BorderThickness="2,2,2,2"/>
-        <TextBox x:Name="FindBox" HorizontalAlignment="Left" Height="48" Margin="416,401,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="265" Foreground="Black" Background="White"
+        <TextBox x:Name="FindBox" HorizontalAlignment="Left" Height="48" Margin="88,401,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="265" Foreground="Black" Background="White"
                  BorderThickness="2,2,2,2" BorderBrush="Black" TextAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" FontWeight="DemiBold" FontSize="18" TextChanged="FindBox_TextChanged"/>
-        <TextBlock HorizontalAlignment="Left" Height="32" Margin="334,412,0,0" TextWrapping="Wrap" Text="Tìm hàng:" VerticalAlignment="Top" Width="82" Foreground="Black"
+        <TextBlock HorizontalAlignment="Left" Height="32" Margin="6,412,0,0" TextWrapping="Wrap" Text="Tìm hàng:" VerticalAlignment="Top" Width="82" Foreground="Black"
                    FontSize="18" FontWeight="Medium"/>
-        <Button x:Name="SearchButton" Content="Tìm" HorizontalAlignment="Left" Height="48" Margin="679,401,0,0" VerticalAlignment="Top" Width="81" Click="SearchButton_Click"
+        <Button x:Name="SearchButton" Content="Tìm" HorizontalAlignment="Left" Height="48" Margin="351,401,0,0" VerticalAlignment="Top" Width="81" Click="SearchButton_Click"
                 BorderThickness="2,2,2,2" BorderBrush="Black"/>
     </Grid>
 </UserControl>
