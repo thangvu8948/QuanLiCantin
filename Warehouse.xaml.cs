@@ -26,20 +26,18 @@ namespace QuanLiCantin
     /// </summary>
     public partial class Warehouse : UserControl
     {
-        private static ObservableCollection<WarehouseItem> ITEMS { get; set; } = null;
+        private static ObservableCollection<Import> IMPORTS { get; set; } = null;
         private static CollectionView DisplayedItems { get; set; } = null;
         private readonly bool use_sql = false;
 
+        private readonly Color purple = Color.FromArgb(0xFF, 67, 0x3A, 0xB7);
 
         public Warehouse()
         {
             InitializeComponent();
-            WH_UI.Children.Remove(ItemAddBox);
-            if (!use_sql)
-                ITEMS = new ObservableCollection<WarehouseItem>(LoadRandomItem());
-            else
-                ITEMS = new ObservableCollection<WarehouseItem>(WarehouseSQL.GetAllItems());
-            DisplayedItems = new ListCollectionView(ITEMS)
+            WH_UI.Children.Remove(ImportAddBox);
+            IMPORTS = new ObservableCollection<Import>(LoadRandomItem());
+            DisplayedItems = new ListCollectionView(IMPORTS)
             {
                 Filter = null
             };
@@ -47,259 +45,48 @@ namespace QuanLiCantin
         }
 
 
-        class WarehouseItem
+        class Import
         {
-            private string _id, _name, _unit;
-            private double _qu;
+            public string MLK { get; set; }
+            public string MaHH { get; set; }
+            public double SLDN { get; set; }
+            public double SLCN { get; set; }
+            public DateTime NLK { get; set; }
 
-            public string ID
+            public Import(string mlk, string mahh, double sldn, double slcn, DateTime nlk)
             {
-                get
-                {
-                    return _id;
-                }
-                set
-                {
-                   _id = value;
-                }
-            }
-            public string Name
-            {
-                get
-                {
-                    return _name;
-                }
-                set
-                {
-                   _name = value;
-                }
-            }
-            public string QuantityUnit
-            {
-                get
-                {
-                    return _unit;
-                }
-                set
-                {
-                   _unit = value;
-                }
-            }
-            public double Quantity
-            {
-                get
-                {
-                    return _qu;
-                }
-                set
-                {
-                    _qu = value;
-                }
+                MLK = mlk;
+                MaHH = mahh;
+                SLDN = sldn;
+                SLCN = slcn;
+                NLK = nlk;
             }
 
-
-            public WarehouseItem(string id, string name, string unit, double quantity)
-            {
-                _id = id;
-                _name = name;
-                _unit = unit;
-                _qu = quantity;
-            }
-
-            public WarehouseItem((string, string, string, double) initializer)
-                => (_id, _name, _unit, _qu) = initializer;
+            public Import((string, string, double, double, DateTime) initializer)
+                => (MLK, MaHH, SLDN, SLCN, NLK) = initializer;
         }
 
-        private ObservableCollection<WarehouseItem> LoadRandomItem()
+        private ObservableCollection<Import> LoadRandomItem()
         {
-            var list = new ObservableCollection<WarehouseItem>
+            var list = new ObservableCollection<Import>
             {
-                new WarehouseItem("1", "Gạo", "kg", 25),
-                new WarehouseItem("2", "Thịt bò", "kg", 5),
-                new WarehouseItem("3", "Spaghetti", "kg", 7.2),
-                new WarehouseItem("4", "Sữa bò", "lít", 50),
-                new WarehouseItem("5", "Yogurt", "hộp", 70),
-                new WarehouseItem("6", "Phở", "kg", 1.5),
-                new WarehouseItem("7", "Siro dâu", "lít", 18),
-                new WarehouseItem("8", "Dầu ăn", "lít", 100),
-                new WarehouseItem("0", "Yogurt", "hộp", 70),
-                new WarehouseItem("10", "Phở", "kg", 1.5),
-                new WarehouseItem("11", "Siro dâu", "lít", 18),
-                new WarehouseItem("12", "Dầu ăn", "lít", 100)
-
-            };
+                new Import("LK0001","HH001",100,91,new DateTime(2019,11,15)),
+                new Import("LK0002","HH002",10,8,new DateTime(2019,11,15)),
+                new Import("LK0003","HH003",5,4,new DateTime(2019,11,15)),
+                new Import("LK0004","HH004",15,13.3,new DateTime(2019,11,15)),
+                new Import("LK0005","HH005",20,10.5,new DateTime(2019,11,15)),
+                new Import("LK0006","HH006",15,12.5,new DateTime(2019,11,15)),
+                new Import("LK0007","HH007",10,9,new DateTime(2019,11,15)),
+                new Import("LK0008","HH001",121,80,new DateTime(2019,11,16))
+        };
 
             return list;
         }
-
-        class WarehouseSQL
-        {
-            public static ObservableCollection<WarehouseItem> GetAllItems()
-            {
-                var conn = DBUtils.GetDBConnection();
-                try
-                {
-                    conn.Open();
-                    using (var cmd = new SqlCommand("SELECT * FROM HangTonKho", conn))
-                    using (DbDataReader r = cmd.ExecuteReader())
-                    {
-                        if (r.HasRows)
-                        {
-                            var item_list = new ObservableCollection<WarehouseItem>();
-                            while (r.Read())
-                            {
-                                var id = Convert.ToString(r.GetValue(1)).Trim();
-                                var name = Convert.ToString(r.GetValue(2));
-                                var unit = Convert.ToString(r.GetValue(3));
-                                var quantity = Convert.ToDouble(r.GetValue(4));
-
-                                item_list.Add(new WarehouseItem(id, name, unit, quantity));
-                            }
-                            return item_list;
-                        }
-                        return null;
-                    }
-                }
-
-                catch (Exception e)
-                {
-                    MessageBox.Show("Error loading data");
-                    Debug.WriteLine($"Error: {e.Message}");
-                }
-                finally
-                {
-                    conn.Close();
-                    conn.Dispose();
-                }
-                return null;
-            }
-
-            public static ObservableCollection<WarehouseItem> GetItemsByProperty
-                (int columnIndex, string value_to_match)
-            {
-                string[] properties = { "ID", "Ten_MH", "ĐVT", "KhoiLuongTon" };
-                string query = $"SELECT * FROM HangTonKho where {properties[columnIndex]} = @value_to_match";
-
-                var conn = DBUtils.GetDBConnection();
-                try
-                {
-                    conn.Open();
-                    var cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@value_to_match", value_to_match);
-                    using (DbDataReader r = cmd.ExecuteReader())
-                    {
-                        if (r.HasRows)
-                        {
-                            var item_list = new ObservableCollection<WarehouseItem>();
-                            while (r.Read())
-                            {
-                                var id = Convert.ToString(r.GetValue(1)).Trim();
-                                var name = Convert.ToString(r.GetValue(2));
-                                var unit = Convert.ToString(r.GetValue(3));
-                                var quantity = Convert.ToDouble(r.GetValue(4));
-
-                                item_list.Add(new WarehouseItem(id, name, unit, quantity));
-                            }
-                            cmd.Dispose();
-                            return item_list;
-                        }
-                        cmd.Dispose();
-                        return null;
-                    }
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show("Error loading data");
-                    Debug.WriteLine($"Error: {e.Message}");
-                }
-                finally
-                {
-                    conn.Close();
-                    conn.Dispose();
-                }
-                return null;
-            }
-
-            public static void UpdateItemByName(string name, int columnIndex, string updatedValue)
-            {
-                var conn = DBUtils.GetDBConnection();
-                string[] properties = { "ID", "Ten_MH", "ĐVT", "KhoiLuongTon" };
-
-                string query = $"UPDATE HangTonKho " +
-                    $"SET {properties[columnIndex]} = @new_value " +
-                    $"WHERE Ten_MH = @name";
-
-                int affectedRows = 0;
-
-                try
-                {
-                    conn.Open();
-                    var cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@name", name);
-                    cmd.Parameters.AddWithValue("@new_value", updatedValue);
-                    affectedRows = cmd.ExecuteNonQuery();
-                    cmd.Dispose();
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show("Error updating data");
-                    Debug.WriteLine($"Error:{e.Message}");
-                }
-                finally
-                {
-                    if (affectedRows > 0)
-                        ITEMS = GetAllItems();
-                    conn.Close();
-                    conn.Dispose();
-                }
-            }
-
-            public static void AddItem(string id, string name, string unit, double quantity)
-            {
-                var conn = DBUtils.GetDBConnection();
-
-                string query =
-                    $"INSERT INTO HangTonKho " +
-                    $"VALUES = (@id, @name, @unit, @quantity)";
-
-                int affectedRows = 0;
-
-                try
-                {
-                    conn.Open();
-                    var cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@id", id);
-                    cmd.Parameters.AddWithValue("@name", name);
-                    cmd.Parameters.AddWithValue("@unit", unit);
-                    cmd.Parameters.AddWithValue("@quantity", quantity);
-                    affectedRows = cmd.ExecuteNonQuery();
-                    cmd.Dispose();
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show("Error inserting item");
-                    Debug.WriteLine($"Error:{e.Message}");
-                }
-                finally
-                {
-                    if (affectedRows > 0)
-                    {
-                        ITEMS = GetAllItems();
-                    }
-                    conn.Close();
-                    conn.Dispose();
-                }
-
-            }
-        }
-
 
         private void ItemTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
         }
 
-
-        //Warehouse UI (Un)load functions
 
         private void WarehouseUI_Loaded(object sender, RoutedEventArgs e)
         {
@@ -308,74 +95,169 @@ namespace QuanLiCantin
 
         private void WarehouseUI_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (WH_UI.Children.Contains(ItemAddBox))
-                WH_UI.Children.Remove(ItemAddBox);
+            foreach (var addBox in WH_UI.Children.OfType<WarehouseAddUI>().ToList())
+                WH_UI.Children.Remove(addBox);
         }
 
         protected bool itemAddFirstLoad = true;
+        protected bool addClick, updateClick = false;
 
-        private void ItemAddBox_Loaded(object sender, RoutedEventArgs e)
+        private void ImportAddBox_Loaded(object sender, RoutedEventArgs e)
         {
-            ItemAddBox.EmptyAllField();
+            ImportAddBox.EmptyAllField();
         }
 
 
-        private void ItemAddBox_Unloaded(object sender, RoutedEventArgs e)
+        private void ImportAddBox_Unloaded(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void AddItemButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (!WH_UI.Children.Contains(ItemAddBox))
-                 WH_UI.Children.Add(ItemAddBox);
-            if (itemAddFirstLoad is true)
-            {
-                ItemAddBox.Confirm.Click += Item_Add_Confirm;
-                ItemAddBox.Quit.Click += Item_Add_Quit;
-                itemAddFirstLoad = false;
-            }
-        }
 
-        private void Item_Add_Confirm(object sender, RoutedEventArgs e)
-        {
-            var item = new WarehouseItem(ItemAddBox.GetInputData());
-            if (use_sql)
-            {
-                WarehouseSQL.AddItem(item.ID, item.Name, item.QuantityUnit, item.Quantity);
-                ITEMS = WarehouseSQL.GetAllItems();
-            }
-            else
-            {
-                ITEMS.Add(item);
-            }
-            WH_UI.Children.Remove(ItemAddBox);
-        }
 
-        private void Item_Add_Quit(object sender, RoutedEventArgs e)
-        {
-            WH_UI.Children.Remove(ItemAddBox);
-        }
-
-        private void ItemAddBox_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ItemAddBox.Opacity = 1.0;
-        }
-
-        private void ItemAddBox_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ItemAddBox.Opacity = 0.6;
-        }
+///-----------------------------------------------------------------------------------
 
         private void ShowAllItemsButton_Click(object sender, RoutedEventArgs e)
         {
             DisplayedItems.Filter = null;
         }
 
+
+
+        private void AddItemButton_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateItem.Foreground = Brushes.Black;
+            UpdateItem.Background = Brushes.White;
+            AddItemButton.Foreground = Brushes.White;
+            AddItemButton.Background = new SolidColorBrush(purple);
+            DeleteItem.Foreground = Brushes.Black;
+            DeleteItem.Background = Brushes.White;
+
+            addClick = true; updateClick = false;
+
+            foreach (var addBox in WH_UI.Children.OfType<WarehouseAddUI>().ToList())
+                WH_UI.Children.Remove(addBox);
+
+
+            WH_UI.Children.Add(ImportAddBox);
+            if (itemAddFirstLoad is true)
+            {
+                ImportAddBox.Confirm.Click += Confirm_Click;
+                ImportAddBox.Quit.Click += Quit_Click;
+                itemAddFirstLoad = false;
+            }
+        }
+
+
+        private void DeleteItem_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateItem.Foreground = Brushes.Black;
+            UpdateItem.Background = Brushes.White;
+            AddItemButton.Foreground = Brushes.Black;
+            AddItemButton.Background = Brushes.White;
+            DeleteItem.Foreground = Brushes.White;
+            DeleteItem.Background = new SolidColorBrush(purple);
+
+        }
+
+        private void UpdateItem_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateItem.Foreground = Brushes.White;
+            UpdateItem.Background = new SolidColorBrush(purple);
+            AddItemButton.Foreground = Brushes.Black;
+            AddItemButton.Background = Brushes.White;
+            DeleteItem.Foreground = Brushes.Black;
+            DeleteItem.Background = Brushes.White;
+
+            addClick = false; updateClick = true;
+
+            foreach (var addBox in WH_UI.Children.OfType<WarehouseAddUI>().ToList())
+                WH_UI.Children.Remove(addBox);
+
+            WH_UI.Children.Add(ImportAddBox);
+
+            if (itemAddFirstLoad is true)
+            {
+                ImportAddBox.Confirm.Click += Confirm_Click;
+                ImportAddBox.Quit.Click += Quit_Click;
+                itemAddFirstLoad = false;
+            }
+        }
+
+        private void Confirm_Click(object sender, RoutedEventArgs e)
+        {
+            if (ImportAddBox.AllValid())
+            {
+                var imp = new Import(ImportAddBox.GetInputData());
+                MessageBox.Show($"{imp.MLK}|{imp.MaHH}|{imp.SLDN}|{imp.SLCN}|{imp.NLK.ToString()}");
+                //Insert
+                if (addClick == true)
+                {
+                    var existing_item = IMPORTS.FirstOrDefault(i => i.MLK == imp.MLK);
+                    if (existing_item == null)
+                    {
+                        IMPORTS.Add(imp);
+                        foreach (var addBox in WH_UI.Children.OfType<WarehouseAddUI>().ToList())
+                            WH_UI.Children.Remove(addBox);
+                    }
+                    else
+                        MessageBox.Show("Mã lưu kho đã tồn tại, xin nhập lại");
+                }
+
+                //Update
+                else
+                {
+                    bool found = false;
+                    for (int i = 0; i < IMPORTS.Count; ++i)
+                    {
+                        if (IMPORTS[i].MLK == imp.MLK)
+                        {
+                            IMPORTS[i] = imp;
+                            found = true;
+                        }
+                    }
+                    DisplayedItems = new ListCollectionView(IMPORTS)
+                    {
+                        Filter = null
+                    };
+                    if (found)
+                    {
+                        foreach (var addBox in WH_UI.Children.OfType<WarehouseAddUI>().ToList())
+                            WH_UI.Children.Remove(addBox);
+                    }
+                    else
+                        MessageBox.Show("Mã lưu kho không tồn tại");
+                }
+            }
+            else
+                return;
+        }
+
+        private void Quit_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var addBox in WH_UI.Children.OfType<WarehouseAddUI>().ToList())
+                WH_UI.Children.Remove(addBox);
+        }
+
+
+
+ ///-----------------------------------------------------------------------------------
+        private void ImportAddBox_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ImportAddBox.Opacity = 1.0;
+        }
+
+        private void ImportAddBox_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ImportAddBox.Opacity = 0.6;
+        }
+
+
+///-----------------------------------------------------------------------------------
         public bool Contains(object obj)
         {
-            var item = obj as WarehouseItem;
-            return (item.Name.ToLower().Contains(FindBox.Text.ToLower().Trim()));
+            var item = obj as Import;
+            return (item.MLK.ToLower().Contains(FindBox.Text.ToLower().Trim()));
         }
 
         private void FindBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -385,7 +267,7 @@ namespace QuanLiCantin
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             if (FindBox.Text != string.Empty)
-                 DisplayedItems.Filter = new Predicate<object>(Contains);
+                DisplayedItems.Filter = new Predicate<object>(Contains);
         }
     }
 }

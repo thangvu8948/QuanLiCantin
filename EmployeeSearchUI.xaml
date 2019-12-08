@@ -19,9 +19,8 @@
             FontSize="20" FontWeight ="DemiBold" Text="Vai trò" Foreground="White" Grid.ColumnSpan="2"/>
         <ComboBox x:Name="RoleSelection" HorizontalAlignment="Left" Height="34" Margin="31,99,0,0" VerticalAlignment="Top" Width="141" BorderBrush="#E500FFFF"
                  BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="Medium" Padding="5,5,0,0" FontSize="15" Grid.Column="1" SelectionChanged="RoleSelection_SelectionChanged">
-            <ComboBoxItem Content="Nhân viên (0)" Foreground="White" Background="#FF342C2C"></ComboBoxItem >
             <ComboBoxItem Content="Quản lý (1)" Foreground="White" Background="#FF342C2C"></ComboBoxItem >
-            <ComboBoxItem Content="Thủ kho (2)" Foreground="White" Background="#FF342C2C"></ComboBoxItem >
+            <ComboBoxItem Content="Nhân viên (2)" Foreground="White" Background="#FF342C2C"></ComboBoxItem >
             <ComboBoxItem Content="Tất cả" Foreground="White" Background="#FF342C2C"></ComboBoxItem >
         </ComboBox>
 

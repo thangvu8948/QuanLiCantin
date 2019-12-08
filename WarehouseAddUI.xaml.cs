@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Globalization;
 using System.Diagnostics;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -21,6 +22,10 @@ namespace QuanLiCantin
     /// </summary>
     public partial class WarehouseAddUI : UserControl
     {
+        private static bool validBegin, validEnd, validDate = false;
+        private double SLDN, SLCN;
+        private DateTime NLK;
+
         public WarehouseAddUI()
         {
             InitializeComponent();
@@ -29,36 +34,15 @@ namespace QuanLiCantin
 
         public void EmptyAllField()
         {
-            IDInputBox.Text = null;
-            NameInputBox.Text = null;
-            UnitInputBox.Text = null;
-            QuantityInputBox.Text = null;
+            MLKBox.Text = null;
+            MaHHBox.Text = null;
+            SLDNBox.Text = null;
+            SLCNBox.Text = null;
+            DateBox.Text = null;
         }
-
-        private void IDInputBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void UnitInputBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void NameInputBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void QuantityInputBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
 
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void Quit_Click(object sender, RoutedEventArgs e)
@@ -66,21 +50,43 @@ namespace QuanLiCantin
             
         }
 
-        public (string, string, string, double) GetInputData()
+        public (string, string, double, double, DateTime) GetInputData()
         {
-            (string, string, string, double) returnValue;
-            double quantity = 0;
-            try
-            {
-                quantity = Convert.ToDouble(QuantityInputBox.Text);
-            }
-            catch (FormatException e)
-            {
-                MessageBox.Show($"Error recognizing inputted quantity");
-                Debug.WriteLine($"{e.Message}");
-            }
-            returnValue = (IDInputBox.Text, NameInputBox.Text, UnitInputBox.Text, quantity);
-            return returnValue;
+            return (MLKBox.Text, MaHHBox.Text, SLDN, SLCN, NLK);
+        }
+
+        private void MLK_TextChanged(object sender, TextChangedEventArgs e)
+        {
+        }
+
+
+        private void MaHH_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void SLDN_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            validBegin = double.TryParse(SLDNBox.Text, out SLDN);
+        }
+
+        private void SLCN_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            validEnd = double.TryParse(SLCNBox.Text, out SLCN);
+        }
+
+
+        private void Date_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            validDate = DateTime.TryParseExact(
+                DateBox.Text, "dd/MM/yyyy", 
+                CultureInfo.InvariantCulture, DateTimeStyles.None,
+                out NLK);
+        }
+
+        public bool AllValid()
+        {
+            return validBegin && validEnd && validDate == true;
         }
     }
 }
