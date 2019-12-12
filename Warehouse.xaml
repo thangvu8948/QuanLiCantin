@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuanLiCantin"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Width="778" Height="544" Loaded="WarehouseUI_Loaded" Unloaded="WarehouseUI_Unloaded">
+             d:DesignHeight="450" d:DesignWidth="800" Width="778" Height="544" Loaded="WarehouseUI_Loaded">
     <Grid x:Name="WH_UI" Width="778" Height="544" HorizontalAlignment="Left" VerticalAlignment="Top">
         <Button x:Name="AddItemButton" Content="Lập phiếu lưu kho..." HorizontalAlignment="Left" Height="48" Margin="6,480,0,0" VerticalAlignment="Top" Width="220" Click="AddItemButton_Click" BorderBrush="#FF333038" Foreground="Black" Background="White" BorderThickness="2,2,2,2"/>
         <Button x:Name="ShowAllItemsButton" Content="Hiện tất cả" HorizontalAlignment="Center" Height="48" Margin="0,422,0,0" VerticalAlignment="Top" Width="765" Click="ShowAllItemsButton_Click"  FontSize="20" Background="Indigo" Foreground="Yellow" BorderBrush="Yellow"
@@ -18,6 +18,11 @@
                 BorderThickness="2,2,2,2" BorderBrush="Black" FontWeight="Bold" FontSize="20"/>
         <Button x:Name="DeleteItem" Content="Xóa phiếu lưu kho..." HorizontalAlignment="Center" Height="48" Margin="279,480,279,0" VerticalAlignment="Top" Width="220" Click="DeleteItem_Click" BorderBrush="#FF333038" Foreground="Black" Background="White" BorderThickness="2,2,2,2"/>
         <Button x:Name="UpdateItem" Content="Sửa phiếu lưu kho..." HorizontalAlignment="Left" Height="48" Margin="549,480,0,0" VerticalAlignment="Top" Width="220" Click="UpdateItem_Click" BorderBrush="#FF333038" Foreground="Black" Background="White" BorderThickness="2,2,2,2"/>
+        <TextBox x:Name="MHHFindBox" HorizontalAlignment="Left" Height="48" Margin="469,2,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="183" Foreground="Black" Background="White"
+            BorderThickness="2,2,2,2" BorderBrush="Black" TextAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" FontWeight="DemiBold" FontSize="18" TextChanged="MHHFindBox_TextChanged"/>
+        <TextBlock HorizontalAlignment="Left" Height="32" Margin="352,14,0,0" TextWrapping="Wrap" Text="Mã hàng hóa:" VerticalAlignment="Top" Width="118" Foreground="Black"
+            FontSize="18" FontWeight="Medium"/>
+        <Rectangle x:Name="BlockScreen" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="544" Margin="0" Stroke="Black" VerticalAlignment="Top" Width="778" Opacity="0.01"/>
         <DataGrid x:Name="ItemTable" ItemsSource="{Binding DisplayedItems}" AutoGenerateColumns="False" Background="#FFE2D4D4" Margin="3,58,0,130" SelectionChanged="ItemTable_SelectionChanged" BorderBrush="#89A04949"
                   IsReadOnly="True" HorizontalAlignment="Left" Width="771" Height="356">
             <DataGrid.Resources>
@@ -52,11 +57,7 @@
                 <DataGridTextColumn Header= "Ngày lưu kho" CanUserResize="False" Binding="{Binding NLK, StringFormat=\{0:dd/MM/yyyy\}}" Width= "*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Rectangle x:Name="BlockScreen" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="544" Margin="0" Stroke="Black" VerticalAlignment="Top" Width="778" Opacity="0.01" d:IsHidden="True"/>
         <local:WarehouseAddUI x:Name="StorageAddBox" HorizontalAlignment="Center" Height="214" VerticalAlignment="Center" Width="500" Margin="0,-40,0,0" Loaded="StorageAddBox_Loaded" MouseEnter="StorageAddBox_MouseEnter" MouseLeave="StorageAddBox_MouseLeave"/>
-        <TextBox x:Name="MHHFindBox" HorizontalAlignment="Left" Height="48" Margin="469,2,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="183" Foreground="Black" Background="White"
-            BorderThickness="2,2,2,2" BorderBrush="Black" TextAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" FontWeight="DemiBold" FontSize="18" TextChanged="MHHFindBox_TextChanged"/>
-        <TextBlock HorizontalAlignment="Left" Height="32" Margin="352,14,0,0" TextWrapping="Wrap" Text="Mã hàng hóa:" VerticalAlignment="Top" Width="118" Foreground="Black"
-            FontSize="18" FontWeight="Medium"/>
+        <local:RemoveRecordUI x:Name="RemoveRecordBox" HorizontalAlignment="Center" Height="150" Margin="199,177,199,217" VerticalAlignment="Center" Width="380" Loaded="RemoveRecordBox_Loaded"/>
     </Grid>
 </UserControl>

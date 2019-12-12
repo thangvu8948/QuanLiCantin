@@ -7,6 +7,30 @@
              mc:Ignorable="d" 
              d:DesignHeight="544" d:DesignWidth="778">
     <Grid x:Name="MM_UI">
+        <ComboBox x:Name="MenuItemTypeBox" HorizontalAlignment="Left" Height="48" Margin="395,2,0,0" Text="1111" VerticalAlignment="Top" Width="279" Foreground="Black" Background="White"
+            BorderThickness="2,2,2,2" BorderBrush="Black" VerticalContentAlignment="Center" Padding="5,0,0,0" FontWeight="DemiBold" FontSize="18" SelectionChanged="MenuItemTypeBox_SelectionChanged">
+            <ComboBoxItem Content="Điểm tâm (1)" Foreground="White" Background="#FF342C2C"/>
+            <ComboBoxItem Content="Ăn trưa (2)" Foreground="White" Background="#FF342C2C"/>
+            <ComboBoxItem Content="Nước uống, đồ tráng miệng (3)" Foreground="White" Background="#FF342C2C"/>
+            <ComboBoxItem Content="Tất cả" Foreground="White" Background="#FF342C2C"/>
+        </ComboBox>
+        <Button x:Name="SearchMenuItem" Content="TÌM" HorizontalAlignment="Right" Height="48" Margin="0,2,10,0" VerticalAlignment="Top" Width="81" Click="SearchMenuItem_Click"
+            BorderThickness="2,2,2,2" BorderBrush="Black" FontWeight="Bold" FontSize="20"/>
+        <TextBlock HorizontalAlignment="Left" Height="32" Margin="310,14,0,0" TextWrapping="Wrap" Text="Loại món:" VerticalAlignment="Top" Width="96" Foreground="Black"
+            FontSize="18" FontWeight="Medium"/>
+        <TextBox x:Name="MenuItemNameBox" HorizontalAlignment="Left" Height="48" Margin="91,2,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="192" Foreground="Black" Background="White"
+            BorderThickness="2,2,2,2" BorderBrush="Black" TextAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" FontWeight="DemiBold" FontSize="18" TextChanged="MenuItemNameBox_TextChanged"/>
+        <TextBlock HorizontalAlignment="Left" Height="32" Margin="12,14,0,0" TextWrapping="Wrap" Text="Tên món:" VerticalAlignment="Top" Width="170" Foreground="Black"
+            FontSize="18" FontWeight="Medium"/>
+        <Button x:Name="ShowAllMenuItems" Content="Hiện tất cả" Height="48" HorizontalAlignment="Center" Margin="6.5,422,6.5,0"  VerticalAlignment="Top" Width="765" Click="ShowAllMenuItems_Click" FontSize="20" Background="Indigo" Foreground="Yellow" BorderBrush="Yellow"
+            BorderThickness="4,4,4,4"/>
+        <Button x:Name="UpdateMenu" Content="Sửa thực đơn" HorizontalAlignment="Left" Height="48" Margin="549,480,0,0" VerticalAlignment="Top" Width="220" Click="UpdateMenu_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
+            BorderThickness="2,2,2,2"/>
+        <Button x:Name="AddToMenu" Content="Thêm món" HorizontalAlignment="Left" Height="48" Margin="6,480,0,0" VerticalAlignment="Top" Width="220" Click="AddToMenu_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
+            BorderThickness="2,2,2,2"/>
+        <Button x:Name="RemoveFromMenu" Content="Xóa món" HorizontalAlignment="Center" Height="48" Margin="279,480,279,0" VerticalAlignment="Top" Width="220" Click="RemoveFromMenu_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
+            BorderThickness="2,2,2,2"/>
+        <Rectangle x:Name="BlockScreen" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="544" Margin="0" Stroke="Black" VerticalAlignment="Top" Width="778" Opacity="0.01"/>
         <DataGrid x:Name="MenuTable" ItemsSource="{Binding DisplayedMenuItems}" AutoGenerateColumns="False" Background="#FFE2D4D4" Margin="3,58,0,130" SelectionChanged="MenuTable_SelectionChanged" BorderBrush="#89A04949"
                   IsReadOnly="True" HorizontalAlignment="Left" Width="771" Height="356" CanUserResizeColumns="False">
             <DataGrid.Resources>
@@ -48,28 +72,6 @@
 
             </DataGrid.Columns>
         </DataGrid>
-        <ComboBox x:Name="MenuItemTypeBox" HorizontalAlignment="Left" Height="48" Margin="395,2,0,0" Text="1111" VerticalAlignment="Top" Width="279" Foreground="Black" Background="White"
-            BorderThickness="2,2,2,2" BorderBrush="Black" VerticalContentAlignment="Center" Padding="5,0,0,0" FontWeight="DemiBold" FontSize="18" SelectionChanged="MenuItemTypeBox_SelectionChanged">
-            <ComboBoxItem Content="Điểm tâm (1)" Foreground="White" Background="#FF342C2C"/>
-            <ComboBoxItem Content="Ăn trưa (2)" Foreground="White" Background="#FF342C2C"/>
-            <ComboBoxItem Content="Nước uống, đồ tráng miệng (3)" Foreground="White" Background="#FF342C2C"/>
-            <ComboBoxItem Content="Tất cả" Foreground="White" Background="#FF342C2C"/>
-        </ComboBox>
-        <Button x:Name="SearchMenuItem" Content="TÌM" HorizontalAlignment="Right" Height="48" Margin="0,2,10,0" VerticalAlignment="Top" Width="81" Click="SearchMenuItem_Click"
-            BorderThickness="2,2,2,2" BorderBrush="Black" FontWeight="Bold" FontSize="20"/>
-        <TextBlock HorizontalAlignment="Left" Height="32" Margin="310,14,0,0" TextWrapping="Wrap" Text="Loại món:" VerticalAlignment="Top" Width="96" Foreground="Black"
-            FontSize="18" FontWeight="Medium"/>
-        <TextBox x:Name="MenuItemNameBox" HorizontalAlignment="Left" Height="48" Margin="91,2,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="192" Foreground="Black" Background="White"
-            BorderThickness="2,2,2,2" BorderBrush="Black" TextAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" FontWeight="DemiBold" FontSize="18" TextChanged="MenuItemNameBox_TextChanged"/>
-        <TextBlock HorizontalAlignment="Left" Height="32" Margin="12,14,0,0" TextWrapping="Wrap" Text="Tên món:" VerticalAlignment="Top" Width="170" Foreground="Black"
-            FontSize="18" FontWeight="Medium"/>
-        <Button x:Name="ShowAllMenuItems" Content="Hiện tất cả" Height="48" HorizontalAlignment="Center" Margin="6.5,422,6.5,0"  VerticalAlignment="Top" Width="765" Click="ShowAllMenuItems_Click" FontSize="20" Background="Indigo" Foreground="Yellow" BorderBrush="Yellow"
-            BorderThickness="4,4,4,4"/>
-        <Button x:Name="UpdateMenu" Content="Sửa thực đơn" HorizontalAlignment="Left" Height="48" Margin="549,480,0,0" VerticalAlignment="Top" Width="220" Click="UpdateMenu_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
-            BorderThickness="2,2,2,2"/>
-        <Button x:Name="AddToMenu" Content="Thêm món" HorizontalAlignment="Left" Height="48" Margin="6,480,0,0" VerticalAlignment="Top" Width="220" Click="AddToMenu_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
-            BorderThickness="2,2,2,2"/>
-        <Button x:Name="RemoveFromMenu" Content="Xóa món" HorizontalAlignment="Center" Height="48" Margin="279,480,279,0" VerticalAlignment="Top" Width="220" Click="RemoveFromMenu_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
-            BorderThickness="2,2,2,2"/>
+        <local:RemoveRecordUI x:Name="RemoveRecordBox" HorizontalAlignment="Center" Height="150" Margin="0,-40,0,0" VerticalAlignment="Center" Width="380" Loaded="RemoveRecordBox_Loaded"/>
     </Grid>
 </UserControl>

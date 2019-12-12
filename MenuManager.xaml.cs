@@ -26,12 +26,14 @@ namespace QuanLiCantin
     {
         private static ObservableCollection<AMenuItem> MENU_ITEMS { get; set; } = null;
         private static ListCollectionView DisplayedMenuItems { get; set; } = null;
-        private readonly Color purple = Color.FromArgb(0xFF, 67, 0x3A, 0xB7);
         
 
         public MenuManager()
         {
             InitializeComponent();
+            
+            MM_UI.Children.Remove(RemoveRecordBox);
+            MM_UI.Children.Remove(BlockScreen);
             MENU_ITEMS = new ObservableCollection<AMenuItem>(MenuSQL.GetAllMenuItems());
             DisplayedMenuItems = new ListCollectionView(MENU_ITEMS)
             {
@@ -39,6 +41,7 @@ namespace QuanLiCantin
             };
             MenuTable.ItemsSource = DisplayedMenuItems;
         }
+
 
         class AMenuItem : INotifyPropertyChanged
         {
@@ -117,12 +120,12 @@ namespace QuanLiCantin
                             var menuList = new ObservableCollection<AMenuItem>();
                             while (r.Read())
                             {
-                                var id = r.GetString(0);
-                                var name = r.GetString(1);
-                                var price = r.GetInt32(2);
-                                var count = r.GetInt32(3);
+                                var id = Convert.ToString(r.GetValue(0)).Trim();
+                                var name = Convert.ToString(r.GetValue(1)).Trim();
+                                var price = Convert.ToInt32(r.GetValue(2));
+                                var count = Convert.ToInt32(r.GetValue(3));
                                 var type = Convert.ToInt32(r.GetValue(4));
-                                var pic = r.GetString(5);
+                                var pic = Convert.ToString(r.GetValue(5)).Trim();
                                 menuList.Add(new AMenuItem(id, name, price, count, type, pic));
                             }
                             return menuList;
@@ -133,7 +136,7 @@ namespace QuanLiCantin
 
                 catch (Exception e)
                 {
-                    MessageBox.Show($"Lỗi truy xuất dữ liệu\n{e.Message}");
+                    MessageBox.Show($"Lỗi truy xuất dữ liệu");
                 }
                 finally
                 {
@@ -169,7 +172,7 @@ namespace QuanLiCantin
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show($"Lỗi khi thêm dữ liệu\n{e.Message}");
+                    MessageBox.Show($"Lỗi khi thêm dữ liệu");
                 }
                 finally
                 {
@@ -198,7 +201,7 @@ namespace QuanLiCantin
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show($"Lỗi khi xóa dữ liệu\n{e.Message}");
+                    MessageBox.Show($"Lỗi khi xóa dữ liệu");
                 }
                 finally
                 {
@@ -212,9 +215,7 @@ namespace QuanLiCantin
             public static bool UpdateMenuItem
                 (string id, string name, int price, int count, string type)
             {
-                var conn = DBUtils.GetDBConnection();
-                string pic;
-                
+                var conn = DBUtils.GetDBConnection();                
 
                 string query = $"UPDATE MonAn " +
                     $"SET TENMON = @name, GIATIEN = @price, SOLUONG = @count, MALOAI = @type, HinhAnh = @pic " +
@@ -237,7 +238,7 @@ namespace QuanLiCantin
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show($"Lỗi khi cập nhật dữ liệu\n{e.Message}");
+                    MessageBox.Show($"Lỗi khi cập nhật dữ liệu");
                 }
                 finally
                 {
@@ -294,11 +295,64 @@ namespace QuanLiCantin
 
 ///--------------------------------------------------------------------------------------------------
 
+        protected bool removeFirstLoad = true;
+
+        private void RemoveRecordBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            RemoveRecordBox.Title.Text = "Xóa món";
+            RemoveRecordBox.OptionName.Text = "ID món cần xóa:";
+        }
 
         private void RemoveFromMenu_Click(object sender, RoutedEventArgs e)
         {
+            if (!MM_UI.Children.Contains(BlockScreen))
+                MM_UI.Children.Add(BlockScreen);
+            MM_UI.Children.Add(RemoveRecordBox);
+            Global.HighlightButton(RemoveFromMenu);
 
+            if (removeFirstLoad)
+            {
+                RemoveRecordBox.Confirm.Click += RemoveConfirm_Click;
+                RemoveRecordBox.Quit.Click += RemoveQuit_Click;
+                removeFirstLoad = false;
+            }
         }
+
+        private void RemoveConfirm_Click(object sender, RoutedEventArgs e)
+        {
+            if (RemoveRecordBox.IsValid())
+            {
+                var input = RemoveRecordBox.InputBox.Text.Trim();
+                bool success = MenuSQL.RemoveMenuItem(input);
+                if (success)
+                {
+                    for (int i = 0, sz = MENU_ITEMS.Count; i < sz; ++i)
+                    {
+                        if (MENU_ITEMS[i].MAMON == input)
+                        {
+                            MENU_ITEMS.RemoveAt(i);
+                            break;
+                        }
+                    }
+                    MM_UI.Children.Remove(RemoveRecordBox);
+                    MM_UI.Children.Remove(BlockScreen);
+                    Global.UnhighlightButton(RemoveFromMenu);
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private void RemoveQuit_Click(object sender, RoutedEventArgs e)
+        {
+            MM_UI.Children.Remove(RemoveRecordBox);
+            MM_UI.Children.Remove(BlockScreen);
+            Global.UnhighlightButton(RemoveFromMenu);
+        }
+
+        ///--------------------------------------------------------------------------------------------------
 
         private void AddToMenu_Click(object sender, RoutedEventArgs e)
         {
@@ -321,6 +375,5 @@ namespace QuanLiCantin
         {
 
         }
-
     }
 }

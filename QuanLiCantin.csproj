@@ -77,9 +77,11 @@
     <Compile Include="ModifyOrdered.xaml.cs">
       <DependentUpon>ModifyOrdered.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NhanVien.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="RelativeToAbsolutePathConverter.cs" />
+    <Compile Include="RemoveRecordUI.xaml.cs">
+      <DependentUpon>RemoveRecordUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ThanhToanWindow.xaml.cs">
       <DependentUpon>ThanhToanWindow.xaml</DependentUpon>
     </Compile>
@@ -133,6 +135,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ModifyOrdered.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RemoveRecordUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

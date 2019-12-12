@@ -7,12 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Width="778" Height="544">
     <Grid x:Name="EM_UI" Width="778" Height="544">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="127*"/>
-            <RowDefinition Height="145*"/>
-        </Grid.RowDefinitions>
         <DataGrid x:Name="EmployeeTable" ItemsSource="{Binding DisplayedEmployee}" AutoGenerateColumns="False" Background="#FFE2D4D4" Margin="3,58,0,130" SelectionChanged="EmployeeTable_SelectionChanged" BorderBrush="#89A04949"
-                  IsReadOnly="True" HorizontalAlignment="Left" Width="771" Height="356" Grid.RowSpan="2">
+                  IsReadOnly="True" HorizontalAlignment="Left" Width="771" Height="356">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="Background" Value="Turquoise"/>
@@ -58,15 +54,15 @@
                 <DataGridTextColumn Header= "Mật khẩu" Binding="{Binding Password}" Width= "150"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="ShowAllEmployees" Content="Hiện tất cả" Height="48" HorizontalAlignment="Center" Margin="6,168,6,0"  VerticalAlignment="Top" Width="766" Click="ShowAllEmployees_Click" FontSize="20" Background="Indigo" Foreground="Yellow" BorderBrush="Yellow"
-            BorderThickness="4,4,4,4" Grid.Row="1"/>
-        <Button x:Name="UpdateEmployee" Content="Sửa thông tin NV" HorizontalAlignment="Left" Height="48" Margin="549,226,0,0" VerticalAlignment="Top" Width="220" Click="SearchEmployees_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
-            BorderThickness="2,2,2,2" Grid.Row="1"/>
-        <Button x:Name="AddEmployee" Content="Thêm nhân viên" HorizontalAlignment="Left" Height="48" Margin="6,226,0,0" VerticalAlignment="Top" Width="220" Click="AddEmployees_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
-            BorderThickness="2,2,2,2" Grid.Row="1"/>
-        <Button x:Name="RemoveEmployee" Content="Xóa nhân viên" HorizontalAlignment="Center" Height="48" Margin="279,226,279,0" VerticalAlignment="Top" Width="220" Click="RemoveEmployees_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
-            BorderThickness="2,2,2,2" Grid.Row="1"/>
-        <Rectangle x:Name="BlockScreen" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="544" Margin="0" Stroke="Black" VerticalAlignment="Top" Width="778" Opacity="0.01" d:IsHidden="True" Grid.RowSpan="2"/>
+        <Button x:Name="ShowAllEmployees" Content="Hiện tất cả" Height="48" HorizontalAlignment="Center" Margin="0,422,0,0"  VerticalAlignment="Top" Width="766" Click="ShowAllEmployees_Click" FontSize="20" Background="Indigo" Foreground="Yellow" BorderBrush="Yellow"
+            BorderThickness="4,4,4,4"/>
+        <Button x:Name="UpdateEmployee" Content="Sửa thông tin NV" HorizontalAlignment="Left" Height="48" Margin="549,480,0,0" VerticalAlignment="Top" Width="220" Click="SearchEmployees_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
+            BorderThickness="2,2,2,2"/>
+        <Button x:Name="AddEmployee" Content="Thêm nhân viên" HorizontalAlignment="Left" Height="48" Margin="6,480,0,0" VerticalAlignment="Top" Width="220" Click="AddEmployees_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
+            BorderThickness="2,2,2,2"/>
+        <Button x:Name="RemoveEmployee" Content="Xóa nhân viên" HorizontalAlignment="Center" Height="48" Margin="279,480,279,0" VerticalAlignment="Top" Width="220" Click="RemoveEmployee_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
+            BorderThickness="2,2,2,2"/>
+        <Rectangle x:Name="BlockScreen" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="544" Margin="0" Stroke="Black" VerticalAlignment="Top" Width="778" Opacity="0.01" Grid.RowSpan="2"/>
         <TextBox x:Name="NameSearchBox" HorizontalAlignment="Left" Height="48" Margin="141,2,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="229" Foreground="Black" Background="White"
             BorderThickness="2,2,2,2" BorderBrush="Black" TextAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" FontWeight="DemiBold" FontSize="18" TextChanged="NameSearchBox_TextChanged"/>
         <TextBlock HorizontalAlignment="Left" Height="32" Margin="12,14,0,0" TextWrapping="Wrap" Text="Tên nhân viên:" VerticalAlignment="Top" Width="170" Foreground="Black"
@@ -81,5 +77,6 @@
         </ComboBox>
         <TextBlock HorizontalAlignment="Left" Height="32" Margin="409,14,0,0" TextWrapping="Wrap" Text="Vị trí:" VerticalAlignment="Top" Width="49" Foreground="Black"
             FontSize="18" FontWeight="Medium"/>
+        <local:RemoveRecordUI x:Name="RemoveRecordBox" HorizontalAlignment="Center" Height="150" Margin="0,0,-40,0" VerticalAlignment="Center" Width="380" Loaded="RemoveRecordBox_Loaded"/>
     </Grid>
 </UserControl>

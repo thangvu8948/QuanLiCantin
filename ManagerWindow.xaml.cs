@@ -26,7 +26,7 @@ namespace QuanLiCantin
         public ManagerWindow()
         {
             InitializeComponent();
-            UsernameBox.Text = $"{MainWindow.GetUsername().Trim().ToUpper()}";
+            UsernameBox.Text = MainWindow.GetUsername();
             Food.Foreground = Brushes.Yellow;
 
             ManagerUI.Children.Remove(WH_UI);

@@ -26,15 +26,17 @@ namespace QuanLiCantin
     {
         private static ObservableCollection<Storage> STORAGES { get; set; } = null;
         private static ListCollectionView DisplayedItems { get; set; } = null;
-        private readonly Color purple = Color.FromArgb(0xFF, 67, 0x3A, 0xB7);
 
         public Warehouse()
         {
             InitializeComponent();
             WH_UI.Children.Remove(StorageAddBox);
             WH_UI.Children.Remove(BlockScreen);
+            WH_UI.Children.Remove(RemoveRecordBox);
+
 
             STORAGES = new ObservableCollection<Storage>(StorageSQL.GetAllStorages());
+
             DisplayedItems = new ListCollectionView(STORAGES)
             {
                 Filter = null
@@ -116,8 +118,8 @@ namespace QuanLiCantin
                             var storageList = new ObservableCollection<Storage>();
                             while (r.Read())
                             {
-                                var mlk = Convert.ToString(r.GetValue(0));
-                                var mahh = Convert.ToString(r.GetValue(1));
+                                var mlk = Convert.ToString(r.GetValue(0)).Trim();
+                                var mahh = Convert.ToString(r.GetValue(1)).Trim();
                                 var sldn = Convert.ToDouble(r.GetValue(2));
                                 var slcn = Convert.ToDouble(r.GetValue(3));
                                 var nlk = Convert.ToDateTime(r.GetValue(4));
@@ -129,9 +131,9 @@ namespace QuanLiCantin
                     }
                 }
 
-                catch (Exception e)
+                catch (Exception)
                 {
-                    MessageBox.Show($"Lỗi truy xuất dữ liệu\n{e.Message}");
+                    MessageBox.Show($"Lỗi truy xuất dữ liệu");
                 }
                 finally
                 {
@@ -163,9 +165,9 @@ namespace QuanLiCantin
                     affectedRows = cmd.ExecuteNonQuery();
                     cmd.Dispose();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    MessageBox.Show($"Lỗi khi thêm dữ liệu\n{e.Message}");
+                    MessageBox.Show($"Lỗi khi thêm dữ liệu");
                 }
                 finally
                 {
@@ -180,7 +182,7 @@ namespace QuanLiCantin
             {
                 var conn = DBUtils.GetDBConnection();
 
-                string query = $"DELETE FROM Kho WHERE MaNV = @id";
+                string query = $"DELETE FROM Kho WHERE MaLuuKho = @id";
 
                 int affectedRows = 0;
 
@@ -192,9 +194,9 @@ namespace QuanLiCantin
                     affectedRows = cmd.ExecuteNonQuery();
                     cmd.Dispose();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    MessageBox.Show($"Lỗi khi xóa dữ liệu\n{e.Message}");
+                    MessageBox.Show($"Lỗi khi xóa dữ liệu");
                 }
                 finally
                 {
@@ -227,9 +229,9 @@ namespace QuanLiCantin
                     affectedRows = cmd.ExecuteNonQuery();
                     cmd.Dispose();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    MessageBox.Show($"Lỗi khi cập nhật dữ liệu\n{e.Message}");
+                    MessageBox.Show($"Lỗi khi cập nhật dữ liệu");
                 }
                 finally
                 {
@@ -260,8 +262,11 @@ namespace QuanLiCantin
         {
             addClick = true; updateClick = false;
 
-            HighlightButton(AddItemButton);
-            WH_UI.Children.Add(BlockScreen);
+            Global.HighlightButton(AddItemButton);
+
+            if (!WH_UI.Children.Contains(BlockScreen))
+                WH_UI.Children.Add(BlockScreen);
+
             WH_UI.Children.Add(StorageAddBox);
 
             if (itemAddFirstLoad is true)
@@ -277,8 +282,11 @@ namespace QuanLiCantin
         {
             addClick = false; updateClick = true;
 
-            HighlightButton(UpdateItem);
-            WH_UI.Children.Add(BlockScreen);
+            Global.HighlightButton(UpdateItem);
+
+            if (!WH_UI.Children.Contains(BlockScreen))
+                WH_UI.Children.Add(BlockScreen);
+
             WH_UI.Children.Add(StorageAddBox);
 
             if (itemAddFirstLoad is true)
@@ -312,7 +320,10 @@ namespace QuanLiCantin
                         for (int i = 0, sz = STORAGES.Count; i < sz; ++i)
                         {
                             if (STORAGES[i].MLK == imp.MLK)
+                            {
                                 STORAGES[i] = imp;
+                                break;
+                            }
                         }
                     }
                 }
@@ -321,7 +332,7 @@ namespace QuanLiCantin
                 {
                     WH_UI.Children.Remove(StorageAddBox);
                     WH_UI.Children.Remove(BlockScreen);
-                    UnhighlightButton(addClick == true ? AddItemButton : UpdateItem);
+                    Global.UnhighlightButton(addClick == true ? AddItemButton : UpdateItem);
                     DisplayedItems.Filter = null;
                 }
             }
@@ -335,7 +346,7 @@ namespace QuanLiCantin
         {
             WH_UI.Children.Remove(StorageAddBox);
             WH_UI.Children.Remove(BlockScreen);
-            UnhighlightButton(addClick == true ? AddItemButton : UpdateItem);
+            Global.UnhighlightButton(addClick == true ? AddItemButton : UpdateItem);
         }
 
         private void StorageAddBox_MouseEnter(object sender, MouseEventArgs e)
@@ -349,16 +360,69 @@ namespace QuanLiCantin
         }
 
 
-///-----------------------------------------------------------------------------------
+///--------------------------------------------------------------------------------------------------
+
+        protected bool removeFirstLoad = true;
 
 
         private void DeleteItem_Click(object sender, RoutedEventArgs e)
         {
-            HighlightButton(DeleteItem);
-            WH_UI.Children.Add(BlockScreen);
+            if (!WH_UI.Children.Contains(BlockScreen))
+                WH_UI.Children.Add(BlockScreen);
+            WH_UI.Children.Add(RemoveRecordBox);
+            Global.HighlightButton(DeleteItem);
+
+            if (removeFirstLoad == true)
+            {
+                RemoveRecordBox.Confirm.Click += RemoveConfirm_Click;
+                RemoveRecordBox.Quit.Click += RemoveQuit_Click;
+                removeFirstLoad = false;
+            }
         }
 
-        ///-----------------------------------------------------------------------------------
+        private void RemoveRecordBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            RemoveRecordBox.Title.Text = "Xóa phiếu lưu kho";
+            RemoveRecordBox.OptionName.Text = "Nhập mã lưu kho:";
+            RemoveRecordBox.InputBox.Text = string.Empty;
+        }
+
+
+        private void RemoveConfirm_Click(object sender, RoutedEventArgs e)
+        {
+            if (RemoveRecordBox.IsValid())
+            {
+                var input = RemoveRecordBox.InputBox.Text;
+                bool success = StorageSQL.RemoveStorage(input);
+                if (success)
+                {
+                    for (int i = 0, sz = STORAGES.Count; i < sz; ++i)
+                    {
+                        if (STORAGES[i].MLK == input)
+                        {
+                            STORAGES.RemoveAt(i);
+                            break;
+                        }
+                    }
+                    WH_UI.Children.Remove(RemoveRecordBox);
+                    WH_UI.Children.Remove(BlockScreen);
+                    Global.UnhighlightButton(DeleteItem);
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private void RemoveQuit_Click(object sender, RoutedEventArgs e)
+        {
+            WH_UI.Children.Remove(RemoveRecordBox);
+            WH_UI.Children.Remove(BlockScreen);
+            Global.UnhighlightButton(DeleteItem);
+        }
+        ///--------------------------------------------------------------------------------------------------
+
         public bool ItemFilter(object obj)
         {
             var item = obj as Storage;
@@ -398,31 +462,10 @@ namespace QuanLiCantin
             StorageAddBox.EmptyAllField();
         }
 
-
-        private void WarehouseUI_Unloaded(object sender, RoutedEventArgs e)
-        {
-            WH_UI.Children.Remove(StorageAddBox);
-        }
-
-        ///-----------------------------------------------------------------------------------
-        private void UnhighlightButton(Button button)
-        {
-            button.Foreground = Brushes.Black;
-            button.Background = Brushes.White;
-            button.BorderBrush = Brushes.Black;
-        }
-
+///-----------------------------------------------------------------------------------
         private void MHHFindBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
-
-        private void HighlightButton(Button clickedButton)
-        {
-            clickedButton.Foreground = Brushes.Cyan;
-            clickedButton.Background = new SolidColorBrush(purple);
-            clickedButton.BorderBrush = Brushes.Cyan;
-        }
     }
-
 }

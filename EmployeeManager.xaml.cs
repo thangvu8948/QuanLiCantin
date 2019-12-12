@@ -34,6 +34,8 @@ namespace QuanLiCantin
         {
             InitializeComponent();
             EM_UI.Children.Remove(BlockScreen);
+            EM_UI.Children.Remove(RemoveRecordBox);
+
             EMPLOYEES = new ObservableCollection<Employee>(EmployeeSQL.GetAllEmployees());
             DisplayedEmployee = new ListCollectionView(EMPLOYEES)
             {
@@ -124,10 +126,9 @@ namespace QuanLiCantin
                     }
                 }
 
-                catch (Exception e)
+                catch (Exception)
                 {
-                    MessageBox.Show("Error loading data");
-                    Debug.WriteLine($"Error: {e.Message}");
+                    MessageBox.Show("Lỗi truy xuất dũ liệu");
                 }
                 finally
                 {
@@ -159,9 +160,9 @@ namespace QuanLiCantin
                     affectedRows = cmd.ExecuteNonQuery();
                     cmd.Dispose();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    MessageBox.Show($"Lỗi khi thêm dữ liệu\n{e.Message}");
+                    MessageBox.Show($"Lỗi khi thêm dữ liệu");
                 }
                 finally
                 {
@@ -188,9 +189,9 @@ namespace QuanLiCantin
                     affectedRows = cmd.ExecuteNonQuery();
                     cmd.Dispose();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    MessageBox.Show($"Lỗi khi xóa dữ liệu\n{e.Message}");
+                    MessageBox.Show($"Lỗi khi xóa dữ liệu");
                 }
                 finally
                 {
@@ -223,9 +224,9 @@ namespace QuanLiCantin
                     affectedRows = cmd.ExecuteNonQuery();
                     cmd.Dispose();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    MessageBox.Show($"Lỗi khi cập nhật dữ liệu\n{e.Message}");
+                    MessageBox.Show($"Lỗi khi cập nhật dữ liệu");
                 }
                 finally
                 {
@@ -284,33 +285,86 @@ namespace QuanLiCantin
 
 ///--------------------------------------------------------------------------------------------------
 
-        private void RemoveEmployees_Click(object sender, RoutedEventArgs e)
+        protected bool removeFirstLoad = true;
+
+
+        private void RemoveEmployee_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (!EM_UI.Children.Contains(BlockScreen))
+                EM_UI.Children.Add(BlockScreen);
+            EM_UI.Children.Add(RemoveRecordBox);
+            Global.HighlightButton(RemoveEmployee);
+
+            if (removeFirstLoad == true)
+            {
+                RemoveRecordBox.Confirm.Click += RemoveConfirm_Click;
+                RemoveRecordBox.Quit.Click += RemoveQuit_Click;
+                removeFirstLoad = false;
+            }
+        }
+
+        private void RemoveRecordBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            RemoveRecordBox.Title.Text = "Xóa nhân viên";
+            RemoveRecordBox.OptionName.Text = "Nhập ID nhân viên:";
+            RemoveRecordBox.InputBox.Text = string.Empty;
         }
 
 
-///--------------------------------------------------------------------------------------------------
+        private void RemoveConfirm_Click(object sender, RoutedEventArgs e)
+        {
+            if (RemoveRecordBox.IsValid())
+            {
+                var input = RemoveRecordBox.InputBox.Text;
+
+                int index = -1;
+
+                for (int i = 0, sz = EMPLOYEES.Count; i < sz; ++i)
+                {
+                    if (EMPLOYEES[i].ID == input)
+                    {
+                        index = i; break;
+                    }
+                }
+                
+                if (EMPLOYEES[index].Name.ToUpper() == MainWindow.GetUsername())
+                {
+                    MessageBox.Show("Không thể xóa tài khoản đang đăng nhập");
+                    return;
+                }
+                else
+                {
+                    bool success = EmployeeSQL.RemoveEmployee(input);
+                    if (success)
+                    {
+                        EMPLOYEES.RemoveAt(index);
+                        EM_UI.Children.Remove(RemoveRecordBox);
+                        EM_UI.Children.Remove(BlockScreen);
+                        Global.UnhighlightButton(RemoveEmployee);
+                    }
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private void RemoveQuit_Click(object sender, RoutedEventArgs e)
+        {
+            EM_UI.Children.Remove(RemoveRecordBox);
+            EM_UI.Children.Remove(BlockScreen);
+            Global.UnhighlightButton(RemoveEmployee);
+        }
+
+
+        ///--------------------------------------------------------------------------------------------------
 
         private void EmployeeTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
         }
 
 ///--------------------------------------------------------------------------------------------------
-
-        private void UnhighlightButton(Button button)
-        {
-            button.Foreground = Brushes.Black;
-            button.Background = Brushes.White;
-            button.BorderBrush = Brushes.Black;
-        }
-
-        private void HighlightButton(Button clickedButton)
-        {
-            clickedButton.Foreground = Brushes.Cyan;
-            clickedButton.Background = new SolidColorBrush(purple);
-            clickedButton.BorderBrush = Brushes.Cyan;
-        }
 
         private void RoleSearchBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -320,5 +374,6 @@ namespace QuanLiCantin
         {
 
         }
+
     }
 }

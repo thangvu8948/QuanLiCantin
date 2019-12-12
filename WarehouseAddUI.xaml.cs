@@ -22,7 +22,7 @@ namespace QuanLiCantin
     /// </summary>
     public partial class WarehouseAddUI : UserControl
     {
-        private bool validBegin, validEnd, validDate, validPK = false;
+        private bool validBegin, validEnd, validDate, validPK, validMHH = false;
         private double SLDN, SLCN;
         private DateTime NLK;
         private readonly Brush correctColor = new SolidColorBrush(Color.FromArgb(0xE5, 0, 0xFF, 0xFF));
@@ -59,14 +59,15 @@ namespace QuanLiCantin
 
         private void MLK_TextChanged(object sender, TextChangedEventArgs e)
         {
-            validPK = MLKBox.Text.Length > 0;
+            validPK = MLKBox.Text.Length > 0 && MLKBox.Text.Length <= 6;
             MLKBox.BorderBrush = validPK == true ? correctColor : incorrectColor;
         }
 
 
         private void MaHH_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            validMHH = MaHHBox.Text.Length > 0 && MaHHBox.Text.Length <= 5;
+            MLKBox.BorderBrush = validPK == true ? correctColor : incorrectColor;
         }
 
         private void SLDN_TextChanged(object sender, TextChangedEventArgs e)
@@ -102,7 +103,7 @@ namespace QuanLiCantin
 
         public bool AllValid()
         {
-            return validBegin && validEnd && validDate && MLKBox.Text.Length > 0 == true;
+            return validBegin && validEnd && validDate && validPK && validMHH == true;
         }
     }
 }

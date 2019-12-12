@@ -22,9 +22,12 @@ namespace QuanLiCantin
     public partial class MainWindow : Window
     {
         bool signInMode = false; //Default: sign in as staff
+        static string empName = null;
+
         public MainWindow()
         {
             InitializeComponent();
+            empName = null;
         }
 
 
@@ -131,61 +134,57 @@ namespace QuanLiCantin
 
         private void SignIn(object sender, RoutedEventArgs e)
         {
-            
             if (boxLoginUser.Text.Length == 0 || boxLoginPassword.Password.Length == 0)
             {
                 MessageBox.Show("Vui lòng nhập đủ các trường");
                 return;
             }
-            int accountType = signInMode == false ? 2 : 1;
-            string sql = $"Select * from NhanVien where TenDN = '{boxLoginUser.Text}' and LoaiNV={accountType} and MatKhau='{boxLoginPassword.Password}'";
+            int accountType = signInMode ? 1 : 2;
+            string sql = $"Select * from NhanVien where TenDN = @loginName and LoaiNV= @accountType and MatKhau=@password";
             SqlConnection conn = DBUtils.GetDBConnection();
             try
             {
                 conn.Open();
 
+                var cmd = new SqlCommand(sql, conn);
 
-                // Tạo một đối tượng Command.
-                SqlCommand cmd = new SqlCommand();
-
-                // Liên hợp Command với Connection.
-                cmd.Connection = conn;
-                cmd.CommandText = sql;
+                cmd.Parameters.AddWithValue("@loginName", boxLoginUser.Text);
+                cmd.Parameters.AddWithValue("@accountType", accountType);
+                cmd.Parameters.AddWithValue("@password", boxLoginPassword.Password);
 
                 using (DbDataReader reader = cmd.ExecuteReader())
                 {
-                    if (reader.HasRows)
+                    if (reader.Read())
                     {
-                       while (reader.Read())
+                        if (!signInMode)
                         {
-                            Global.nhanVien = new NhanVien();
-                            Global.nhanVien.MaNV = (string)reader.GetValue(0);
-                            Global.nhanVien.LoaiNV = (int)reader.GetValue(1);
-                            Global.nhanVien.TenNV = (string)reader.GetValue(2);
-                            Global.nhanVien.TenDN = (string)reader.GetValue(3);
-                            Global.nhanVien.MatKhau = (string)reader.GetValue(4);
-                        }
-                        if (signInMode == false)
-                        {
+                            empName = Convert.ToString(reader.GetValue(2)).Trim().ToUpper();
                             MenuWindow menu = new MenuWindow();
                             menu.Show();
-                            this.Close();                        }
+                            this.Close();
+                        }
                         else
                         {
+                            empName = Convert.ToString(reader.GetValue(2)).Trim().ToUpper();
                             var mng = new ManagerWindow();
                             mng.Show();
                             this.Close();
                         }
+                        cmd.Dispose();
                         return;
                     }
                     MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu");
+                    cmd.Dispose();
                     conn.Close();
+                    conn.Dispose();
+                    return;
                 }
             }
             catch (Exception err)
             {
-                MessageBox.Show("Lỗi kết nối, vui lòng thử lại");
+                MessageBox.Show($"Lỗi kết nối, vui lòng thử lại");
             }
+            return;
         }
 
         private void BackToMainFromLogin(object sender, RoutedEventArgs e)
@@ -198,7 +197,7 @@ namespace QuanLiCantin
 
         public static string GetUsername()
         {
-            return boxLoginUser.Text;
+            return empName;
         }
     }
 }
