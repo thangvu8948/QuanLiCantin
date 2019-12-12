@@ -11,7 +11,7 @@ namespace QuanLiCantin
     {
         public static SqlConnection GetDBConnection()
         {
-            string datasource = @"DESKTOP-S11RR64\SQLEXPRESS";
+            string datasource = ".\\SQLEXPRESS";
 
             string database = "qlct";
 

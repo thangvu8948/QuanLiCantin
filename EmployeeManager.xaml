@@ -7,8 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Width="778" Height="544">
     <Grid x:Name="EM_UI" Width="778" Height="544">
-        <DataGrid x:Name="EmployeeTable" ItemsSource="{Binding DisplayedEmployee}" AutoGenerateColumns="False" Background="#FFE2D4D4" Margin="1,58,0,155" SelectionChanged="EmployeeTable_SelectionChanged" BorderBrush="#89A04949"
-                  IsReadOnly="True" HorizontalAlignment="Left" Width="610" Height="331">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="127*"/>
+            <RowDefinition Height="145*"/>
+        </Grid.RowDefinitions>
+        <DataGrid x:Name="EmployeeTable" ItemsSource="{Binding DisplayedEmployee}" AutoGenerateColumns="False" Background="#FFE2D4D4" Margin="3,58,0,130" SelectionChanged="EmployeeTable_SelectionChanged" BorderBrush="#89A04949"
+                  IsReadOnly="True" HorizontalAlignment="Left" Width="771" Height="356" Grid.RowSpan="2">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="Background" Value="Turquoise"/>
@@ -28,30 +32,54 @@
                     <Setter Property="BorderBrush" Value="Black"/>
                     <Setter Property="BorderThickness" Value="1, 2, 2, 3"/>
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
                 </Style>
             </DataGrid.Resources>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header= "ID" Binding="{Binding ID}" Width= "60" CanUserResize="False"/>
-                <DataGridTextColumn Header= "Vị trí" Binding="{Binding Role}" Width= "60" CanUserResize="False"/>
+                <DataGridTextColumn Header= "ID" Binding="{Binding ID}" Width= "80">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style>
+                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header= "Vị trí" Binding="{Binding Role}" Width= "60">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style>
+                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header= "Tên" Binding="{Binding Name}" Width= "*"/>
-                <DataGridTextColumn Header= "Tên đăng nhập" Binding="{Binding LoginName}" Width= "150"/>
+                <DataGridTextColumn Header= "Tên đăng nhập" Binding="{Binding LoginName}" Width= "200"/>
                 <DataGridTextColumn Header= "Mật khẩu" Binding="{Binding Password}" Width= "150"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Ellipse x:Name="InfoButton" HorizontalAlignment="Left" Height="40" Margin="710,9,0,0" Stroke="Black" VerticalAlignment="Top" Width="40">
-            <Ellipse.Fill>
-                <ImageBrush ImageSource="Images/ExtraIcon/icon2.jpg"/>
-            </Ellipse.Fill>
-        </Ellipse>
-        <Button x:Name="ShowAllEmployees" Content="Hiện tất cả" HorizontalAlignment="Left" Height="48" Margin="615,117,0,0" VerticalAlignment="Top" Width="153" Click="ShowAllEmployees_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
-            BorderThickness="2,2,2,2"/>
-        <Button x:Name="SearchEmployee" Content="Tìm nhân viên" HorizontalAlignment="Left" Height="48" Margin="615,176,0,0" VerticalAlignment="Top" Width="153" Click="SearchEmployees_Click" FontSize="18" Background="#FF673AB7" Foreground="White" BorderBrush="#FF673AB7"
-            BorderThickness="2,2,2,2"/>
-        <local:EmployeeSearchUI x:Name="EmployeeSearchBox" HorizontalAlignment="Left" Height="199" Margin="70,144,0,0" VerticalAlignment="Top" Width="500" Loaded="EmployeeSearchUI_Loaded" MouseEnter="EmployeeSearchBox_MouseEnter" MouseLeave="EmployeeSearchBox_MouseLeave"/>
-        <Button x:Name="AddEmployee" Content="Thêm nhân viên" HorizontalAlignment="Left" Height="48" Margin="615,235,0,0" VerticalAlignment="Top" Width="153" Click="AddEmployees_Click" FontSize="16" Background="#FF673AB7" Foreground="White" BorderBrush="#FF673AB7"
-            BorderThickness="2,2,2,2"/>
-        <Button x:Name="RemoveEmployee" Content="Xóa nhân viên" HorizontalAlignment="Left" Height="48" Margin="615,294,0,0" VerticalAlignment="Top" Width="153" Click="RemoveEmployees_Click" FontSize="18" Background="#FF673AB7" Foreground="White" BorderBrush="#FF673AB7"
-            BorderThickness="2,2,2,2"/>
+        <Button x:Name="ShowAllEmployees" Content="Hiện tất cả" Height="48" HorizontalAlignment="Center" Margin="6,168,6,0"  VerticalAlignment="Top" Width="766" Click="ShowAllEmployees_Click" FontSize="20" Background="Indigo" Foreground="Yellow" BorderBrush="Yellow"
+            BorderThickness="4,4,4,4" Grid.Row="1"/>
+        <Button x:Name="UpdateEmployee" Content="Sửa thông tin NV" HorizontalAlignment="Left" Height="48" Margin="549,226,0,0" VerticalAlignment="Top" Width="220" Click="SearchEmployees_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
+            BorderThickness="2,2,2,2" Grid.Row="1"/>
+        <Button x:Name="AddEmployee" Content="Thêm nhân viên" HorizontalAlignment="Left" Height="48" Margin="6,226,0,0" VerticalAlignment="Top" Width="220" Click="AddEmployees_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
+            BorderThickness="2,2,2,2" Grid.Row="1"/>
+        <Button x:Name="RemoveEmployee" Content="Xóa nhân viên" HorizontalAlignment="Center" Height="48" Margin="279,226,279,0" VerticalAlignment="Top" Width="220" Click="RemoveEmployees_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
+            BorderThickness="2,2,2,2" Grid.Row="1"/>
+        <Rectangle x:Name="BlockScreen" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="544" Margin="0" Stroke="Black" VerticalAlignment="Top" Width="778" Opacity="0.01" d:IsHidden="True" Grid.RowSpan="2"/>
+        <TextBox x:Name="NameSearchBox" HorizontalAlignment="Left" Height="48" Margin="141,2,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="229" Foreground="Black" Background="White"
+            BorderThickness="2,2,2,2" BorderBrush="Black" TextAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" FontWeight="DemiBold" FontSize="18" TextChanged="NameSearchBox_TextChanged"/>
+        <TextBlock HorizontalAlignment="Left" Height="32" Margin="12,14,0,0" TextWrapping="Wrap" Text="Tên nhân viên:" VerticalAlignment="Top" Width="170" Foreground="Black"
+            FontSize="18" FontWeight="Medium"/>
+        <Button x:Name="SearchEmployees" Content="TÌM" HorizontalAlignment="Right" Height="48" Margin="0,2,10,0" VerticalAlignment="Top" Width="81" Click="SearchEmployees_Click"
+            BorderThickness="2,2,2,2" BorderBrush="Black" FontWeight="Bold" FontSize="20"/>
+        <ComboBox x:Name="RoleSearchBox" HorizontalAlignment="Left" Height="48" Margin="462,2,0,0" Text="1111" VerticalAlignment="Top" Width="212" Foreground="Black" Background="White"
+            BorderThickness="2,2,2,2" BorderBrush="Black" VerticalContentAlignment="Center" Padding="5,0,0,0" FontWeight="DemiBold" FontSize="18" SelectionChanged="RoleSearchBox_SelectionChanged">
+            <ComboBoxItem Content="Quản lý (1)" Foreground="White" Background="#FF342C2C"></ComboBoxItem >
+            <ComboBoxItem Content="Nhân viên (2)" Foreground="White" Background="#FF342C2C"></ComboBoxItem >
+            <ComboBoxItem Content="Tất cả" Foreground="White" Background="#FF342C2C"></ComboBoxItem >
+        </ComboBox>
+        <TextBlock HorizontalAlignment="Left" Height="32" Margin="409,14,0,0" TextWrapping="Wrap" Text="Vị trí:" VerticalAlignment="Top" Width="49" Foreground="Black"
+            FontSize="18" FontWeight="Medium"/>
     </Grid>
 </UserControl>

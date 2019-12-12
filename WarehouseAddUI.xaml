@@ -35,6 +35,6 @@
         <TextBlock HorizontalAlignment="Left" Height="33" Margin="125,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" TextAlignment="Left"
             FontSize="18" FontWeight ="DemiBold" Text="Ngày lưu kho" Foreground="White" Grid.Column="1"/>
         <TextBox x:Name="DateBox" HorizontalAlignment="Left" Height="34" Margin="249,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" BorderBrush="#E500FFFF"
-            BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="Medium" Padding="5,0,0,0" TextChanged="Date_TextChanged" FontSize="15" Grid.Column="1"/>
+            BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="Medium" Padding="5,0,0,0" TextChanged="Date_TextChanged" FontSize="15" Grid.Column="1" MouseEnter="DateBox_MouseEnter"/>
     </Grid>
 </UserControl>

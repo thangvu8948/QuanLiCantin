@@ -6,9 +6,20 @@
              xmlns:local="clr-namespace:QuanLiCantin"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Width="778" Height="544" Loaded="WarehouseUI_Loaded" Unloaded="WarehouseUI_Unloaded">
-    <Grid x:Name="WH_UI" Width="778" Height="544">
-        <DataGrid x:Name="ItemTable" ItemsSource="{Binding DisplayedItems}" AutoGenerateColumns="False" Background="#FFE2D4D4" Margin="1,58,0,155" SelectionChanged="ItemTable_SelectionChanged" BorderBrush="#89A04949"
-                  IsReadOnly="True" HorizontalAlignment="Left" Width="610" Height="331">
+    <Grid x:Name="WH_UI" Width="778" Height="544" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Button x:Name="AddItemButton" Content="Lập phiếu lưu kho..." HorizontalAlignment="Left" Height="48" Margin="6,480,0,0" VerticalAlignment="Top" Width="220" Click="AddItemButton_Click" BorderBrush="#FF333038" Foreground="Black" Background="White" BorderThickness="2,2,2,2"/>
+        <Button x:Name="ShowAllItemsButton" Content="Hiện tất cả" HorizontalAlignment="Center" Height="48" Margin="0,422,0,0" VerticalAlignment="Top" Width="765" Click="ShowAllItemsButton_Click"  FontSize="20" Background="Indigo" Foreground="Yellow" BorderBrush="Yellow"
+                BorderThickness="4,4,4,4"/>
+        <TextBox x:Name="MLKFindBox" HorizontalAlignment="Left" Height="48" Margin="119,2,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="163" Foreground="Black" Background="White"
+                 BorderThickness="2,2,2,2" BorderBrush="Black" TextAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" FontWeight="DemiBold" FontSize="18" TextChanged="FindBox_TextChanged"/>
+        <TextBlock HorizontalAlignment="Left" Height="32" Margin="12,14,0,0" TextWrapping="Wrap" Text="Mã lưu kho:" VerticalAlignment="Top" Width="170" Foreground="Black"
+                   FontSize="18" FontWeight="Medium"/>
+        <Button x:Name="SearchButton" Content="TÌM" HorizontalAlignment="Right" Height="48" Margin="0,2,10,0" VerticalAlignment="Top" Width="81" Click="SearchButton_Click"
+                BorderThickness="2,2,2,2" BorderBrush="Black" FontWeight="Bold" FontSize="20"/>
+        <Button x:Name="DeleteItem" Content="Xóa phiếu lưu kho..." HorizontalAlignment="Center" Height="48" Margin="279,480,279,0" VerticalAlignment="Top" Width="220" Click="DeleteItem_Click" BorderBrush="#FF333038" Foreground="Black" Background="White" BorderThickness="2,2,2,2"/>
+        <Button x:Name="UpdateItem" Content="Sửa phiếu lưu kho..." HorizontalAlignment="Left" Height="48" Margin="549,480,0,0" VerticalAlignment="Top" Width="220" Click="UpdateItem_Click" BorderBrush="#FF333038" Foreground="Black" Background="White" BorderThickness="2,2,2,2"/>
+        <DataGrid x:Name="ItemTable" ItemsSource="{Binding DisplayedItems}" AutoGenerateColumns="False" Background="#FFE2D4D4" Margin="3,58,0,130" SelectionChanged="ItemTable_SelectionChanged" BorderBrush="#89A04949"
+                  IsReadOnly="True" HorizontalAlignment="Left" Width="771" Height="356">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -28,28 +39,24 @@
                     <Setter Property="BorderBrush" Value="Black"/>
                     <Setter Property="BorderThickness" Value="1, 2, 2, 3"/>
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+                    <Setter Property="TextBlock.TextAlignment" Value="Center"/>
                 </Style>
             </DataGrid.Resources>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header= "MaLK" Binding="{Binding MLK}" Width= "100" CanUserResize="False"/>
-                <DataGridTextColumn Header= "MaHH" Binding="{Binding MaHH}" Width= "100" CanUserResize="False"/>
+                <DataGridTextColumn Header= "MaLK" Binding="{Binding MLK}" Width= "150" CanUserResize="False"/>
+                <DataGridTextColumn Header= "MaHH" Binding="{Binding MaHH}" Width= "150" CanUserResize="False"/>
                 <DataGridTextColumn Header= "SL đầu ngày" Binding="{Binding SLDN}" Width= "125" CanUserResize="False"/>
                 <DataGridTextColumn Header= "SL cuối ngày" Binding="{Binding SLCN}" Width= "125" CanUserResize="False"/>
-                <DataGridTextColumn Header= "Ngày lưu kho" CanUserResize="False" Binding="{Binding NLK, StringFormat=\{\0:dd/MM/yyyy\}}" Width= "*"/>
+                <DataGridTextColumn Header= "Ngày lưu kho" CanUserResize="False" Binding="{Binding NLK, StringFormat=\{0:dd/MM/yyyy\}}" Width= "*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="AddItemButton" Content="Lập phiếu lưu kho..." HorizontalAlignment="Left" Height="48" Margin="615,176,0,0" VerticalAlignment="Top" Width="153" Click="AddItemButton_Click" BorderBrush="#FF333038" Foreground="Black" Background="White"/>
-        <local:WarehouseAddUI x:Name="ImportAddBox" HorizontalAlignment="Left" Height="215" VerticalAlignment="Top" Width="500" Margin="56,144,0,0" Loaded="ImportAddBox_Loaded" MouseEnter="ImportAddBox_MouseEnter" MouseLeave="ImportAddBox_MouseLeave"/>
-        <Button x:Name="ShowAllItemsButton" Content="Hiện tất cả" HorizontalAlignment="Left" Height="48" Margin="615,117,0,0" VerticalAlignment="Top" Width="153" Click="ShowAllItemsButton_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
-                BorderThickness="2,2,2,2"/>
-        <TextBox x:Name="FindBox" HorizontalAlignment="Left" Height="48" Margin="111,401,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="207" Foreground="Black" Background="White"
-                 BorderThickness="2,2,2,2" BorderBrush="Black" TextAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" FontWeight="DemiBold" FontSize="18" TextChanged="FindBox_TextChanged"/>
-        <TextBlock HorizontalAlignment="Left" Height="32" Margin="6,412,0,0" TextWrapping="Wrap" Text="Tìm hàng:" VerticalAlignment="Top" Width="82" Foreground="Black"
-                   FontSize="18" FontWeight="Medium"/>
-        <Button x:Name="SearchButton" Content="Tìm" HorizontalAlignment="Left" Height="48" Margin="316,401,0,0" VerticalAlignment="Top" Width="81" Click="SearchButton_Click"
-                BorderThickness="2,2,2,2" BorderBrush="Black"/>
-        <Button x:Name="DeleteItem" Content="Xóa phiếu lưu kho..." HorizontalAlignment="Left" Height="48" Margin="615,235,0,0" VerticalAlignment="Top" Width="153" Click="DeleteItem_Click" BorderBrush="#FF333038" Foreground="Black" Background="White"/>
-        <Button x:Name="UpdateItem" Content="Sửa phiếu lưu kho..." HorizontalAlignment="Left" Height="48" Margin="615,294,0,0" VerticalAlignment="Top" Width="153" Click="UpdateItem_Click" BorderBrush="#FF333038" Foreground="Black" Background="White"/>
+        <Rectangle x:Name="BlockScreen" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="544" Margin="0" Stroke="Black" VerticalAlignment="Top" Width="778" Opacity="0.01" d:IsHidden="True"/>
+        <local:WarehouseAddUI x:Name="StorageAddBox" HorizontalAlignment="Center" Height="214" VerticalAlignment="Center" Width="500" Margin="0,-40,0,0" Loaded="StorageAddBox_Loaded" MouseEnter="StorageAddBox_MouseEnter" MouseLeave="StorageAddBox_MouseLeave"/>
+        <TextBox x:Name="MHHFindBox" HorizontalAlignment="Left" Height="48" Margin="469,2,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="183" Foreground="Black" Background="White"
+            BorderThickness="2,2,2,2" BorderBrush="Black" TextAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" FontWeight="DemiBold" FontSize="18" TextChanged="MHHFindBox_TextChanged"/>
+        <TextBlock HorizontalAlignment="Left" Height="32" Margin="352,14,0,0" TextWrapping="Wrap" Text="Mã hàng hóa:" VerticalAlignment="Top" Width="118" Foreground="Black"
+            FontSize="18" FontWeight="Medium"/>
     </Grid>
 </UserControl>

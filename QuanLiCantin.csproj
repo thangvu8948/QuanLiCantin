@@ -67,17 +67,16 @@
     <Compile Include="EmployeeManager.xaml.cs">
       <DependentUpon>EmployeeManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EmployeeSearchUI.xaml.cs">
-      <DependentUpon>EmployeeSearchUI.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Global.cs" />
     <Compile Include="ManagerWindow.xaml.cs">
       <DependentUpon>ManagerWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MenuManager.xaml.cs">
+      <DependentUpon>MenuManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ModifyOrdered.xaml.cs">
       <DependentUpon>ModifyOrdered.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NhanVien.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="RelativeToAbsolutePathConverter.cs" />
     <Compile Include="ThanhToanWindow.xaml.cs">
@@ -97,10 +96,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="EmployeeSearchUI.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -108,6 +103,10 @@
     <Page Include="ManagerWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MenuManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MenuWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

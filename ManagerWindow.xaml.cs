@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace QuanLiCantin
 {
@@ -20,9 +21,7 @@ namespace QuanLiCantin
     /// </summary>
     public partial class ManagerWindow : Window
     {
-        private readonly System.Windows.Threading.DispatcherTimer clock = null;
-        private bool is_clock_loaded = false;
-        private readonly CultureInfo locale = new CultureInfo("vi-VN");
+        public static CultureInfo locale = new CultureInfo("vi-VN");
         
         public ManagerWindow()
         {
@@ -32,39 +31,23 @@ namespace QuanLiCantin
 
             ManagerUI.Children.Remove(WH_UI);
             ManagerUI.Children.Remove(EMP_UI);
-
-
-            clock = new System.Windows.Threading.DispatcherTimer
-            {
-                Interval = TimeSpan.FromMilliseconds(100)
-            };
-            if (is_clock_loaded is false)
-            {
-                clock.Tick += Clock_Tick;
-                is_clock_loaded = true;
-            }
-            Timer.Text = DateTime.Now.ToString("HH:mm:ss\nddd, dd/MM/yyyy", locale);
-            clock.Start();
-        }
-
-        private void Clock_Tick(object sender, EventArgs e)
-        {
-            Timer.Text = 
-                DateTime.Now.ToString("HH:mm:ss\nddd, dd/MM/yyyy", locale);
         }
 
         private void Food_Click(object sender, RoutedEventArgs e)
         {
-            Food.Foreground = Brushes.Yellow;
-            Employee.Foreground = Brushes.White;
-            Warehouse.Foreground = Brushes.White;
-            Exit.Foreground = Brushes.White;
+            if (!ManagerUI.Children.Contains(MM_UI))
+            {
+                Food.Foreground = Brushes.Yellow;
+                Employee.Foreground = Brushes.White;
+                Warehouse.Foreground = Brushes.White;
+                Exit.Foreground = Brushes.White;
 
-            OptionIndicator.Margin = Food.Margin;
-            ManagerMode.Text = string.Empty;
+                OptionIndicator.Margin = Food.Margin;
 
-            ManagerUI.Children.Remove(WH_UI);
-            ManagerUI.Children.Remove(EMP_UI);
+                ManagerUI.Children.Add(MM_UI);
+                ManagerUI.Children.Remove(WH_UI);
+                ManagerUI.Children.Remove(EMP_UI);
+            }
         }
 
 
@@ -79,8 +62,7 @@ namespace QuanLiCantin
         }
 
         private void Employee_Click(object sender, RoutedEventArgs e)
-        {
-            
+        {           
             if (!ManagerUI.Children.Contains(EMP_UI))
             {
                 Food.Foreground = Brushes.White;
@@ -88,11 +70,11 @@ namespace QuanLiCantin
                 Warehouse.Foreground = Brushes.White;
                 Exit.Foreground = Brushes.White;
 
-                ManagerMode.Text = "QUẢN LÝ NHÂN VIÊN";
                 OptionIndicator.Margin = Employee.Margin;
 
                 ManagerUI.Children.Add(EMP_UI);
                 ManagerUI.Children.Remove(WH_UI);
+                ManagerUI.Children.Remove(MM_UI);
             }
         }
 
@@ -116,10 +98,10 @@ namespace QuanLiCantin
                 Exit.Foreground = Brushes.White;
 
                 OptionIndicator.Margin = Warehouse.Margin;
-                ManagerMode.Text = "QUẢN LÝ KHO";
 
                 ManagerUI.Children.Add(WH_UI);
                 ManagerUI.Children.Remove(EMP_UI);
+                ManagerUI.Children.Remove(MM_UI);
             }
         }
 
@@ -137,7 +119,6 @@ namespace QuanLiCantin
         {
             var main_window = new MainWindow();
             main_window.Show();
-            clock.Stop();
             this.Close();
         }
 
@@ -157,6 +138,11 @@ namespace QuanLiCantin
         }
 
         private void EMP_UI_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MM_Loaded(object sender, RoutedEventArgs e)
         {
 
         }

@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.Common;
+using System.ComponentModel;
 
 namespace QuanLiCantin
 {
@@ -26,35 +27,53 @@ namespace QuanLiCantin
     {
         private static ObservableCollection<Employee> EMPLOYEES{ get; set; } = null;
         private static ListCollectionView DisplayedEmployee { get; set; } = null;
-        private readonly bool use_sql = false;
+        private readonly Color purple = Color.FromArgb(0xFF, 67, 0x3A, 0xB7);
 
 
         public EmployeeManager()
         {
             InitializeComponent();
-            EM_UI.Children.Remove(EmployeeSearchBox);
-
-            var tooltip = new ToolTip
+            EM_UI.Children.Remove(BlockScreen);
+            EMPLOYEES = new ObservableCollection<Employee>(EmployeeSQL.GetAllEmployees());
+            DisplayedEmployee = new ListCollectionView(EMPLOYEES)
             {
-                Content = "Vai trò:\n1:Quản lý, 2:Nhân viên"
+                Filter = null
             };
-            InfoButton.ToolTip = tooltip;
-
-            if (!use_sql)
-                EMPLOYEES = new ObservableCollection<Employee>(LoadRandomEmployees());
-            else
-                EMPLOYEES = new ObservableCollection<Employee>(EmployeeSQL.GetAllEmployees());
-            DisplayedEmployee = new ListCollectionView(EMPLOYEES);
             EmployeeTable.ItemsSource = DisplayedEmployee;
         }
 
-        class Employee
+        class Employee : INotifyPropertyChanged
         {
-            public string ID { get; set; }
-            public int Role { get; set; }
-            public string Name { get; set; }
-            public string LoginName { get; set; }
-            public string Password { get; set; }
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            private string _id, _name, _loginName, _password;
+            private int _role;
+
+            public string ID 
+            {
+                get{ return _id;}
+                set{ _id = value; }
+            }
+            public int Role 
+            {
+                get { return _role; }
+                set { if (_role != value) { _role = value; NotifyPropertyChanged("Role"); } }
+            }
+            public string Name
+            {
+                get { return _name; }
+                set { if (_name != value) { _name = value; NotifyPropertyChanged("Name"); } }
+            }
+            public string LoginName
+            {
+                get { return _loginName; }
+                set { if (_loginName != value) { _loginName = value; NotifyPropertyChanged("LoginName"); } }
+            }
+            public string Password
+            {
+                get { return _password; }
+                set { if (_password != value) { _password = value; NotifyPropertyChanged("Password"); } }
+            }
 
             public Employee(string id, int role, string name, string loginName, string password)
             {
@@ -67,23 +86,14 @@ namespace QuanLiCantin
 
             public Employee((string, int, string, string, string) initializer)
                 => (ID, Role, Name, LoginName, Password) = initializer;
-        }
 
-        private ObservableCollection<Employee> LoadRandomEmployees()
-        {
-            var list = new ObservableCollection<Employee>
+            private void NotifyPropertyChanged(string propertyName = "")
             {
-                new Employee("175", 2, "Trần Văn A", "AAA", "AAA1"),
-                new Employee("922", 2, "Nguyễn Thị B", "BBB", "BBB1"),
-                new Employee("028", 1, "Phạm Hoàng C", "CCC", "CCC1"),
-                new Employee("332", 2, "Nguyễn Văn D", "DDD", "DDD1"),
-                new Employee("997", 2, "Lê Quốc E", "EEE", "EEE1"),
-            };
-
-            return list;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
-
+///--------------------------------------------------------------------------------------------------
 
         class EmployeeSQL
         {
@@ -128,12 +138,12 @@ namespace QuanLiCantin
             }
 
 
-            public static void AddEmployee(string id, int role, string name, string loginName, string password)
+            public static bool AddEmployee(string id, int role, string name, string loginName, string password)
             {
                 var conn = DBUtils.GetDBConnection();
 
                 string query =
-                    $"INSERT INTO NhanVien VALUES = (@id, @role, @name, @loginName, @password)";
+                    $"INSERT INTO NhanVien VALUES (@id, @role, @name, @loginName, @password)";
 
                 int affectedRows = 0;
 
@@ -144,29 +154,25 @@ namespace QuanLiCantin
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@role", role);
                     cmd.Parameters.AddWithValue("@name", name);
-                    cmd.Parameters.AddWithValue("@birthday", loginName);
-                    cmd.Parameters.AddWithValue("@startDate", password);
+                    cmd.Parameters.AddWithValue("@loginName", loginName);
+                    cmd.Parameters.AddWithValue("@password", password);
                     affectedRows = cmd.ExecuteNonQuery();
                     cmd.Dispose();
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Error inserting data");
-                    Debug.WriteLine($"Error:{e.Message}");
+                    MessageBox.Show($"Lỗi khi thêm dữ liệu\n{e.Message}");
                 }
                 finally
                 {
-                    if (affectedRows > 0)
-                    {
-                        EMPLOYEES = GetAllEmployees();
-                    }
                     conn.Close();
                     conn.Dispose();
                 }
 
+                return affectedRows > 0;
             }
 
-            public static void RemoveEmployeeByID(string id)
+            public static bool RemoveEmployee(string id)
             {
                 var conn = DBUtils.GetDBConnection();
 
@@ -184,26 +190,24 @@ namespace QuanLiCantin
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Error removing data");
-                    Debug.WriteLine($"Error:{e.Message}");
+                    MessageBox.Show($"Lỗi khi xóa dữ liệu\n{e.Message}");
                 }
                 finally
                 {
-                    if (affectedRows > 0)
-                    {
-                        EMPLOYEES = GetAllEmployees();
-                    }
                     conn.Close();
                     conn.Dispose();
                 }
+
+                return affectedRows > 0;
             }
 
-            public static void UpdateEmployeeByID(string id, int columnIndex, string updatedValue)
+            public static bool UpdateEmployee(string id, int role, string name, string loginName, string password)
             {
-                string[] properties = { "MaNV", "LoaiNV", "Ten", "TenDN", "MatKhau" };
                 var conn = DBUtils.GetDBConnection();
 
-                string query = $"UPDATE NhanVien SET {properties[columnIndex]} = @updatedValue WHERE MANV = @id";
+                string query = $"UPDATE NhanVien " +
+                    $"SET LoaiNV = @role, Ten = @name, TenDN = @loginName, MatKhau = @password " +
+                    $"WHERE MaNV = @id";
 
                 int affectedRows = 0;
 
@@ -212,24 +216,24 @@ namespace QuanLiCantin
                     conn.Open();
                     var cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@id", id);
-                    cmd.Parameters.AddWithValue("@updatedValue", updatedValue);
+                    cmd.Parameters.AddWithValue("@role", role);
+                    cmd.Parameters.AddWithValue("@name", name);
+                    cmd.Parameters.AddWithValue("@loginName", loginName);
+                    cmd.Parameters.AddWithValue("@password", password);
                     affectedRows = cmd.ExecuteNonQuery();
                     cmd.Dispose();
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Error updating data");
-                    Debug.WriteLine($"Error:{e.Message}");
+                    MessageBox.Show($"Lỗi khi cập nhật dữ liệu\n{e.Message}");
                 }
                 finally
                 {
-                    if (affectedRows > 0)
-                    {
-                        EMPLOYEES = GetAllEmployees();
-                    }
                     conn.Close();
                     conn.Dispose();
                 }
+
+                return affectedRows > 0;
             }
         }
 
@@ -241,11 +245,14 @@ namespace QuanLiCantin
             DisplayedEmployee.Filter = null;
         }
 
+///--------------------------------------------------------------------------------------------------
+
+
         public bool EmployeeFilter(object obj)
         {
             var emp = obj as Employee;
-            int role = EmployeeSearchBox.RoleSelection.SelectedIndex + 1;
-            var name = EmployeeSearchBox.NameSearchBox.Text;
+            int role = RoleSearchBox.SelectedIndex + 1;
+            var name = NameSearchBox.Text;
             if (role > 0 && role < 3)
             {
                 if (emp.Role == role)
@@ -255,63 +262,63 @@ namespace QuanLiCantin
             }
             else
             {
-                return emp.Name.ToLower().Contains(name.ToLower().Trim());
+                if (name.Length > 0)
+                    return emp.Name.ToLower().Contains(name.ToLower().Trim());
+                return true;
             }
         }
-
-
-        protected bool search_first_load = true;
 
         private void SearchEmployees_Click(object sender, RoutedEventArgs e)
         {
-            if (!EM_UI.Children.Contains(EmployeeSearchBox))
-                EM_UI.Children.Add(EmployeeSearchBox);
-            if (search_first_load is true)
-            {
-                EmployeeSearchBox.Confirm.Click += Confirm_Click;
-                EmployeeSearchBox.Quit.Click += Quit_Click;
-                search_first_load = false;
-            }
+           DisplayedEmployee.Filter = new Predicate<object>(EmployeeFilter);
         }
 
-        private void Quit_Click(object sender, RoutedEventArgs e)
-        {
-            EM_UI.Children.Remove(EmployeeSearchBox);
-        }
+///--------------------------------------------------------------------------------------------------
 
-        private void Confirm_Click(object sender, RoutedEventArgs e)
-        {
-            DisplayedEmployee.Filter = new Predicate<object>(EmployeeFilter);
-            EM_UI.Children.Remove(EmployeeSearchBox);
-        }
-
-        private void EmployeeSearchUI_Loaded(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void EmployeeTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
 
         private void AddEmployees_Click(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }
 
+
+///--------------------------------------------------------------------------------------------------
+
         private void RemoveEmployees_Click(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }
 
-        private void EmployeeSearchBox_MouseEnter(object sender, MouseEventArgs e)
+
+///--------------------------------------------------------------------------------------------------
+
+        private void EmployeeTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            EmployeeSearchBox.Opacity = 1;
         }
 
-        private void EmployeeSearchBox_MouseLeave(object sender, MouseEventArgs e)
+///--------------------------------------------------------------------------------------------------
+
+        private void UnhighlightButton(Button button)
         {
-            EmployeeSearchBox.Opacity = 0.6;
+            button.Foreground = Brushes.Black;
+            button.Background = Brushes.White;
+            button.BorderBrush = Brushes.Black;
+        }
+
+        private void HighlightButton(Button clickedButton)
+        {
+            clickedButton.Foreground = Brushes.Cyan;
+            clickedButton.Background = new SolidColorBrush(purple);
+            clickedButton.BorderBrush = Brushes.Cyan;
+        }
+
+        private void RoleSearchBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+        }
+
+        private void NameSearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
