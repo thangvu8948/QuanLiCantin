@@ -7,22 +7,25 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
-        Title="Login" Height="600" Width="1200"
-        Background="Black" Foreground="White">
+        WindowState="Maximized"
+        Title="Phục vụ"
+        MinHeight="850"
+        MinWidth="1500"
+        Background="Black" Foreground="White" d:DesignWidth="1848" d:DesignHeight="856">
     <Window.Resources>
         <local:RelativeToAbsolutePathConverter x:Key="converter"/>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="4*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
             <TextBlock Name ="TenNVText" Text="{Binding TenNV}" FontSize="20" Padding="10, 3"/>
             <TextBlock Text="Nhân viên" Padding="10, 3"/>
             <Button Content="Thực đơn" Margin="0, 150, 0, 0" Padding= "5, 10" Height="60" FontSize="20" FontWeight="Bold" HorizontalAlignment="Stretch"/>
-          
+            
             <Button Content="Đăng xuất" Padding= "5, 10" FontSize="20" Height="60" FontWeight="Bold" HorizontalAlignment="Stretch" Click="DangXuatClick"/>
 
         </StackPanel>
@@ -32,12 +35,17 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <ComboBox  Margin="0, 10, 0, 10" Height="40" Width="120">
-                <ComboBoxItem Content="Tất cả" IsSelected="True" Tag="All"  Selected="All_select"/>
-                <ComboBoxItem Content="Điểm tâm" Tag="Bf"  Selected="Bf_select"/>
-                <ComboBoxItem Content="Ăn trưa" Tag="Dr"  Selected="La_select"/>
-                <ComboBoxItem Content="Thức uống" Tag="La"  Selected="Dr_select"/>
-            </ComboBox>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBox Name="TimKiemTextbox" Width="600" Height="50" Margin="20,20,20,20" VerticalContentAlignment="Center" materialDesign:HintAssist.Hint="Tìm kiếm" FontSize="22" Padding="6,2,6,3" BorderBrush="White" BorderThickness="1"/>
+                <ComboBox  Margin="20,20,20,20" Height="40" Width="120">
+                    <ComboBoxItem Content="Tất cả" IsSelected="True" Tag="All"  Selected="All_select"/>
+                    <ComboBoxItem Content="Điểm tâm" Tag="Bf"  Selected="Bf_select"/>
+                    <ComboBoxItem Content="Ăn trưa" Tag="Dr"  Selected="La_select"/>
+                    <ComboBoxItem Content="Thức uống" Tag="La"  Selected="Dr_select"/>
+                </ComboBox>
+                <Button Width="80" Height="40" Content="Tìm"  Margin="20,29"  Click="TimKiemClick"/>
+            </StackPanel>
+            
             <ListView Name="MenuList" Grid.Row="1" 
                       ScrollViewer.CanContentScroll="True"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -61,7 +69,7 @@
                                        Text="{Binding Name}"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
-                                       Foreground="Red"
+                                       Foreground="White"
                                        TextAlignment="Center"
                                        FontWeight="Bold"
                                            Width="280"
@@ -73,7 +81,7 @@
                                        Text="{Binding Price}"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
-                                       Foreground="Red"
+                                       Foreground="Yellow"
                                        TextAlignment="Center"
                                        FontWeight="Bold"
                                            Width="200"
@@ -134,10 +142,10 @@
                                        VerticalAlignment="Center"
                                        TextAlignment="Left"
                                        HorizontalAlignment="Left"
-                                       Foreground="Red"
+                                       Foreground="White"
                                        FontWeight="Bold"
-                                       FontSize="13"
-                                           Height="50" Width="100"/>
+                                       FontSize="15"
+                                           Height="40" Width="100"/>
 
                                 </Border>
                                 <Border BorderBrush="AliceBlue"  Width="60" Height="50">
@@ -145,11 +153,11 @@
                                        Text="{Binding SoLuong}"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Right"
-                                       Foreground="Red"
+                                       Foreground="Yellow"
                                        TextAlignment="Right"
                                        FontWeight="Bold"
-                                       FontSize="13"
-                                           Height="50"
+                                       FontSize="15"
+                                           Height="40"
                                           />
 
                                 </Border>

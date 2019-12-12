@@ -45,7 +45,7 @@ namespace QuanLiCantin
                 Debug.WriteLine("Openning Connection ...");
                 conn.Open();
                 Debug.WriteLine("Connection successful!");
-                BindingList<Product> products = ProductDAO.GetAllProducts(_typeFood);
+                BindingList<Product> products = ProductDAO.GetAllProducts(_typeFood, query);
                 if (products != null)
                 {
                     MessageBox.Show($"{products[0].Name} \r\n {products[0].Price}");
@@ -71,24 +71,33 @@ namespace QuanLiCantin
         BindingList<Product> _products = null;
         BindingList<Order> _orders = null;
         int _typeFood = 0;
+        string query = "";
 
         class ProductDAO : INotifyPropertyChanged
         {
             public event PropertyChangedEventHandler PropertyChanged;
 
-            public static BindingList<Product> GetAllProducts(int type)
+            public static BindingList<Product> GetAllProducts(int type, string search)
             {
-                string sql = "Select * from MonAn";
+                string sql = $"Select * from MonAn and TENMON";
                 SqlConnection conn = DBUtils.GetDBConnection();
                 try
                 {
                     conn.Open();
                     switch (type)
                     {
-                        case 0: sql = "Select * from MonAn"; break;
-                        case 1: sql = "Select * from MonAn where MALOAI = 1"; break;
-                        case 2: sql = "Select * from MonAn where MALOAI = 2"; break;
-                        case 3: sql = "Select * from MonAn where MALOAI = 3"; break;
+                        case 0: sql = $"Select * from MonAn"; break;
+                        case 1: sql = $"Select * from MonAn where MALOAI = 1"; break;
+                        case 2: sql = $"Select * from MonAn where MALOAI = 2"; break;
+                        case 3: sql = $"Select * from MonAn where MALOAI = 3"; break;
+                    }
+                    if (search.Length > 0)
+                    {
+                        if (type == 0)
+                        {
+                            sql += $" where TENMON like N'%{search}%'";
+                        }
+                        else sql += $" and TENMON like N'%{search}%'";
                     }
 
                     // Tạo một đối tượng Command.
@@ -150,7 +159,7 @@ namespace QuanLiCantin
             _orders = new BindingList<Order>();
             OrderedList.ItemsSource = _orders;
 
-            _products = ProductDAO.GetAllProducts(_typeFood);
+            _products = ProductDAO.GetAllProducts(_typeFood, query);
             MenuList.ItemsSource = _products;
             MenuList.MouseLeftButtonUp += ChooseProduct;
 
@@ -238,7 +247,7 @@ namespace QuanLiCantin
             if (_products != null)
             {
                 _products.Clear();
-                _products = ProductDAO.GetAllProducts(_typeFood);
+                _products = ProductDAO.GetAllProducts(_typeFood, query);
                 MenuList.ItemsSource = _products;
             }
 
@@ -249,7 +258,7 @@ namespace QuanLiCantin
             _typeFood = 1;
             if (_products != null)
                 _products.Clear();
-            _products = ProductDAO.GetAllProducts(_typeFood);
+            _products = ProductDAO.GetAllProducts(_typeFood, query);
             MenuList.ItemsSource = _products;
         }
 
@@ -258,7 +267,7 @@ namespace QuanLiCantin
             _typeFood = 3;
             if (_products != null)
                 _products.Clear();
-            _products = ProductDAO.GetAllProducts(_typeFood);
+            _products = ProductDAO.GetAllProducts(_typeFood, query);
             MenuList.ItemsSource = _products;
         }
 
@@ -267,7 +276,7 @@ namespace QuanLiCantin
             _typeFood = 2;
             if (_products != null)
                 _products.Clear();
-            _products = ProductDAO.GetAllProducts(_typeFood);
+            _products = ProductDAO.GetAllProducts(_typeFood, query);
             MenuList.ItemsSource = _products;
 
         }
@@ -275,6 +284,11 @@ namespace QuanLiCantin
         private void ThanhToanClick(object sender, RoutedEventArgs e)
         {
             Global.orders.Clear();
+            if (_orders.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn món");
+                return;
+            }
             foreach(var order in _orders)
             {
                 Global.orders.Add(order);
@@ -297,6 +311,19 @@ namespace QuanLiCantin
             var main_window = new MainWindow();
             main_window.Show();
             this.Close();
+        }
+
+        private void TimKiemClick(object sender, RoutedEventArgs e)
+        { 
+            string searchString = TimKiemTextbox.Text;
+
+            query = searchString;
+            if (_products != null)
+                _products.Clear();
+            _products = ProductDAO.GetAllProducts(_typeFood, query);
+            MenuList.ItemsSource = _products;
+
+
         }
     }
 
