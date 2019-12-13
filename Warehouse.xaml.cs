@@ -372,7 +372,7 @@ namespace QuanLiCantin
         {
             RemoveRecordBox.Title.Text = "Xóa phiếu lưu kho";
             RemoveRecordBox.OptionName.Text = "Nhập mã lưu kho:";
-            RemoveRecordBox.InputBox.Text = string.Empty;
+            RemoveRecordBox.Reset();
         }
 
 
@@ -447,7 +447,7 @@ namespace QuanLiCantin
 
         private void StorageAddBox_Loaded(object sender, RoutedEventArgs e)
         {
-            StorageAddBox.EmptyAllField();
+            StorageAddBox.Reset();
         }
 
         private void ItemFindBox_TextChanged(object sender, TextChangedEventArgs e)

@@ -24,15 +24,21 @@ namespace QuanLiCantin
         private readonly Brush correctColor = Brushes.LightGreen;
         private readonly Brush incorrectColor = Brushes.Red;
 
-        private int price, count;
+        private int price, count, id;
 
         public MenuItemAddUI()
         {
             InitializeComponent();
-            IDBox.Text = string.Empty;
-            PriceBox.Text = string.Empty;
-            CountBox.Text = string.Empty;
-            NameBox.Text = string.Empty;
+            Reset();
+        }
+
+        public void Reset()
+        {
+            IDBox.Text = string.Empty; IDBox.BorderBrush = Brushes.Cyan;
+            PriceBox.Text = string.Empty; PriceBox.BorderBrush = Brushes.Cyan;
+            CountBox.Text = string.Empty; CountBox.BorderBrush = Brushes.Cyan;
+            NameBox.Text = string.Empty; NameBox.BorderBrush = Brushes.Cyan;
+            MenuItemType.BorderBrush = Brushes.Cyan;
             validID = validPrice = validCount = validName = validType = false;
         }
 
@@ -46,6 +52,7 @@ namespace QuanLiCantin
         private void IDBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             validID = IDBox.Text.Length > 0 && IDBox.Text.Length <= 5;
+            validID &= int.TryParse(IDBox.Text, out id);
             IDBox.BorderBrush = validID ? correctColor : incorrectColor;
         }
 
@@ -86,9 +93,9 @@ namespace QuanLiCantin
             return validCount && validID && validName && validType && validPrice == true;
         }
 
-        public (string, string, int, int, int, string) GetInputData()
+        public (int, string, int, int, int, string) GetInputData()
         {
-            return (IDBox.Text, NameBox.Text, 
+            return (id, NameBox.Text, 
                 price, count, MenuItemType.SelectedIndex + 1, 
                 $"Images/{IDBox.Text}/download.jpg");
         }

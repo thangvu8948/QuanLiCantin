@@ -29,6 +29,14 @@ namespace QuanLiCantin
         public WHItemAddUI()
         {
             InitializeComponent();
+            Reset();
+        }
+
+        public void Reset()
+        {
+            RemainBox.Text = string.Empty; RemainBox.BorderBrush = Brushes.Cyan;
+            IDBox.Text = string.Empty; IDBox.BorderBrush = Brushes.Cyan;
+            NameBox.Text = string.Empty; NameBox.BorderBrush = Brushes.Cyan;
         }
 
         private void RemainBox_TextChanged(object sender, TextChangedEventArgs e)

@@ -20,12 +20,19 @@ namespace QuanLiCantin
     /// </summary>
     public partial class RemoveRecordUI : UserControl
     {
-        private bool isEmpty = true;
+        private bool isEmpty;
 
         public RemoveRecordUI()
         {
             InitializeComponent();
-            InputBox.Text = null;
+
+            InputBox.BorderBrush = Brushes.Cyan;
+
+        }
+
+        public void Reset()
+        {
+            InputBox.Text = string.Empty;
             isEmpty = false;
         }
 
@@ -42,7 +49,7 @@ namespace QuanLiCantin
         private void InputBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             isEmpty = InputBox.Text.Length == 0;
-            InputBox.BorderBrush = isEmpty ? Brushes.Red : Brushes.Cyan;
+            InputBox.BorderBrush = isEmpty ? Brushes.Red : Brushes.Green;
         }
 
         private void Title_TextChanged(object sender, TextChangedEventArgs e)

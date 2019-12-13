@@ -78,6 +78,6 @@
         <TextBlock HorizontalAlignment="Left" Height="32" Margin="409,14,0,0" TextWrapping="Wrap" Text="Vị trí:" VerticalAlignment="Top" Width="49" Foreground="Black"
             FontSize="18" FontWeight="Medium"/>
         <local:RemoveRecordUI x:Name="RemoveRecordBox" HorizontalAlignment="Center" Height="150" Margin="0,0,-40,0" VerticalAlignment="Center" Width="380" Loaded="RemoveRecordBox_Loaded"/>
-        <local:EmployeeAddUI x:Name="EmpAddBox" HorizontalAlignment="Left" Height="276" Margin="148,124,0,0" VerticalAlignment="Top" Width="500" Loaded="EmpAddBox_Loaded"/>
+        <local:EmployeeAddUI x:Name="EmpAddBox" HorizontalAlignment="Left" Height="276" Margin="96,114,0,0" VerticalAlignment="Top" Width="564" Loaded="EmpAddBox_Loaded"/>
     </Grid>
 </UserControl>

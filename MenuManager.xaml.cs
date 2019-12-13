@@ -49,11 +49,11 @@ namespace QuanLiCantin
         {
             public event PropertyChangedEventHandler PropertyChanged;
 
-            private string id, name;
-            private int count, price, type;
+            private string name;
+            private int id, count, price, type;
             private string pic;
 
-            public string MAMON
+            public int MAMON
             {
                 get { return id; }
                 set { id = value; }
@@ -87,7 +87,7 @@ namespace QuanLiCantin
                 set { if (pic != value) { pic = value; NotifyPropertyChanged("HinhAnh"); } }
             }
 
-            public AMenuItem(string id, string name, int price, int count, int type, string pic)
+            public AMenuItem(int id, string name, int price, int count, int type, string pic)
             {
                 MAMON = id;
                 TENMON = name;
@@ -97,7 +97,7 @@ namespace QuanLiCantin
                 HinhAnh = pic;
             }
 
-            public AMenuItem((string, string, int, int, int, string) initializer)
+            public AMenuItem((int, string, int, int, int, string) initializer)
                 => (MAMON, TENMON, GIATIEN, SOLUONG, MALOAI, HinhAnh) = initializer;
 
             private void NotifyPropertyChanged(string propertyName = "")
@@ -122,7 +122,7 @@ namespace QuanLiCantin
                             var menuList = new ObservableCollection<AMenuItem>();
                             while (r.Read())
                             {
-                                var id = Convert.ToString(r.GetValue(0)).Trim();
+                                var id = Convert.ToInt32(r.GetValue(0));
                                 var name = Convert.ToString(r.GetValue(1)).Trim();
                                 var price = Convert.ToInt32(r.GetValue(2));
                                 var count = Convert.ToInt32(r.GetValue(3));
@@ -150,7 +150,7 @@ namespace QuanLiCantin
 
 
             public static bool AddMenuItem
-                (string id, string name, int price, int count, string type)
+                (int id, string name, int price, int count, string type)
             {
                 var conn = DBUtils.GetDBConnection();
 
@@ -185,7 +185,7 @@ namespace QuanLiCantin
                 return affectedRows > 0;
             }
 
-            public static bool RemoveMenuItem(string id)
+            public static bool RemoveMenuItem(int id)
             {
                 var conn = DBUtils.GetDBConnection();
 
@@ -215,7 +215,7 @@ namespace QuanLiCantin
             }
 
             public static bool UpdateMenuItem
-                (string id, string name, int price, int count, string type)
+                (int id, string name, int price, int count, string type)
             {
                 var conn = DBUtils.GetDBConnection();                
 
@@ -303,6 +303,7 @@ namespace QuanLiCantin
         {
             RemoveRecordBox.Title.Text = "Xóa món";
             RemoveRecordBox.OptionName.Text = "ID món cần xóa:";
+            RemoveRecordBox.Reset();
         }
 
         private void RemoveFromMenu_Click(object sender, RoutedEventArgs e)
@@ -324,7 +325,7 @@ namespace QuanLiCantin
         {
             if (RemoveRecordBox.IsValid())
             {
-                var input = RemoveRecordBox.InputBox.Text.Trim();
+                var input = Convert.ToInt32(RemoveRecordBox.InputBox.Text);
                 bool success = MenuSQL.RemoveMenuItem(input);
                 if (success)
                 {
@@ -463,7 +464,7 @@ namespace QuanLiCantin
 
         private void MenuAddBox_Loaded(object sender, RoutedEventArgs e)
         {
-
+            MenuAddBox.Reset();
         }
 
         private void MenuItemNameBox_TextChanged(object sender, TextChangedEventArgs e)
