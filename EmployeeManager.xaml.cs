@@ -397,7 +397,7 @@ namespace QuanLiCantin
         {
             RemoveRecordBox.Title.Text = "Xóa nhân viên";
             RemoveRecordBox.OptionName.Text = "Nhập ID nhân viên:";
-            RemoveRecordBox.InputBox.Text = string.Empty;
+            RemoveRecordBox.Reset();
         }
 
 
@@ -470,7 +470,7 @@ namespace QuanLiCantin
 
         private void EmpAddBox_Loaded(object sender, RoutedEventArgs e)
         {
-
+            EmpAddBox.Reset();
         }
     }
 }

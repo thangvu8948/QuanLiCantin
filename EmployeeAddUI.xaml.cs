@@ -23,12 +23,23 @@ namespace QuanLiCantin
         private readonly Brush correctColor = Brushes.LightGreen;
         private readonly Brush incorrectColor = Brushes.Red;
 
-        private bool validID, validRole, validName, validLoginName, validPassword = false;
+        private bool validID, validRole, validName, validLoginName, validPassword;
         private int role;
 
         public EmployeeAddUI()
         {
             InitializeComponent();
+            Reset();
+        }
+
+        public void Reset()
+        {
+            IDBox.Text = string.Empty; IDBox.BorderBrush = Brushes.Cyan;
+            RoleBox.Text = string.Empty; RoleBox.BorderBrush = Brushes.Cyan;
+            NameBox.Text = string.Empty; NameBox.BorderBrush = Brushes.Cyan;
+            LoginNameBox.Text = string.Empty; LoginNameBox.BorderBrush = Brushes.Cyan;
+            PasswordBox.Text = string.Empty; PasswordBox.BorderBrush = Brushes.Cyan;
+            validID = validRole = validName = validLoginName = validPassword = false;
         }
 
         private void IDBox_TextChanged(object sender, TextChangedEventArgs e)

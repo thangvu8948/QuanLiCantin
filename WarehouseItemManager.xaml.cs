@@ -369,7 +369,7 @@ namespace QuanLiCantin
         {
             RemoveRecordBox.Title.Text = "Xóa hàng hóa";
             RemoveRecordBox.OptionName.Text = "Nhập mã hàng hóa:";
-            RemoveRecordBox.InputBox.Text = string.Empty;
+            RemoveRecordBox.Reset();
         }
 
 

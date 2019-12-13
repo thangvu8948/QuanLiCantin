@@ -31,16 +31,16 @@ namespace QuanLiCantin
         public WarehouseAddUI()
         {
             InitializeComponent();
-            EmptyAllField();
+            Reset();          
         }
 
-        public void EmptyAllField()
+        public void Reset()
         {
-            MLKBox.Text = null;
-            MaHHBox.Text = null;
-            SLDNBox.Text = null;
-            SLCNBox.Text = null;
-            DateBox.Text = null;
+            MLKBox.Text = null; MLKBox.BorderBrush = Brushes.Cyan;
+            MaHHBox.Text = null; MaHHBox.BorderBrush = Brushes.Cyan;
+            SLDNBox.Text = null; SLDNBox.BorderBrush = Brushes.Cyan;
+            SLCNBox.Text = null; SLCNBox.BorderBrush = Brushes.Cyan;
+            DateBox.Text = null; DateBox.BorderBrush = Brushes.Cyan;
         }
 
         private void Confirm_Click(object sender, RoutedEventArgs e)
