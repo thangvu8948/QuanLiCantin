@@ -32,6 +32,7 @@ namespace QuanLiCantin
 
         public void Reset()
         {
+            InputBox.BorderBrush = Brushes.Cyan;
             InputBox.Text = string.Empty;
             isEmpty = false;
         }
@@ -49,7 +50,7 @@ namespace QuanLiCantin
         private void InputBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             isEmpty = InputBox.Text.Length == 0;
-            InputBox.BorderBrush = isEmpty ? Brushes.Red : Brushes.Green;
+            InputBox.BorderBrush = isEmpty ? Brushes.Red : Brushes.LightGreen;
         }
 
         private void Title_TextChanged(object sender, TextChangedEventArgs e)

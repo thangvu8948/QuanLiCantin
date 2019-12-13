@@ -202,7 +202,40 @@ namespace QuanLiCantin
                 }
 
                 return affectedRows > 0;
+            }
 
+            public static bool FindAccount(string loginName)
+            {
+                var conn = DBUtils.GetDBConnection();
+
+                string query =
+                    $"SELECT * FROM TaiKhoan WHERE ID = @loginName";
+
+                try
+                {
+                    conn.Open();
+                    var cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@loginName", loginName);
+                    using (DbDataReader r = cmd.ExecuteReader())
+                    {
+                        if (r.Read())
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                    cmd.Dispose();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show($"Lỗi khi thêm dữ liệu");
+                }
+                finally
+                {
+                    conn.Close();
+                    conn.Dispose();
+                }
+                return false;
             }
 
             public static bool RemoveEmployee(string id)
@@ -358,18 +391,25 @@ namespace QuanLiCantin
             if (EmpAddBox.AllValid())
             {
                 var emp = new Employee(EmpAddBox.GetInputData());
-                bool success;
+                bool success = false;
                 //Insert
                 if (addClick == true)
                 {
-                    bool n = EMPLOYEES.Any(i => i.LoginName == emp.LoginName);
+                    bool n = EmployeeSQL.FindAccount(emp.LoginName);
                     if (n == false)
                     {
                         EmployeeSQL.AddAccount(emp.LoginName, emp.Password, emp.Role);
                     }
-                    success = EmployeeSQL.AddEmployee(emp.ID, emp.Role, emp.Name, emp.LoginName, emp.Password);
+                    bool dupLoginName = EMPLOYEES.Any(i => i.LoginName == emp.LoginName);
+                    if (!dupLoginName)
+                        success = EmployeeSQL.AddEmployee(emp.ID, emp.Role, emp.Name, emp.LoginName, emp.Password);
+                    else
+                    {
+                        MessageBox.Show("Tên đăng nhập đã tồn tại");
+                    }
                     if (success)
                         EMPLOYEES.Add(emp);
+
                 }
 
                 //Update
