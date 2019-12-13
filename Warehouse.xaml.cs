@@ -349,17 +349,6 @@ namespace QuanLiCantin
             Global.UnhighlightButton(addClick == true ? AddItemButton : UpdateItem);
         }
 
-        private void StorageAddBox_MouseEnter(object sender, MouseEventArgs e)
-        {
-            StorageAddBox.Opacity = 1.0;
-        }
-
-        private void StorageAddBox_MouseLeave(object sender, MouseEventArgs e)
-        {
-            StorageAddBox.Opacity = 0.5;
-        }
-
-
 ///--------------------------------------------------------------------------------------------------
 
         protected bool removeFirstLoad = true;

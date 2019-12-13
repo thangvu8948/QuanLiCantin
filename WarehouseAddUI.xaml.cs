@@ -105,5 +105,17 @@ namespace QuanLiCantin
         {
             return validBegin && validEnd && validDate && validPK && validMHH == true;
         }
+
+
+        private void WHItemAddUI_MouseEnter(object sender, MouseEventArgs e)
+        {
+            this.Opacity = 1.0;
+        }
+
+        private void WHItemAddUI_MouseLeave(object sender, MouseEventArgs e)
+        {
+            this.Opacity = 0.5;
+        }
+
     }
 }

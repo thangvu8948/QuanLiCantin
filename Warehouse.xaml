@@ -50,14 +50,14 @@
             </DataGrid.Resources>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header= "MaLK" Binding="{Binding MLK}" Width= "150" CanUserResize="False"/>
-                <DataGridTextColumn Header= "MaHH" Binding="{Binding MaHH}" Width= "150" CanUserResize="False"/>
+                <DataGridTextColumn Header= "Mã lưu kho" Binding="{Binding MLK}" Width= "150" CanUserResize="False"/>
+                <DataGridTextColumn Header= "Mã hàng hóa" Binding="{Binding MaHH}" Width= "150" CanUserResize="False"/>
                 <DataGridTextColumn Header= "SL đầu ngày" Binding="{Binding SLDN}" Width= "125" CanUserResize="False"/>
                 <DataGridTextColumn Header= "SL cuối ngày" Binding="{Binding SLCN}" Width= "125" CanUserResize="False"/>
                 <DataGridTextColumn Header= "Ngày lưu kho" CanUserResize="False" Binding="{Binding NLK, StringFormat=\{0:dd/MM/yyyy\}}" Width= "*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <local:WarehouseAddUI x:Name="StorageAddBox" HorizontalAlignment="Center" Height="214" VerticalAlignment="Center" Width="500" Margin="0,-40,0,0" Loaded="StorageAddBox_Loaded" MouseEnter="StorageAddBox_MouseEnter" MouseLeave="StorageAddBox_MouseLeave"/>
+        <local:WarehouseAddUI x:Name="StorageAddBox" HorizontalAlignment="Center" Height="214" VerticalAlignment="Center" Width="500" Margin="0,-40,0,0" Loaded="StorageAddBox_Loaded"/>
         <local:RemoveRecordUI x:Name="RemoveRecordBox" HorizontalAlignment="Center" Height="150" Margin="199,177,199,217" VerticalAlignment="Center" Width="380" Loaded="RemoveRecordBox_Loaded"/>
     </Grid>
 </UserControl>

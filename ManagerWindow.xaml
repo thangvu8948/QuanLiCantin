@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:QuanLiCantin"
         mc:Ignorable="d"
         Title="ManagerWindow" Height="600" Width="1005" MaxHeight="600" MaxWidth="1005">
-    <Grid x:Name="ManagerUI" Background="#FFE2D4D4">
+    <Grid x:Name="ManagerUI" Background="#FFE2D4D4" d:IsLocked="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="0*"/>
             <RowDefinition/>
@@ -15,24 +15,24 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <DockPanel x:Name="LeftPanel" HorizontalAlignment="Left" Height="569" LastChildFill="False" VerticalAlignment="Top" Width="214" Grid.RowSpan="2" Background="#FF151313"/>
-        <Button x:Name="Food" HorizontalContentAlignment="Left" Content=" QL thực đơn" HorizontalAlignment="Left" Height="79" Margin="0,116,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Food_Click" MouseEnter="Food_MouseEnter" BorderBrush="#FF151313" MouseLeave="Food_MouseLeave" Grid.Row="1" IsCancel="True"/>
-        <Button x:Name="Employee" HorizontalContentAlignment="Left" Content=" QL nhân viên" HorizontalAlignment="Left" Height="79" Margin="0,194,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Employee_Click" MouseEnter="Employee_MouseEnter" BorderBrush="#FF151313" MouseLeave="Employee_MouseLeave" Grid.Row="1" IsCancel="True"/>
-        <Button x:Name="Warehouse" HorizontalContentAlignment="Left" Content=" Quản lý kho" HorizontalAlignment="Left" Height="79" Margin="0,273,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Warehouse_Click" MouseEnter="Warehouse_MouseEnter" BorderBrush="#FF151313" MouseLeave="Warehouse_MouseLeave" Grid.Row="1"/>
-        <Button x:Name="Exit" HorizontalContentAlignment="Left" Content=" Thoát ra Login" HorizontalAlignment="Left" Height="79" Margin="0,352,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Exit_Click" BorderBrush="#FF151313" MouseEnter="Exit_MouseEnter" MouseLeave="Exit_MouseLeave" Grid.Row="1"/>
-        <local:Warehouse x:Name="WH_UI" Height="544" Margin="214,12,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="778" Loaded="Warehouse_Loaded" BorderBrush="Black"/>
+        <DockPanel x:Name="LeftPanel" HorizontalAlignment="Left" Height="569" LastChildFill="False" VerticalAlignment="Top" Width="214" Grid.RowSpan="2" Background="#FF151313" d:IsLocked="True"/>
+        <Button x:Name="Food" HorizontalContentAlignment="Left" Content=" QL thực đơn" HorizontalAlignment="Left" Height="79" Margin="0,116,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Food_Click" MouseEnter="Food_MouseEnter" BorderBrush="#FF151313" MouseLeave="Food_MouseLeave" Grid.Row="1" IsCancel="True" d:IsLocked="True"/>
+        <Button x:Name="Employee" HorizontalContentAlignment="Left" Content=" QL nhân viên" HorizontalAlignment="Left" Height="79" Margin="0,194,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Employee_Click" MouseEnter="Employee_MouseEnter" BorderBrush="#FF151313" MouseLeave="Employee_MouseLeave" Grid.Row="1" IsCancel="True" d:IsLocked="True"/>
+        <Button x:Name="Warehouse" HorizontalContentAlignment="Left" Content=" Quản lý kho" HorizontalAlignment="Left" Height="79" Margin="0,273,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Warehouse_Click" MouseEnter="Warehouse_MouseEnter" BorderBrush="#FF151313" MouseLeave="Warehouse_MouseLeave" Grid.Row="1" d:IsLocked="True"/>
+        <Button x:Name="Exit" HorizontalContentAlignment="Left" Content=" Thoát ra Login" HorizontalAlignment="Left" Height="79" Margin="0,352,0,0" VerticalAlignment="Top" Width="214" Background="#FF151313" Foreground="White" FontSize="22" Click="Exit_Click" BorderBrush="#FF151313" MouseEnter="Exit_MouseEnter" MouseLeave="Exit_MouseLeave" Grid.Row="1" d:IsLocked="True"/>
+        <local:Warehouse x:Name="WH_UI" Height="544" Margin="214,12,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="778" Loaded="Warehouse_Loaded" BorderBrush="Black" d:IsHidden="True" d:IsLocked="True"/>
         <Ellipse x:Name="UserImage" HorizontalAlignment="Left" Height="53" Margin="15,14,0,0" Grid.RowSpan="2" Stroke="Yellow" VerticalAlignment="Top" Width="53"
-                 StrokeThickness ="2">
+                 StrokeThickness ="2" d:IsLocked="True">
             <Ellipse.Fill>
                 <ImageBrush ImageSource="Images/ExtraIcon/UserImage.png"/>
             </Ellipse.Fill>
         </Ellipse>
         <TextBlock x:Name="UsernameBox" HorizontalAlignment="Left" Height="43" Margin="70,9,0,0" Grid.RowSpan="2" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" Width="144"
-                   Padding="3,2,0,0" Foreground="White" FontSize="16" FontStyle="Italic" FontWeight="DemiBold" LineHeight="20" LineStackingStrategy="BlockLineHeight"/>
+                   Padding="3,2,0,0" Foreground="White" FontSize="16" FontStyle="Italic" FontWeight="DemiBold" LineHeight="20" LineStackingStrategy="BlockLineHeight" d:IsLocked="True"/>
         <TextBlock x:Name="UserRoleBox" HorizontalAlignment="Left" Height="27" Margin="70,47,0,0" Grid.RowSpan="2" TextWrapping="Wrap" Text="Quản lý" VerticalAlignment="Top" Width="144"
-            Padding="3,2,0,0" Foreground="White" FontSize="15" FontStyle="Italic"/>
-        <Rectangle x:Name="OptionIndicator" Fill="Yellow" HorizontalAlignment="Left" Height="79" Margin="0,116,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="10"/>
-        <local:EmployeeManager x:Name="EMP_UI" HorizontalAlignment="Left" Height="544" Margin="214,12,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="778" Loaded="EMP_UI_Loaded" d:IsHidden="True"/>
-        <local:MenuManager x:Name="MM_UI" HorizontalAlignment="Left" Height="544" Margin="214,12,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="778" Loaded="MM_Loaded" d:IsHidden="True"/>
+            Padding="3,2,0,0" Foreground="White" FontSize="15" FontStyle="Italic" d:IsLocked="True"/>
+        <Rectangle x:Name="OptionIndicator" Fill="Yellow" HorizontalAlignment="Left" Height="79" Margin="0,116,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="10" d:IsLocked="True"/>
+        <local:EmployeeManager x:Name="EMP_UI" HorizontalAlignment="Left" Height="544" Margin="214,12,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="778" Loaded="EMP_UI_Loaded" d:IsHidden="True" d:IsLocked="True"/>
+        <local:MenuManager x:Name="MM_UI" HorizontalAlignment="Left" Height="544" Margin="214,12,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="778" Loaded="MM_Loaded" d:IsLocked="True"/>
     </Grid>
 </Window>

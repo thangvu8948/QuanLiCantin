@@ -30,7 +30,7 @@
             BorderThickness="2,2,2,2"/>
         <Button x:Name="RemoveFromMenu" Content="Xóa món" HorizontalAlignment="Center" Height="48" Margin="279,480,279,0" VerticalAlignment="Top" Width="220" Click="RemoveFromMenu_Click" FontSize="18" Background="White" Foreground="Black" BorderBrush="#FF333038"
             BorderThickness="2,2,2,2"/>
-        <Rectangle x:Name="BlockScreen" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="544" Margin="0" Stroke="Black" VerticalAlignment="Top" Width="778" Opacity="0.01"/>
+        <Rectangle x:Name="BlockScreen" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="544" Margin="0" Stroke="Black" VerticalAlignment="Top" Width="778" Opacity="0.01" d:IsHidden="True"/>
         <DataGrid x:Name="MenuTable" ItemsSource="{Binding DisplayedMenuItems}" AutoGenerateColumns="False" Background="#FFE2D4D4" Margin="3,58,0,130" SelectionChanged="MenuTable_SelectionChanged" BorderBrush="#89A04949"
                   IsReadOnly="True" HorizontalAlignment="Left" Width="771" Height="356" CanUserResizeColumns="False">
             <DataGrid.Resources>
@@ -73,5 +73,6 @@
             </DataGrid.Columns>
         </DataGrid>
         <local:RemoveRecordUI x:Name="RemoveRecordBox" HorizontalAlignment="Center" Height="150" Margin="0,-40,0,0" VerticalAlignment="Center" Width="380" Loaded="RemoveRecordBox_Loaded"/>
+        <local:MenuItemAddUI x:Name="MenuAddBox" HorizontalAlignment="Left" Height="242" Margin="144,148,0,0" VerticalAlignment="Top" Width="500" Loaded="MenuAddBox_Loaded"/>
     </Grid>
 </UserControl>

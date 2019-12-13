@@ -182,7 +182,7 @@ namespace QuanLiCantin
             }
             catch (Exception err)
             {
-                MessageBox.Show($"Lỗi kết nối, vui lòng thử lại");
+                MessageBox.Show($"Lỗi kết nối, vui lòng thử lại\n{err.Message}");
             }
             return;
         }

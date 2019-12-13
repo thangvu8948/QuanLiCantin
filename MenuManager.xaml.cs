@@ -34,6 +34,8 @@ namespace QuanLiCantin
             
             MM_UI.Children.Remove(RemoveRecordBox);
             MM_UI.Children.Remove(BlockScreen);
+            MM_UI.Children.Remove(MenuAddBox);
+
             MENU_ITEMS = new ObservableCollection<AMenuItem>(MenuSQL.GetAllMenuItems());
             DisplayedMenuItems = new ListCollectionView(MENU_ITEMS)
             {
@@ -134,7 +136,7 @@ namespace QuanLiCantin
                     }
                 }
 
-                catch (Exception e)
+                catch (Exception)
                 {
                     MessageBox.Show($"Lỗi truy xuất dữ liệu");
                 }
@@ -170,7 +172,7 @@ namespace QuanLiCantin
                     affectedRows = cmd.ExecuteNonQuery();
                     cmd.Dispose();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     MessageBox.Show($"Lỗi khi thêm dữ liệu");
                 }
@@ -199,7 +201,7 @@ namespace QuanLiCantin
                     affectedRows = cmd.ExecuteNonQuery();
                     cmd.Dispose();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     MessageBox.Show($"Lỗi khi xóa dữ liệu");
                 }
@@ -236,7 +238,7 @@ namespace QuanLiCantin
                     affectedRows = cmd.ExecuteNonQuery();
                     cmd.Dispose();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     MessageBox.Show($"Lỗi khi cập nhật dữ liệu");
                 }
@@ -352,21 +354,114 @@ namespace QuanLiCantin
             Global.UnhighlightButton(RemoveFromMenu);
         }
 
-        ///--------------------------------------------------------------------------------------------------
+///--------------------------------------------------------------------------------------------------
+
+        protected bool itemAddFirstLoad = true;
+        protected bool addClick, updateClick = false;
+
 
         private void AddToMenu_Click(object sender, RoutedEventArgs e)
         {
+            addClick = true; updateClick = false;
 
+            Global.HighlightButton(AddToMenu);
+
+            if (!MM_UI.Children.Contains(BlockScreen))
+                MM_UI.Children.Add(BlockScreen);
+
+            MM_UI.Children.Add(MenuAddBox);
+            MenuAddBox.Title.Text = "Thêm món";
+
+            if (itemAddFirstLoad is true)
+            {
+                MenuAddBox.Confirm.Click += Confirm_Click;
+                MenuAddBox.Quit.Click += Quit_Click; ;
+                itemAddFirstLoad = false;
+            }
         }
 
+
         private void UpdateMenu_Click(object sender, RoutedEventArgs e)
+        {
+            addClick = false; updateClick = true;
+
+            Global.HighlightButton(UpdateMenu);
+
+            if (!MM_UI.Children.Contains(BlockScreen))
+                MM_UI.Children.Add(BlockScreen);
+
+            MM_UI.Children.Add(MenuAddBox);
+            MenuAddBox.Title.Text = "Thêm món";
+
+            if (itemAddFirstLoad is true)
+            {
+                MenuAddBox.Confirm.Click += Confirm_Click;
+                MenuAddBox.Quit.Click += Quit_Click; ;
+                itemAddFirstLoad = false;
+            }
+        }
+
+        private void Quit_Click(object sender, RoutedEventArgs e)
+        {
+            MM_UI.Children.Remove(MenuAddBox);
+            MM_UI.Children.Remove(BlockScreen);
+            Global.UnhighlightButton(addClick ? AddToMenu : UpdateMenu);
+        }
+
+        private void Confirm_Click(object sender, RoutedEventArgs e)
+        {
+            if (MenuAddBox.AllValid())
+            {
+                var item = new AMenuItem(MenuAddBox.GetInputData());
+                bool success;
+                //Insert
+                if (addClick == true)
+                {
+                    success =  MenuSQL.AddMenuItem(item.MAMON, item.TENMON, item.GIATIEN, item.SOLUONG, item.MALOAI.ToString());
+                    if (success)
+                        MENU_ITEMS.Add(item);
+                }
+
+                //Update
+                else
+                {
+                    success = MenuSQL.UpdateMenuItem(item.MAMON, item.TENMON, item.GIATIEN, item.SOLUONG, item.MALOAI.ToString());
+                    if (success)
+                    {
+                        for (int i = 0, sz = MENU_ITEMS.Count; i < sz; ++i)
+                        {
+                            if (MENU_ITEMS[i].MAMON == item.MAMON)
+                            {
+                                MENU_ITEMS[i] = item;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (success)
+                {
+                    MM_UI.Children.Remove(MenuAddBox);
+                    MM_UI.Children.Remove(BlockScreen);
+                    Global.UnhighlightButton(addClick == true ? AddToMenu : UpdateMenu);
+                    DisplayedMenuItems.Filter = null;
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+
+        ///--------------------------------------------------------------------------------------------------
+
+        private void MenuItemTypeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
-///--------------------------------------------------------------------------------------------------
-
-        private void MenuItemTypeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void MenuAddBox_Loaded(object sender, RoutedEventArgs e)
         {
 
         }
