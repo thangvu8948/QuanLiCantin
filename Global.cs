@@ -11,7 +11,9 @@ namespace QuanLiCantin
 {
     class Global
     {
+        public static List<Product> products = new List<Product>();
         public static List<Order> orders = new List<Order>();
+        public static NhanVien nhanVien = new NhanVien();
         private static readonly Color purple = Color.FromArgb(0xFF, 67, 0x3A, 0xB7);
 
         public static void UnhighlightButton(Button button)

@@ -20,11 +20,11 @@ namespace QuanLiCantin
     public partial class ChonSoLuongWindow : Window
     {
         public int AlteredSoluong = 1;
-
-        public ChonSoLuongWindow()
+        private int _available;
+        public ChonSoLuongWindow(int available)
         {
             InitializeComponent();
-
+            _available = available;
         }
 
         private void SendBack(object sender, RoutedEventArgs e)
@@ -32,7 +32,8 @@ namespace QuanLiCantin
             try
             {
                 int temp = Convert.ToInt32(Soluong.Text);
-                if (temp < 0) throw new Exception("Nhỏ hơn 0");
+                if (temp <= 0) throw new Exception("Vui lòng nhập lớn hơn 0");
+                if (temp > _available) throw new Exception("Không đủ số lượng");
                 else
                 {
                     AlteredSoluong = temp;
@@ -42,7 +43,7 @@ namespace QuanLiCantin
                 return;
             } catch(Exception err)
             {
-                MessageBox.Show("Vui lòng nhập số");
+                MessageBox.Show(err.Message);
             } 
             
         }

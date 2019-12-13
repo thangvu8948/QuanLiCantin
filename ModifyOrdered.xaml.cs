@@ -19,10 +19,12 @@ namespace QuanLiCantin
     /// </summary>
     public partial class ModifyOrdered : Window
     {
-        public ModifyOrdered(int data)
+        private string _id;
+        public ModifyOrdered(int data, string id)
         {
             InitializeComponent();
             alterSoluongBox.Text = data.ToString();
+            _id = id;
         }
         public int alteredCount;
         private void DieuChinhSoluongClick(object sender, RoutedEventArgs e)
@@ -30,7 +32,9 @@ namespace QuanLiCantin
             try
             {
                 int temp = Convert.ToInt32(alterSoluongBox.Text);
-                if (temp < 0) throw new Exception("Nhỏ hơn 0");
+                if (temp < 0) throw new Exception("Vui lòng nhập số lớn hơn 0");
+                int available = GetAvailable();
+                if (temp > available) throw new Exception("Không đủ số lượng");
                 else
                 {
                     alteredCount = temp;
@@ -39,10 +43,20 @@ namespace QuanLiCantin
                 this.Close();
             } catch(Exception exc)
             {
-                MessageBox.Show("Vui lòng nhập số hợp lệ");
+                MessageBox.Show(exc.Message);
             }
         }
-
+        private int GetAvailable()
+        {
+            for (int i = 0; i < Global.products.Count; i++)
+            {
+                if (Global.products[i].ID == _id)
+                {
+                    return Global.products[i].Remain;
+                }
+            }
+            return 0;
+        }
         private void DeleteClick(object sender, RoutedEventArgs e)
         {
             alteredCount = 0;

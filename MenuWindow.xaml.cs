@@ -133,9 +133,10 @@ namespace QuanLiCantin
                                     Image = hinhanh
                                 };
                                 listProduct.Add(product);
+                                Global.products.Add(product);
                             }
                             conn.Close();
-
+                            
                             return listProduct;
                         }
                         conn.Close();
@@ -181,7 +182,7 @@ namespace QuanLiCantin
 
             Order item = (Order)OrderedList.ItemContainerGenerator.ItemFromContainer(dep);
 
-            var screen = new ModifyOrdered(item.SoLuong);
+            var screen = new ModifyOrdered(item.SoLuong, item.ID);
             if (screen.ShowDialog() == true)
             {
                 var i = OrderedList.SelectedIndex;
@@ -207,7 +208,7 @@ namespace QuanLiCantin
 
             Product item = (Product)MenuList.ItemContainerGenerator.ItemFromContainer(dep);
 
-            var sl = new ChonSoLuongWindow();
+            var sl = new ChonSoLuongWindow(item.Remain);
 
             if (sl.ShowDialog() == true)
             {
@@ -215,7 +216,7 @@ namespace QuanLiCantin
                 {
                     if (_orders[i].ID == item.ID)
                     {
-                        _orders[i].SoLuong += sl.AlteredSoluong;
+                        _orders[i].SoLuong = sl.AlteredSoluong;
                         OrderedList.ItemsSource = _orders;
                         return;
                     }

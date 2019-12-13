@@ -86,6 +86,16 @@ namespace QuanLiCantin
                     cmd.CommandText = sql;
                     DbDataReader reader2 = cmd.ExecuteReader();
                     reader2.Close();
+
+                    var sql2 = $"UPDATE MonAn set SOLUONG = SOLUONG - {Global.orders[j].SoLuong} WHERE MAMON = '{Global.orders[j].ID}'";
+                    var command = new SqlCommand(sql2, conn);
+                    var count = command.ExecuteNonQuery();
+
+                    for (int k = 0; k < Global.products.Count; k++)
+                    {
+                        if (Global.products[k].ID == Global.orders[j].ID)
+                            Global.products[k].Remain -= Global.orders[j].SoLuong;
+                    }
                 }
             } catch(Exception err)
             {

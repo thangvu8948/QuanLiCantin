@@ -159,6 +159,7 @@ namespace QuanLiCantin
                         if (!signInMode)
                         {
                             empName = Convert.ToString(reader.GetValue(2)).Trim().ToUpper();
+                            Global.nhanVien.TenNV = empName;
                             MenuWindow menu = new MenuWindow();
                             menu.Show();
                             this.Close();
