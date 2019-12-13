@@ -114,7 +114,7 @@ namespace QuanLiCantin
                 try
                 {
                     conn.Open();
-                    using (var cmd = new SqlCommand("SELECT * FROM MonAn", conn))
+                    using (var cmd = new SqlCommand("SELECT * FROM MonAn ORDER BY cast(MAMON as int) asc", conn))
                     using (DbDataReader r = cmd.ExecuteReader())
                     {
                         if (r.HasRows)
