@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLiCantin"
         mc:Ignorable="d"
+        Icon="Images/ExtraIcon/icon.ico"
         Title="MainWindow" Height="600" Width="1000"
         Background="Black">
     <Canvas Name="canvas"   Height="400" Width="800" >

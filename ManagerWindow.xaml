@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLiCantin"
         mc:Ignorable="d"
+        Icon="Images/ExtraIcon/icon.ico"
         Title="ManagerWindow" Height="600" Width="1005" MaxHeight="600" MaxWidth="1005">
     <Grid x:Name="ManagerUI" Background="#FFE2D4D4">
         <Grid.RowDefinitions>

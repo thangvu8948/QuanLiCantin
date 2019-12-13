@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLiCantin"
         mc:Ignorable="d"
+        Icon="Images/ExtraIcon/icon.ico"
         Title="Tùy chọn" Height="147.581" Width="501.5">
     <Canvas>
         <Label Foreground="Black" Content="Số lượng" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="130" Canvas.Top="25"/>

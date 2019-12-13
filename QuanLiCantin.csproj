@@ -248,5 +248,8 @@
     <Resource Include="Images\ExtraIcon\info.png" />
     <Resource Include="Images\ExtraIcon\UserImage.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ExtraIcon\icon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
