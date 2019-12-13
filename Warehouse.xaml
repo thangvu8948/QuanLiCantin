@@ -57,7 +57,7 @@
                 <DataGridTextColumn Header= "Ngày lưu kho" CanUserResize="False" Binding="{Binding NLK, StringFormat=\{0:dd/MM/yyyy\}}" Width= "*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <local:WarehouseAddUI x:Name="StorageAddBox" HorizontalAlignment="Center" Height="214" VerticalAlignment="Center" Width="500" Margin="0,-40,0,0" Loaded="StorageAddBox_Loaded"/>
-        <local:RemoveRecordUI x:Name="RemoveRecordBox" HorizontalAlignment="Center" Height="150" Margin="199,177,199,217" VerticalAlignment="Center" Width="380" Loaded="RemoveRecordBox_Loaded"/>
+        <local:WarehouseAddUI x:Name="StorageAddBox" HorizontalAlignment="Center" Height="214" VerticalAlignment="Center" Width="500" Margin="0,-40,0,0" Loaded="StorageAddBox_Loaded" d:IsHidden="True"/>
+        <local:RemoveRecordUI x:Name="RemoveRecordBox" HorizontalAlignment="Center" Height="150" Margin="154,177,148,217" VerticalAlignment="Center" Width="469" Loaded="RemoveRecordBox_Loaded"/>
     </Grid>
 </UserControl>

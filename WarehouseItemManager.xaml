@@ -21,7 +21,7 @@
             BorderThickness="2,2,2,2" BorderBrush="Black" TextAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" FontWeight="DemiBold" FontSize="18" TextChanged="ItemFindBox_TextChanged"/>
         <TextBlock HorizontalAlignment="Left" Height="32" Margin="329,14,0,0" TextWrapping="Wrap" Text="Tên hàng hóa:" VerticalAlignment="Top" Width="118" Foreground="Black"
             FontSize="18" FontWeight="Medium"/>
-        <Rectangle x:Name="BlockScreen" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="544" Margin="0" Stroke="Black" VerticalAlignment="Top" Width="778" Opacity="0.01" d:IsHidden="True"/>
+        <Rectangle x:Name="BlockScreen" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="544" Margin="0" Stroke="Black" VerticalAlignment="Top" Width="778" Opacity="0.01"/>
         <DataGrid x:Name="ItemTable" ItemsSource="{Binding DisplayedItems}" AutoGenerateColumns="False" Background="#FFE2D4D4" Margin="3,58,0,130" SelectionChanged="ItemTable_SelectionChanged" BorderBrush="#89A04949"
                   IsReadOnly="True" HorizontalAlignment="Left" Width="771" Height="356">
             <DataGrid.Resources>
@@ -56,6 +56,6 @@
             </DataGrid.Columns>
         </DataGrid>
         <local:WHItemAddUI x:Name="ItemAddBox"  HorizontalAlignment="Left" Height="211" Margin="153,168,0,0" VerticalAlignment="Top" Width="494" Loaded="ItemAddBox_Loaded"/>
-        <local:RemoveRecordUI x:Name="RemoveRecordBox" HorizontalAlignment="Center" Height="150" Margin="199,177,199,217" VerticalAlignment="Center" Width="380" Loaded="RemoveRecordBox_Loaded"/>
+        <local:RemoveRecordUI x:Name="RemoveRecordBox" HorizontalAlignment="Center" Height="150" Margin="154,177,156,217" VerticalAlignment="Center" Width="469" Loaded="RemoveRecordBox_Loaded"/>
     </Grid>
 </UserControl>

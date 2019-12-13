@@ -5,16 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuanLiCantin"
              mc:Ignorable="d" 
-             d:DesignHeight="150" d:DesignWidth="380" BorderBrush="#E59700FF" BorderThickness="5,5,5,5">
+             d:DesignHeight="150" BorderBrush="#E59700FF" BorderThickness="5,5,5,5" Width="469">
     <Grid x:Name="RM_UI" Background="#FF342C2C" MouseEnter="RM_UI_MouseEnter" MouseLeave="RM_UI_MouseLeave">
         <TextBox x:Name="Title" HorizontalAlignment="Center" Height="43" TextWrapping="Wrap" Text="Title" VerticalAlignment="Top" Width="246" TextAlignment="Center" Foreground="White"
                  FontSize="28" FontWeight="DemiBold" Margin="0,0,0,0" BorderBrush="{x:Null}" TextChanged="Title_TextChanged"/>
-        <TextBlock  x:Name="OptionName" Height="31" Margin="4,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155" TextAlignment="Left"
+        <TextBlock  x:Name="OptionName" Height="31" Margin="4,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" TextAlignment="Left"
             FontSize="18" FontWeight ="DemiBold" Text="Option:" Foreground="White" HorizontalAlignment="Left"/>
-        <TextBox x:Name="InputBox" HorizontalAlignment="Left" Height="34" Margin="161,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="199" BorderBrush="#E500FFFF"
+        <TextBox x:Name="InputBox" HorizontalAlignment="Left" Height="34" Margin="227,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="227" BorderBrush="#E500FFFF"
             BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="Medium" Padding="5,0,0,0" TextChanged="InputBox_TextChanged" FontSize="15"/>
-        <Button x:Name="Quit" Content="Thoát" HorizontalAlignment="Left" Height="37" Margin="11,96,0,0" VerticalAlignment="Top" Width="150" Background="{x:Null}" BorderThickness="2,2,2,2" Click="Quit_Click"/>
-        <Button x:Name="Confirm" Content="Xác nhận" HorizontalAlignment="Left" Height="37" Margin="210,96,0,0" VerticalAlignment="Top" Width="150" Background="{x:Null}" BorderThickness="2,2,2,2" Click="Confirm_Click"/>
+        <Button x:Name="Quit" Content="Thoát" HorizontalAlignment="Left" Height="37" Margin="49,96,0,0" VerticalAlignment="Top" Width="150" Background="{x:Null}" BorderThickness="2,2,2,2" Click="Quit_Click"/>
+        <Button x:Name="Confirm" Content="Xác nhận" HorizontalAlignment="Left" Height="37" Margin="264,96,0,0" VerticalAlignment="Top" Width="150" Background="{x:Null}" BorderThickness="2,2,2,2" Click="Confirm_Click"/>
 
     </Grid>
 </UserControl>
