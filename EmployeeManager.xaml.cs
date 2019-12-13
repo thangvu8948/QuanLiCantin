@@ -172,6 +172,39 @@ namespace QuanLiCantin
                 return affectedRows > 0;
             }
 
+            public static bool AddAccount(string loginName, string password, int type)
+            {
+                var conn = DBUtils.GetDBConnection();
+
+                string query =
+                    $"INSERT INTO TaiKhoan VALUES (@loginName, @password, @type)";
+
+                int affectedRows = 0;
+
+                try
+                {
+                    conn.Open();
+                    var cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@loginName", loginName);
+                    cmd.Parameters.AddWithValue("@password", password);
+                    cmd.Parameters.AddWithValue("@type", type);
+                    affectedRows = cmd.ExecuteNonQuery();
+                    cmd.Dispose();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show($"Lỗi khi thêm dữ liệu");
+                }
+                finally
+                {
+                    conn.Close();
+                    conn.Dispose();
+                }
+
+                return affectedRows > 0;
+
+            }
+
             public static bool RemoveEmployee(string id)
             {
                 var conn = DBUtils.GetDBConnection();
@@ -329,6 +362,11 @@ namespace QuanLiCantin
                 //Insert
                 if (addClick == true)
                 {
+                    bool n = EMPLOYEES.Any(i => i.LoginName == emp.LoginName);
+                    if (n == false)
+                    {
+                        EmployeeSQL.AddAccount(emp.LoginName, emp.Password, emp.Role);
+                    }
                     success = EmployeeSQL.AddEmployee(emp.ID, emp.Role, emp.Name, emp.LoginName, emp.Password);
                     if (success)
                         EMPLOYEES.Add(emp);
