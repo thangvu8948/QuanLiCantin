@@ -23,20 +23,27 @@ namespace QuanLiCantin
     {
         public static CultureInfo locale = new CultureInfo("vi-VN");
         
+        int mode = 0;
+        private bool warehouseItemMode = false;
+
         public ManagerWindow()
         {
             InitializeComponent();
             UsernameBox.Text = MainWindow.GetUsername();
             Food.Foreground = Brushes.Yellow;
 
-            ManagerUI.Children.Remove(WH_UI);
+            ManagerUI.Children.Remove(WH_Storage_UI);
+            ManagerUI.Children.Remove(WH_Items_UI);
+            
             ManagerUI.Children.Remove(EMP_UI);
         }
 
         private void Food_Click(object sender, RoutedEventArgs e)
         {
-            if (!ManagerUI.Children.Contains(MM_UI))
+            if (mode != 0)
             {
+                mode = 0;
+
                 Food.Foreground = Brushes.Yellow;
                 Employee.Foreground = Brushes.White;
                 Warehouse.Foreground = Brushes.White;
@@ -44,9 +51,13 @@ namespace QuanLiCantin
 
                 OptionIndicator.Margin = Food.Margin;
 
-                ManagerUI.Children.Add(MM_UI);
-                ManagerUI.Children.Remove(WH_UI);
+                if (!warehouseItemMode)
+                    ManagerUI.Children.Remove(WH_Storage_UI);
+                else
+                    ManagerUI.Children.Remove(WH_Items_UI);
+                
                 ManagerUI.Children.Remove(EMP_UI);
+                ManagerUI.Children.Add(MM_UI);
             }
         }
 
@@ -63,8 +74,10 @@ namespace QuanLiCantin
 
         private void Employee_Click(object sender, RoutedEventArgs e)
         {           
-            if (!ManagerUI.Children.Contains(EMP_UI))
+            if (mode != 1)
             {
+                mode = 1;
+
                 Food.Foreground = Brushes.White;
                 Employee.Foreground = Brushes.Yellow;
                 Warehouse.Foreground = Brushes.White;
@@ -72,9 +85,14 @@ namespace QuanLiCantin
 
                 OptionIndicator.Margin = Employee.Margin;
 
-                ManagerUI.Children.Add(EMP_UI);
-                ManagerUI.Children.Remove(WH_UI);
+                if (!warehouseItemMode)
+                    ManagerUI.Children.Remove(WH_Storage_UI);
+                else
+                    ManagerUI.Children.Remove(WH_Items_UI);
+               
                 ManagerUI.Children.Remove(MM_UI);
+                
+                ManagerUI.Children.Add(EMP_UI);
             }
         }
 
@@ -90,18 +108,37 @@ namespace QuanLiCantin
 
         private void Warehouse_Click(object sender, RoutedEventArgs e)
         {
-            if (!ManagerUI.Children.Contains(WH_UI))
+            if (mode != 2)
             {
+                mode = 2;
+
                 Food.Foreground = Brushes.White;
                 Employee.Foreground = Brushes.White;
                 Warehouse.Foreground = Brushes.Yellow;
                 Exit.Foreground = Brushes.White;
 
                 OptionIndicator.Margin = Warehouse.Margin;
-
-                ManagerUI.Children.Add(WH_UI);
                 ManagerUI.Children.Remove(EMP_UI);
                 ManagerUI.Children.Remove(MM_UI);
+
+                if (warehouseItemMode)
+                    ManagerUI.Children.Add(WH_Items_UI);
+                else
+                    ManagerUI.Children.Add(WH_Storage_UI);
+            }
+            else
+            {
+                warehouseItemMode = !warehouseItemMode;
+                if (warehouseItemMode)
+                {
+                    ManagerUI.Children.Remove(WH_Storage_UI);
+                    ManagerUI.Children.Add(WH_Items_UI);
+                }
+                else
+                {
+                    ManagerUI.Children.Remove(WH_Items_UI);
+                    ManagerUI.Children.Add(WH_Storage_UI);
+                }
             }
         }
 
@@ -132,12 +169,25 @@ namespace QuanLiCantin
             Exit.Background = LeftPanel.Background;
         }
 
+
+
+
         private void Warehouse_Loaded(object sender, RoutedEventArgs e)
         {
 
         }
 
         private void EMP_UI_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void WH_Items_UI_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void WH_Storage_UI_Loaded(object sender, RoutedEventArgs e)
         {
 
         }

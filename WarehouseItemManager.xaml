@@ -1,0 +1,61 @@
+﻿<UserControl x:Name="WH_Item_UI" x:Class="QuanLiCantin.WarehouseItemManager"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuanLiCantin"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Width="778" Height="544" Loaded="WarehouseUI_Loaded">
+    <Grid x:Name="WH_I_UI" Width="778" Height="544" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="AddItemButton" Content="Thêm hàng vào kho" HorizontalAlignment="Left" Height="48" Margin="6,480,0,0" VerticalAlignment="Top" Width="220" Click="AddItemButton_Click" BorderBrush="#FF333038" Foreground="Black" Background="White" BorderThickness="2,2,2,2"/>
+        <Button x:Name="ShowAllItemsButton" Content="Hiện tất cả" HorizontalAlignment="Center" Height="48" Margin="6,422,6,0" VerticalAlignment="Top" Width="766" Click="ShowAllItemsButton_Click"  FontSize="20" Background="Indigo" Foreground="Yellow" BorderBrush="Yellow"
+                BorderThickness="4,4,4,4"/>
+        <Button x:Name="SearchButton" Content="TÌM" HorizontalAlignment="Right" Height="48" Margin="0,2,10,0" VerticalAlignment="Top" Width="81" Click="SearchButton_Click"
+                BorderThickness="2,2,2,2" BorderBrush="Black" FontWeight="Bold" FontSize="20"/>
+        <Button x:Name="DeleteItem" Content="Xóa thông tin hàng hóa" HorizontalAlignment="Center" Height="48" Margin="279,480,279,0" VerticalAlignment="Top" Width="220" Click="DeleteItem_Click" BorderBrush="#FF333038" Foreground="Black" Background="White" BorderThickness="2,2,2,2"/>
+        <Button x:Name="UpdateItem" Content="Sửa thông tin hàng hóa" HorizontalAlignment="Left" Height="48" Margin="549,480,0,0" VerticalAlignment="Top" Width="220" Click="UpdateItem_Click" BorderBrush="#FF333038" Foreground="Black" Background="White" BorderThickness="2,2,2,2"/>
+        <TextBox x:Name="ItemFindBox" HorizontalAlignment="Left" Height="48" Margin="446,2,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="206" Foreground="Black" Background="White"
+            BorderThickness="2,2,2,2" BorderBrush="Black" TextAlignment="Left" VerticalContentAlignment="Center" Padding="5,0,0,0" FontWeight="DemiBold" FontSize="18" TextChanged="ItemFindBox_TextChanged"/>
+        <TextBlock HorizontalAlignment="Left" Height="32" Margin="329,14,0,0" TextWrapping="Wrap" Text="Tên hàng hóa:" VerticalAlignment="Top" Width="118" Foreground="Black"
+            FontSize="18" FontWeight="Medium"/>
+        <Rectangle x:Name="BlockScreen" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="544" Margin="0" Stroke="Black" VerticalAlignment="Top" Width="778" Opacity="0.01" d:IsHidden="True"/>
+        <DataGrid x:Name="ItemTable" ItemsSource="{Binding DisplayedItems}" AutoGenerateColumns="False" Background="#FFE2D4D4" Margin="3,58,0,130" SelectionChanged="ItemTable_SelectionChanged" BorderBrush="#89A04949"
+                  IsReadOnly="True" HorizontalAlignment="Left" Width="771" Height="356">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="Background" Value="Turquoise"/>
+                    <Setter Property="FontSize" Value="18"/>
+                    <Setter Property="FontWeight" Value="DemiBold"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="1, 2, 2, 3"/>
+                </Style>
+
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="Background" Value="White"/>
+                    <Setter Property="FontSize" Value="20"/>
+                    <Setter Property="FontWeight" Value="SemiBold"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="1, 2, 2, 3"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+                    <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.Resources>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header= "Mã hàng hóa" Binding="{Binding MaHH}" Width= "150" CanUserResize="False"/>
+                <DataGridTextColumn Header= "Tên" Binding="{Binding TenHH}" Width= "*" CanUserResize="False">
+                </DataGridTextColumn>
+                <DataGridTextColumn Header= "Khối lượng" Binding="{Binding KhoiLuong}" Width= "125" CanUserResize="False"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <local:WHItemAddUI x:Name="ItemAddBox"  HorizontalAlignment="Left" Height="211" Margin="153,168,0,0" VerticalAlignment="Top" Width="494" Loaded="ItemAddBox_Loaded"/>
+        <local:RemoveRecordUI x:Name="RemoveRecordBox" HorizontalAlignment="Center" Height="150" Margin="199,177,199,217" VerticalAlignment="Center" Width="380" Loaded="RemoveRecordBox_Loaded"/>
+    </Grid>
+</UserControl>

@@ -24,7 +24,7 @@ namespace QuanLiCantin
     /// </summary>
     public partial class Warehouse : UserControl
     {
-        private static ObservableCollection<Storage> STORAGES { get; set; } = null;
+        private static ObservableCollection<Storage> STORAGES { get; set; } = StorageSQL.GetAllStorages();
         private static ListCollectionView DisplayedItems { get; set; } = null;
 
         public Warehouse()
@@ -33,9 +33,6 @@ namespace QuanLiCantin
             WH_UI.Children.Remove(StorageAddBox);
             WH_UI.Children.Remove(BlockScreen);
             WH_UI.Children.Remove(RemoveRecordBox);
-
-
-            STORAGES = new ObservableCollection<Storage>(StorageSQL.GetAllStorages());
 
             DisplayedItems = new ListCollectionView(STORAGES)
             {
@@ -268,6 +265,7 @@ namespace QuanLiCantin
                 WH_UI.Children.Add(BlockScreen);
 
             WH_UI.Children.Add(StorageAddBox);
+            StorageAddBox.Title.Text = "Lập phiếu lưu kho";
 
             if (itemAddFirstLoad is true)
             {
@@ -288,6 +286,7 @@ namespace QuanLiCantin
                 WH_UI.Children.Add(BlockScreen);
 
             WH_UI.Children.Add(StorageAddBox);
+            StorageAddBox.Title.Text = "Sửa phiếu lưu kho";
 
             if (itemAddFirstLoad is true)
             {
@@ -410,7 +409,7 @@ namespace QuanLiCantin
             WH_UI.Children.Remove(BlockScreen);
             Global.UnhighlightButton(DeleteItem);
         }
-        ///--------------------------------------------------------------------------------------------------
+///--------------------------------------------------------------------------------------------------
 
         public bool ItemFilter(object obj)
         {
@@ -451,7 +450,12 @@ namespace QuanLiCantin
             StorageAddBox.EmptyAllField();
         }
 
-///-----------------------------------------------------------------------------------
+        private void ItemFindBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        ///-----------------------------------------------------------------------------------
         private void MHHFindBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 

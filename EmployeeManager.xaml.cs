@@ -25,9 +25,8 @@ namespace QuanLiCantin
     /// </summary>
     public partial class EmployeeManager : UserControl
     {
-        private static ObservableCollection<Employee> EMPLOYEES{ get; set; } = null;
+        private static ObservableCollection<Employee> EMPLOYEES{ get; set; } = EmployeeSQL.GetAllEmployees();
         private static ListCollectionView DisplayedEmployee { get; set; } = null;
-        private readonly Color purple = Color.FromArgb(0xFF, 67, 0x3A, 0xB7);
 
 
         public EmployeeManager()
@@ -36,7 +35,6 @@ namespace QuanLiCantin
             EM_UI.Children.Remove(BlockScreen);
             EM_UI.Children.Remove(RemoveRecordBox);
 
-            EMPLOYEES = new ObservableCollection<Employee>(EmployeeSQL.GetAllEmployees());
             DisplayedEmployee = new ListCollectionView(EMPLOYEES)
             {
                 Filter = null
@@ -317,8 +315,9 @@ namespace QuanLiCantin
             {
                 var input = RemoveRecordBox.InputBox.Text;
 
-                int index = -1;
+                int index = 0;
 
+              
                 for (int i = 0, sz = EMPLOYEES.Count; i < sz; ++i)
                 {
                     if (EMPLOYEES[i].ID == input)
@@ -326,12 +325,14 @@ namespace QuanLiCantin
                         index = i; break;
                     }
                 }
+
                 
                 if (EMPLOYEES[index].Name.ToUpper() == MainWindow.GetUsername())
                 {
                     MessageBox.Show("Không thể xóa tài khoản đang đăng nhập");
                     return;
                 }
+
                 else
                 {
                     bool success = EmployeeSQL.RemoveEmployee(input);

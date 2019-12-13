@@ -12,29 +12,29 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="6*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock HorizontalAlignment="Left" Height="46" Margin="66,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="362" TextAlignment="Center"
+        <TextBlock x:Name="Title" HorizontalAlignment="Left" Height="46" Margin="2,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="488" TextAlignment="Center"
                    FontSize="30" FontWeight ="DemiBold" Text="Lưu kho" Foreground="White" Grid.ColumnSpan="2"/>
         <TextBlock HorizontalAlignment="Left" Height="31" Margin="4,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="56" TextAlignment="Left"
             FontSize="18" FontWeight ="Medium" Text="MLK" Foreground="White"/>
         <TextBlock HorizontalAlignment="Left" Height="33" Margin="4,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="62" TextAlignment="Left"
             FontSize="18" FontWeight ="DemiBold" Text="MAHH" Foreground="White"/>
         <TextBox x:Name="MaHHBox" HorizontalAlignment="Left" Height="34" Margin="64,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="107" BorderBrush="#E500FFFF"
-                 BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="Light" Padding="5,0,0,0" TextChanged="MaHH_TextChanged" Grid.ColumnSpan="2" FontSize="15"/>
+                 BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="DemiBold" Padding="5,0,0,0" TextChanged="MaHH_TextChanged" Grid.ColumnSpan="2" FontSize="15"/>
         <TextBox x:Name="MLKBox" HorizontalAlignment="Left" Height="34" Margin="64,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="106" BorderBrush="#E500FFFF"
-            BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="Light" Padding="5,0,0,0" TextChanged="MLK_TextChanged" Grid.ColumnSpan="2" FontSize="15"/>
+            BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="DemiBold" Padding="5,0,0,0" TextChanged="MLK_TextChanged" Grid.ColumnSpan="2" FontSize="15"/>
         <TextBlock HorizontalAlignment="Left" Height="31" Margin="126,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="73" TextAlignment="Left"
             FontSize="18" FontWeight ="DemiBold" Text="SLDN" Foreground="White" Grid.Column="1"/>
         <TextBox x:Name="SLDNBox" HorizontalAlignment="Left" Height="34" Margin="178,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" BorderBrush="#E500FFFF"
-            BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="Light" Padding="5,0,0,0" TextChanged="SLDN_TextChanged" Grid.Column="1" FontSize="15"/>
+            BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="DemiBold" Padding="5,0,0,0" TextChanged="SLDN_TextChanged" Grid.Column="1" FontSize="15"/>
         <TextBlock HorizontalAlignment="Left" Height="33" Margin="277,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" TextAlignment="Left"
             FontSize="18" FontWeight ="DemiBold" Text="SLCN " Foreground="White" Grid.Column="1"/>
         <TextBox x:Name="SLCNBox" HorizontalAlignment="Left" Height="34" Margin="326,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" BorderBrush="#E500FFFF"
-            BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="Light" Padding="5,0,0,0" TextChanged="SLCN_TextChanged" Grid.Column="1" FontSize="15"/>
+            BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="DemiBold" Padding="5,0,0,0" TextChanged="SLCN_TextChanged" Grid.Column="1" FontSize="15"/>
         <Button x:Name="Quit" Grid.ColumnSpan="2" Content="Thoát" HorizontalAlignment="Left" Height="37" Margin="43,159,0,0" VerticalAlignment="Top" Width="150" Background="{x:Null}" BorderThickness="2,2,2,2"/>
         <Button x:Name="Confirm" Content="Xác nhận" HorizontalAlignment="Left" Height="37" Margin="226,159,0,0" VerticalAlignment="Top" Width="150" Background="{x:Null}" Grid.Column="1" BorderThickness="2,2,2,2" Click="Confirm_Click"/>
         <TextBlock HorizontalAlignment="Left" Height="33" Margin="125,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" TextAlignment="Left"
             FontSize="18" FontWeight ="DemiBold" Text="Ngày lưu kho" Foreground="White" Grid.Column="1"/>
         <TextBox x:Name="DateBox" HorizontalAlignment="Left" Height="34" Margin="249,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" BorderBrush="#E500FFFF"
-            BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="Light" Padding="5,0,0,0" TextChanged="Date_TextChanged" FontSize="15" Grid.Column="1" MouseEnter="DateBox_MouseEnter"/>
+            BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="DemiBold" Padding="5,0,0,0" TextChanged="Date_TextChanged" FontSize="15" Grid.Column="1" MouseEnter="DateBox_MouseEnter"/>
     </Grid>
 </UserControl>

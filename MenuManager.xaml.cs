@@ -24,7 +24,7 @@ namespace QuanLiCantin
     /// </summary>
     public partial class MenuManager : UserControl
     {
-        private static ObservableCollection<AMenuItem> MENU_ITEMS { get; set; } = null;
+        private static ObservableCollection<AMenuItem> MENU_ITEMS { get; set; } = MenuSQL.GetAllMenuItems();
         private static ListCollectionView DisplayedMenuItems { get; set; } = null;
         
 
@@ -391,7 +391,7 @@ namespace QuanLiCantin
                 MM_UI.Children.Add(BlockScreen);
 
             MM_UI.Children.Add(MenuAddBox);
-            MenuAddBox.Title.Text = "Thêm món";
+            MenuAddBox.Title.Text = "Chỉnh sửa món";
 
             if (itemAddFirstLoad is true)
             {

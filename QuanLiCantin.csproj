@@ -94,6 +94,12 @@
     <Compile Include="WarehouseAddUI.xaml.cs">
       <DependentUpon>WarehouseAddUI.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WarehouseItemManager.xaml.cs">
+      <DependentUpon>WarehouseItemManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WHItemAddUI.xaml.cs">
+      <DependentUpon>WHItemAddUI.xaml</DependentUpon>
+    </Compile>
     <Page Include="ChonSoLuongWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -158,6 +164,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="WarehouseAddUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WarehouseItemManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WHItemAddUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
