@@ -83,7 +83,6 @@
     <Compile Include="ModifyOrdered.xaml.cs">
       <DependentUpon>ModifyOrdered.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NhanVien.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="RelativeToAbsolutePathConverter.cs" />
     <Compile Include="RemoveRecordUI.xaml.cs">
