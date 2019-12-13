@@ -9,7 +9,7 @@
         SizeToContent="WidthAndHeight"
         MaxHeight="750"
         ResizeMode="NoResize"
-        Title="ThanhToanWindow" Height="466.935" Width="584.678"
+        Title="Thanh Toán" Height="466.935" Width="584.678"
         Background="Black">
     <Grid>
         <Grid.RowDefinitions>
