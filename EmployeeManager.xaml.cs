@@ -34,6 +34,7 @@ namespace QuanLiCantin
             InitializeComponent();
             EM_UI.Children.Remove(BlockScreen);
             EM_UI.Children.Remove(RemoveRecordBox);
+            EM_UI.Children.Remove(EmpAddBox);
 
             DisplayedEmployee = new ListCollectionView(EMPLOYEES)
             {
@@ -272,16 +273,107 @@ namespace QuanLiCantin
            DisplayedEmployee.Filter = new Predicate<object>(EmployeeFilter);
         }
 
-///--------------------------------------------------------------------------------------------------
+        ///--------------------------------------------------------------------------------------------------
+
+        protected bool empAddFirstLoad = true;
+        protected bool addClick, updateClick = false;
 
 
         private void AddEmployees_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            addClick = true; updateClick = false;
+
+            Global.HighlightButton(AddEmployee);
+
+            if (!EM_UI.Children.Contains(BlockScreen))
+                EM_UI.Children.Add(BlockScreen);
+
+            EM_UI.Children.Add(EmpAddBox);
+            EmpAddBox.Title.Text = "Thêm nhân viên";
+
+            if (empAddFirstLoad is true)
+            {
+                EmpAddBox.Confirm.Click += Add_Confirm_Click;
+                EmpAddBox.Quit.Click += Add_Quit_Click;
+                empAddFirstLoad = false;
+            }
         }
 
 
-///--------------------------------------------------------------------------------------------------
+        private void UpdateEmployee_Click(object sender, RoutedEventArgs e)
+        {
+            addClick = false; updateClick = true;
+
+            Global.HighlightButton(UpdateEmployee);
+
+            if (!EM_UI.Children.Contains(BlockScreen))
+                EM_UI.Children.Add(BlockScreen);
+
+            EM_UI.Children.Add(EmpAddBox);
+            EmpAddBox.Title.Text = "Sửa thông tin nhân viên";
+
+            if (empAddFirstLoad is true)
+            {
+                EmpAddBox.Confirm.Click += Add_Confirm_Click;
+                EmpAddBox.Quit.Click += Add_Quit_Click;
+                empAddFirstLoad = false;
+            }
+        }
+
+        private void Add_Confirm_Click(object sender, RoutedEventArgs e)
+        {
+            if (EmpAddBox.AllValid())
+            {
+                var emp = new Employee(EmpAddBox.GetInputData());
+                bool success;
+                //Insert
+                if (addClick == true)
+                {
+                    success = EmployeeSQL.AddEmployee(emp.ID, emp.Role, emp.Name, emp.LoginName, emp.Password);
+                    if (success)
+                        EMPLOYEES.Add(emp);
+                }
+
+                //Update
+                else
+                {
+                    success = EmployeeSQL.UpdateEmployee(emp.ID, emp.Role, emp.Name, emp.LoginName, emp.Password);
+                    if (success)
+                    {
+                        for (int i = 0, sz = EMPLOYEES.Count; i < sz; ++i)
+                        {
+                            if (EMPLOYEES[i].ID == emp.ID)
+                            {
+                                EMPLOYEES[i] = emp;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (success)
+                {
+                    EM_UI.Children.Remove(EmpAddBox);
+                    EM_UI.Children.Remove(BlockScreen);
+                    Global.UnhighlightButton(addClick == true ? AddEmployee : UpdateEmployee);
+                    DisplayedEmployee.Filter = null;
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private void Add_Quit_Click(object sender, RoutedEventArgs e)
+        {
+            EM_UI.Children.Remove(EmpAddBox);
+            EM_UI.Children.Remove(BlockScreen);
+            Global.UnhighlightButton(addClick == true ? AddEmployee : UpdateEmployee);
+        }
+
+
+ ///--------------------------------------------------------------------------------------------------
 
         protected bool removeFirstLoad = true;
 
@@ -359,7 +451,7 @@ namespace QuanLiCantin
         }
 
 
-        ///--------------------------------------------------------------------------------------------------
+///--------------------------------------------------------------------------------------------------
 
         private void EmployeeTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -376,5 +468,9 @@ namespace QuanLiCantin
 
         }
 
+        private void EmpAddBox_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

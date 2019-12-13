@@ -21,7 +21,7 @@ namespace QuanLiCantin
     public partial class MenuItemAddUI : UserControl
     {
         private bool validID, validPrice, validCount, validName, validType;
-        private readonly Brush correctColor = new SolidColorBrush(Color.FromArgb(0xE5, 0, 0xFF, 0xFF));
+        private readonly Brush correctColor = Brushes.LightGreen;
         private readonly Brush incorrectColor = Brushes.Red;
 
         private int price, count;

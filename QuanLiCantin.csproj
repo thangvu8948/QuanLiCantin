@@ -64,6 +64,9 @@
     <Compile Include="ChonSoLuongWindow.xaml.cs">
       <DependentUpon>ChonSoLuongWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeAddUI.xaml.cs">
+      <DependentUpon>EmployeeAddUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EmployeeManager.xaml.cs">
       <DependentUpon>EmployeeManager.xaml</DependentUpon>
     </Compile>
@@ -101,6 +104,10 @@
       <DependentUpon>WHItemAddUI.xaml</DependentUpon>
     </Compile>
     <Page Include="ChonSoLuongWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EmployeeAddUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -22,7 +22,7 @@ namespace QuanLiCantin
     {
         private bool validID = false, validRemain = false, validName = false;
         private double remain;
-        private readonly Brush correctColor = new SolidColorBrush(Color.FromArgb(0xE5, 0, 0xFF, 0xFF));
+        private readonly Brush correctColor = Brushes.LightGreen;
         private readonly Brush incorrectColor = Brushes.Red;
 
 

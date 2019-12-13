@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="QuanLiCantin.EmployeeAddUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuanLiCantin"
+             mc:Ignorable="d" d:DesignWidth="800" Background="#FF05E9E9" BorderBrush="#E59700FF" BorderThickness="5, 5, 5, 5
+             " Width="500" Height="276.667">
+    <Grid x:Name="EMP_Add_UI" Background="#FF342C2C" MouseEnter="EMP_Add_UI_MouseEnter" MouseLeave="EMP_Add_UI_MouseLeave">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="6*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="Title" HorizontalAlignment="Left" Height="46" Margin="2,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="488" TextAlignment="Center"
+                   FontSize="30" FontWeight ="DemiBold" Text="Thêm nhân viên" Foreground="White" Grid.ColumnSpan="2"/>
+        <TextBlock HorizontalAlignment="Left" Height="31" Margin="4,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="56" TextAlignment="Left"
+            FontSize="18" FontWeight ="Medium" Text="ID" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Left" Height="33" Margin="4,102,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="62" TextAlignment="Left"
+            FontSize="18" FontWeight ="DemiBold" Text="Tên" Foreground="White"/>
+        <TextBox x:Name="NameBox" HorizontalAlignment="Left" Height="34" Margin="64,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="412" BorderBrush="#E500FFFF"
+                 BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="DemiBold" Padding="5,0,0,0" TextChanged="NameBox_TextChanged" Grid.ColumnSpan="2" FontSize="15"/>
+        <TextBox x:Name="IDBox" HorizontalAlignment="Left" Height="34" Margin="64,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="106" BorderBrush="#E500FFFF"
+            BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="DemiBold" Padding="5,0,0,0" TextChanged="IDBox_TextChanged" Grid.ColumnSpan="2" FontSize="15"/>
+        <TextBlock HorizontalAlignment="Left" Height="31" Margin="173,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" TextAlignment="Left"
+            FontSize="18" FontWeight ="DemiBold" Text="Vị trí" Foreground="White" Grid.Column="1"/>
+        <TextBox x:Name="RoleBox" HorizontalAlignment="Left" Height="34" Margin="232,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="173" BorderBrush="#E500FFFF"
+            BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="DemiBold" Padding="5,0,0,0" TextChanged="RoleBox_TextChanged" Grid.Column="1" FontSize="15" RenderTransformOrigin="1.212,0.529"/>
+        <Button x:Name="Quit" Grid.ColumnSpan="2" Content="Thoát" HorizontalAlignment="Left" Height="38" Margin="46,221,0,0" VerticalAlignment="Top" Width="150" Background="{x:Null}" BorderThickness="2,2,2,2" Click="Quit_Click"/>
+        <Button x:Name="Confirm" Content="Xác nhận" HorizontalAlignment="Left" Height="38" Margin="229,221,0,0" VerticalAlignment="Top" Width="150" Background="{x:Null}" Grid.Column="1" BorderThickness="2,2,2,2" Click="Confirm_Click"/>
+        <TextBlock HorizontalAlignment="Left" Height="33" Margin="4,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135" TextAlignment="Left"
+            FontSize="18" FontWeight ="DemiBold" Text="Tên đăng nhập" Foreground="White" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="LoginNameBox" HorizontalAlignment="Left" Height="34" Margin="71,139,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="335" BorderBrush="#E500FFFF"
+            BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="DemiBold" Padding="5,0,0,0" TextChanged="LoginNameBox_TextChanged" FontSize="15" Grid.Column="1"/>
+        <TextBlock HorizontalAlignment="Left" Height="33" Margin="4,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="117" TextAlignment="Left"
+            FontSize="18" FontWeight ="DemiBold" Text="Mật khẩu" Foreground="White" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="PasswordBox" HorizontalAlignment="Left" Height="34" Margin="71,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="335" BorderBrush="#E500FFFF"
+            BorderThickness="3, 3, 3, 3" Foreground="White" FontWeight="DemiBold" Padding="5,0,0,0" TextChanged="PasswordBox_TextChanged" FontSize="15" Grid.Column="1"/>
+    </Grid>
+</UserControl>

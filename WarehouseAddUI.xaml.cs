@@ -25,7 +25,7 @@ namespace QuanLiCantin
         private bool validBegin, validEnd, validDate, validPK, validMHH = false;
         private double SLDN, SLCN;
         private DateTime NLK;
-        private readonly Brush correctColor = new SolidColorBrush(Color.FromArgb(0xE5, 0, 0xFF, 0xFF));
+        private readonly Brush correctColor = Brushes.LightGreen;
         private readonly Brush incorrectColor = Brushes.Red;
 
         public WarehouseAddUI()
