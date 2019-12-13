@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Brush = System.Windows.Media.Brush;
+using Brushes = System.Windows.Media.Brushes;
 
 namespace QuanLiCantin
 {
@@ -21,7 +26,7 @@ namespace QuanLiCantin
     public partial class MenuItemAddUI : UserControl
     {
         private bool validID, validPrice, validCount, validName, validType;
-        private readonly Brush correctColor = Brushes.LightGreen;
+        private readonly Brush correctColor = System.Windows.Media.Brushes.LightGreen;
         private readonly Brush incorrectColor = Brushes.Red;
 
         private int price, count, id;
@@ -76,6 +81,41 @@ namespace QuanLiCantin
         {
             validName = NameBox.Text.Length > 0 && NameBox.Text.Length <= 50;
             NameBox.BorderBrush = validName ? correctColor : incorrectColor;
+        }
+
+        private void chooseImageBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (IDBox.Text == "")
+            {
+                MessageBox.Show("Vui lòng nhập ID trước", "Thông báo");
+                return;
+            }
+            var screen = new OpenFileDialog();
+            screen.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+       "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+       "Portable Network Graphic (*.png)|*.png";
+            if (screen.ShowDialog() == true)
+            {
+                previewImageUI.Source = new BitmapImage(new Uri(screen.FileName));  
+                try
+                {
+                    // var path = $"Images\\{IDBox.Text}\\";
+                    var path = System.AppDomain.CurrentDomain.BaseDirectory;
+                    var navigate = $"..\\..\\Images\\{IDBox.Text}\\";
+                    string sourceDir = System.IO.Path.Combine(path, navigate);
+                    var des = sourceDir + "download.jpg";
+
+                    if (!Directory.Exists(sourceDir)) {
+                        Directory.CreateDirectory(sourceDir);
+                    }
+                    File.Copy(screen.FileName, des, false);
+                }
+                catch (Exception er)
+                {
+                    MessageBox.Show("ID trùng");
+                }
+                
+            }
         }
 
         private void Quit_Click(object sender, RoutedEventArgs e)

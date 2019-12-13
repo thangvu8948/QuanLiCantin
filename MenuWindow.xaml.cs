@@ -123,6 +123,12 @@ namespace QuanLiCantin
                                 int loai = Convert.ToInt32(reader.GetValue(4));
                                 string hinhanh = (string)reader.GetValue(5);
 
+                                var path = System.AppDomain.CurrentDomain.BaseDirectory;
+                                var navigate = $"..\\..\\";
+                                var dir = System.IO.Path.Combine(path, navigate);
+                                dir += hinhanh;
+                                
+
                                 var product = new Product()
                                 {
                                     ID = id,
@@ -130,7 +136,7 @@ namespace QuanLiCantin
                                     Price = giatien,
                                     Remain = soluong,
                                     Type = loai,
-                                    Image = hinhanh
+                                    Image = dir
                                 };
                                 if (product.Image == null)
                                 {

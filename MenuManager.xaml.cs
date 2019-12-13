@@ -16,6 +16,7 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace QuanLiCantin
 {
@@ -128,7 +129,13 @@ namespace QuanLiCantin
                                 var count = Convert.ToInt32(r.GetValue(3));
                                 var type = Convert.ToInt32(r.GetValue(4));
                                 var pic = Convert.ToString(r.GetValue(5)).Trim();
-                                menuList.Add(new AMenuItem(id, name, price, count, type, pic));
+
+                                var path = System.AppDomain.CurrentDomain.BaseDirectory;
+                                var navigate = $"..\\..\\";
+                                var dir = System.IO.Path.Combine(path, navigate);
+                                dir += pic;
+
+                                menuList.Add(new AMenuItem(id, name, price, count, type, dir));
                             }
                             return menuList;
                         }
