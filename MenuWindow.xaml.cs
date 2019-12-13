@@ -132,6 +132,10 @@ namespace QuanLiCantin
                                     Type = loai,
                                     Image = hinhanh
                                 };
+                                if (product.Image == null)
+                                {
+                                    product.Image = "Images/ExtraIcon/noimage.png";
+                                }
                                 listProduct.Add(product);
                                 Global.products.Add(product);
                             }

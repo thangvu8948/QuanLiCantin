@@ -240,7 +240,9 @@
     <Resource Include="Images\8\download.jpg" />
     <Resource Include="Images\9\download.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\ExtraIcon\noimage.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\ExtraIcon\icon2.jpg" />
     <Resource Include="Images\ExtraIcon\info.png" />
